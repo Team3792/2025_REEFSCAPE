@@ -1,0 +1,1 @@
+This repository contains all the software for the 2025 FRC season REEFSCAPE programmed by FRC team 3792 the Army Ants from Columbia, Missouri. See our website [here](https://www.armyants.us/home) and feel free to reach out with any questions or comments!
