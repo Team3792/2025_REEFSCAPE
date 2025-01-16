@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
    */
   //hello!
    //motors
-    PWMSparkMax algaeControlMotor = new PWMSparkMax(0);
+    PWMSparkMax algaeControlMotor = new PWMSparkMax(10);
     
     PWMSparkMax coralControlMotorRight = new PWMSparkMax(0);
     PWMSparkMax coralControlMotorLeft = new PWMSparkMax(0);
