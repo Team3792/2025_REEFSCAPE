@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,10 +24,10 @@ public class Robot extends TimedRobot {
    */
   //hello!
    //motors
-    PWMSparkMax algaeControlMotor = new PWMSparkMax(10);
+    SparkMax algaeControlMotor = new SparkMax(10, MotorType.kBrushless);
     
-    PWMSparkMax coralControlMotorRight = new PWMSparkMax(0);
-    PWMSparkMax coralControlMotorLeft = new PWMSparkMax(0);
+    SparkMax coralControlMotorRight = new SparkMax(11, MotorType.kBrushless);
+    SparkMax coralControlMotorLeft = new SparkMax(12, MotorType.kBrushless);
 
     TalonFX elevatorMotorLeft = new TalonFX(0);
     TalonFX elevatorMotorRight = new TalonFX(0);
@@ -52,52 +53,53 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    
+    //algaeControlMotor.set(.2);
   }
 
   @Override
   public void teleopPeriodic() {
     //driver controls
-    if(driver.getR1ButtonPressed()){
-      algaeControlMotor.setVoltage(3);
-    }else if(driver.getL1ButtonPressed()){
-      algaeControlMotor.setVoltage(-3);
+
+    if(driver.getR1Button()){
+     algaeControlMotor.set(1);
+    }else if(driver.getL1Button()){
+    algaeControlMotor.set(-0.3);
     }else{
-      algaeControlMotor.setVoltage(0);
+      algaeControlMotor.set(0);
     }
 
     //operator controls
-    if(operator.getR1ButtonPressed()){
-      coralControlMotorLeft.setVoltage(3);
-      coralControlMotorRight.setVoltage(3);
-    }else if(operator.getL1ButtonPressed()){
-      coralControlMotorLeft.setVoltage(-3);
-      coralControlMotorRight.setVoltage(-3);
+    if(operator.getR1Button()){
+      coralControlMotorLeft.set(0.3);
+      coralControlMotorRight.set(0.3);
+    }else if(operator.getL1Button()){
+      coralControlMotorLeft.set(-0.3);
+      coralControlMotorRight.set(-0.3);
     }else{
-      coralControlMotorLeft.setVoltage(0);
-      coralControlMotorRight.setVoltage(0);
+      coralControlMotorLeft.set(0);
+      coralControlMotorRight.set(0);
     }
 
-    if(operator.getR2ButtonPressed()){
-      elevatorMotorLeft.setVoltage(3);
-      elevatorMotorRight.setVoltage(3);
-    }else if(operator.getL2ButtonPressed()){
-      elevatorMotorLeft.setVoltage(-3);
-      elevatorMotorRight.setVoltage(-3);
+    if(operator.getR2Button()){
+      elevatorMotorLeft.set(0.3);
+      elevatorMotorRight.set(0.3);
+    }else if(operator.getL2Button()){
+      elevatorMotorLeft.set(-0.3);
+      elevatorMotorRight.set(-0.3);
     }else{
-      elevatorMotorLeft.setVoltage(0);
-      elevatorMotorRight.setVoltage(0);
+      elevatorMotorLeft.set(0);
+      elevatorMotorRight.set(0);
     }
 
-    if(operator.getR3ButtonPressed()){
-      climbMotorLeft.setVoltage(3);
-      climbMotorRight.setVoltage(3);
-    }else if(operator.getL3ButtonPressed()){
-      climbMotorLeft.setVoltage(-3);
-      climbMotorRight.setVoltage(-3);
+    if(operator.getR3Button()){
+      climbMotorLeft.set(0.3);
+      climbMotorRight.set(0.3);
+    }else if(operator.getL3Button()){
+      climbMotorLeft.set(-0.3);
+      climbMotorRight.set(-0.3);
     }else{
-      climbMotorLeft.setVoltage(0);
-      climbMotorRight.setVoltage(0);
+      climbMotorLeft.set(0);
+      climbMotorRight.set(0);
     }
 
 
