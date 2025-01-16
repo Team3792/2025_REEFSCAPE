@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.PS5Controller;
@@ -21,20 +22,21 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   //algae control
+   //motors
     PWMSparkMax algaeControlMotor = new PWMSparkMax(0);
     
-    //neos for coral man
     PWMSparkMax coralControlMotorRight = new PWMSparkMax(0);
     PWMSparkMax coralControlMotorLeft = new PWMSparkMax(0);
 
-    //falcon for rest
+    TalonFX elevatorLeft = new TalonFX(0);
+    TalonFX elevatorRight = new TalonFX(0);
 
-    //elevator
-     elevatorRight = new PWMSparkMax(0);
-    PWMSparkMax elevatorLeft = new PWMSparkMax(0);
+    TalonFX climbRight = new TalonFX(0);
+    TalonFX climbLeft = new TalonFX(0);
 
-    PS5Controller controller = new PS5Controller(0);
+  //controllers
+    PS5Controller driver = new PS5Controller(0);
+    PS5Controller operator = new PS5Controller(1);
 
 
   public Robot() {}
@@ -55,14 +57,51 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    //algae control (in/out)
-    if(controller.getR1ButtonPressed()){
+    //driver controls
+    if(driver.getR1ButtonPressed()){
       algaeControlMotor.setVoltage(3);
-    }else if(controller.getL1ButtonPressed()){
+    }else if(driver.getL1ButtonPressed()){
       algaeControlMotor.setVoltage(-3);
     }else{
       algaeControlMotor.setVoltage(0);
     }
+
+    //operator controls
+    if(operator.getR1ButtonPressed()){
+      coralControlMotorLeft.setVoltage(3);
+      coralControlMotorRight.setVoltage(3);
+    }else if(operator.getL1ButtonPressed()){
+      coralControlMotorLeft.setVoltage(-3);
+      coralControlMotorRight.setVoltage(-3);
+    }else{
+      coralControlMotorLeft.setVoltage(0);
+      coralControlMotorRight.setVoltage(0);
+    }
+
+    if(operator.getR2ButtonPressed()){
+      elevatorLeft.setVoltage(3);
+      elevatorRight.setVoltage(3);
+    }else if(operator.getL2ButtonPressed()){
+      elevatorLeft.setVoltage(-3);
+      elevatorRight.setVoltage(-3);
+    }else{
+      elevatorLeft.setVoltage(0);
+      elevatorRight.setVoltage(0);
+    }
+
+    if(operator.getR3ButtonPressed()){
+      climbLeft.setVoltage(3);
+      climbRight.setVoltage(3);
+    }else if(operator.getL3ButtonPressed()){
+      climbLeft.setVoltage(-3);
+      climbRight.setVoltage(-3);
+    }else{
+      climbLeft.setVoltage(0);
+      climbRight.setVoltage(0);
+    }
+
+
+
   }
   //coral control
 
