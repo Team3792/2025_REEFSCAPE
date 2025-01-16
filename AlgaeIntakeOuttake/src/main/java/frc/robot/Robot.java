@@ -28,11 +28,11 @@ public class Robot extends TimedRobot {
     PWMSparkMax coralControlMotorRight = new PWMSparkMax(0);
     PWMSparkMax coralControlMotorLeft = new PWMSparkMax(0);
 
-    TalonFX elevatorLeft = new TalonFX(0);
-    TalonFX elevatorRight = new TalonFX(0);
+    TalonFX elevatorMotorLeft = new TalonFX(0);
+    TalonFX elevatorMotorRight = new TalonFX(0);
 
-    TalonFX climbRight = new TalonFX(0);
-    TalonFX climbLeft = new TalonFX(0);
+    TalonFX climbMotorRight = new TalonFX(0);
+    TalonFX climbMotorLeft = new TalonFX(0);
 
   //controllers
     PS5Controller driver = new PS5Controller(0);
@@ -79,25 +79,25 @@ public class Robot extends TimedRobot {
     }
 
     if(operator.getR2ButtonPressed()){
-      elevatorLeft.setVoltage(3);
-      elevatorRight.setVoltage(3);
+      elevatorMotorLeft.setVoltage(3);
+      elevatorMotorRight.setVoltage(3);
     }else if(operator.getL2ButtonPressed()){
-      elevatorLeft.setVoltage(-3);
-      elevatorRight.setVoltage(-3);
+      elevatorMotorLeft.setVoltage(-3);
+      elevatorMotorRight.setVoltage(-3);
     }else{
-      elevatorLeft.setVoltage(0);
-      elevatorRight.setVoltage(0);
+      elevatorMotorLeft.setVoltage(0);
+      elevatorMotorRight.setVoltage(0);
     }
 
     if(operator.getR3ButtonPressed()){
-      climbLeft.setVoltage(3);
-      climbRight.setVoltage(3);
+      climbMotorLeft.setVoltage(3);
+      climbMotorRight.setVoltage(3);
     }else if(operator.getL3ButtonPressed()){
-      climbLeft.setVoltage(-3);
-      climbRight.setVoltage(-3);
+      climbMotorLeft.setVoltage(-3);
+      climbMotorRight.setVoltage(-3);
     }else{
-      climbLeft.setVoltage(0);
-      climbRight.setVoltage(0);
+      climbMotorLeft.setVoltage(0);
+      climbMotorRight.setVoltage(0);
     }
 
 
