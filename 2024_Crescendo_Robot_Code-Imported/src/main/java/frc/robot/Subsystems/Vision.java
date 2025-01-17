@@ -16,7 +16,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 public class Vision {
     private PhotonCamera coralCamera = new PhotonCamera("low camera");
 
-    private Optional<Transform3d> getTagToCamera(){
+    public Optional<Transform3d> getTagToCamera(){
         var result = coralCamera.getLatestResult();
 
         //Check for targets
@@ -26,6 +26,6 @@ public class Vision {
 
         PhotonTrackedTarget bestTarget = result.getBestTarget();
         Transform3d cameraToTarget = bestTarget.getBestCameraToTarget();
-        return Optional.of(cameraToTarget.inverse());
+        return Optional.of(cameraToTarget);
     }
 }
