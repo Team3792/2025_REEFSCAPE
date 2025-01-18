@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Commands.Swerve_Commands.PrecisionAlignCommand;
 import frc.robot.Commands.Swerve_Commands.SwerveDriveCommand;
 import frc.robot.Commands.Swerve_Commands.PrecisionAlignCommand.AlignType;
-import frc.robot.Subsystems.Vision;
+import frc.robot.Subsystems.VisionSubsystem;
 import frc.robot.Subsystems.Swerve.SwerveSubsystem;
 import frc.robot.Util.RobotState;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -26,7 +26,7 @@ public class RobotContainer {
   //Create subsystems
   PowerDistribution powerDistribution = new PowerDistribution(1, ModuleType.kRev);
   SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-  Vision vision = new Vision();
+  VisionSubsystem visionSubsystem = new VisionSubsystem();
   //Create joysticks and buttons
   CommandPS5Controller driverJoystick = new CommandPS5Controller(0);
 
@@ -66,8 +66,8 @@ public class RobotContainer {
     driverJoystick.cross().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(180)));
     driverJoystick.circle().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(-90)));
 
-    driverJoystick.L1().onTrue(new PrecisionAlignCommand(swerveSubsystem, vision, AlignType.LeftAlign));
-    driverJoystick.R1().onTrue(new PrecisionAlignCommand(swerveSubsystem, vision, AlignType.RightAlign));
+    driverJoystick.L1().whileTrue(new PrecisionAlignCommand(swerveSubsystem, visionSubsystem, AlignType.LeftAlign));
+    driverJoystick.R1().whileTrue(new PrecisionAlignCommand(swerveSubsystem, visionSubsystem, AlignType.RightAlign));
 
   
     

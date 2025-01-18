@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -36,22 +37,15 @@ public class SwerveSubsystem extends SubsystemBase {
   private final Field2d field = new Field2d();
   //Pigeon2 pigeon = new Pigeon2(9);
 
-
-  // private final SwerveDriveOdometry odemetry = new SwerveDriveOdometry(Constants.Swerve.kKinematics, getRotation2d(), new SwerveModulePosition[]{
-  //   frontLeft.getPosition(),
-  //   frontRight.getPosition(),
-  //   backLeft.getPosition(),
-  //   backRight.getPosition()
-  // });
- 
-
   private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.kKinematics, getRotation2d(), new SwerveModulePosition[]{
     frontLeft.getPosition(),
     frontRight.getPosition(),
     backLeft.getPosition(),
     backRight.getPosition()
     }, 
-    new Pose2d()); //For now, assume starting at origin.
+    new Pose2d()); 
+    
+    //For now, assume starting at origin.
 
   public SwerveSubsystem() {
     //1 second after start up, zero heading
@@ -74,11 +68,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void zeroHeading(){
     //pigeon.reset();
-  }
-
-  public double getDistanceTraveled(){
-    //Return average of wheels 
-    return 0.25 * (frontLeft.getDriveDistance() + frontRight.getDriveDistance() + backLeft.getDriveDistance() + backRight.getDriveDistance());
   }
 
   public void resetEncoders(){
@@ -127,6 +116,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void addVisionMeasurement(Pose3d visionMeasurement){
     poseEstimator.addVisionMeasurement(visionMeasurement.toPose2d(), Timer.getFPGATimestamp());
+    //poseEstimator.setVisionMeasurementStdDevs(Matrix)
   }
 
   public void resetPose(Pose2d newPose){
@@ -195,6 +185,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
     ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.002 );
+    System.out.println("x: " + robotRelativeSpeeds.vxMetersPerSecond + ", y: " + robotRelativeSpeeds.vyMetersPerSecond + ", theta: " + robotRelativeSpeeds.omegaRadiansPerSecond);
 
     SwerveModuleState[] targetStates = Swerve.kKinematics.toSwerveModuleStates(targetSpeeds);
     setStates(targetStates);

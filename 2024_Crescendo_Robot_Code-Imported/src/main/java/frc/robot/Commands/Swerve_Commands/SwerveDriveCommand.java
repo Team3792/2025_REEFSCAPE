@@ -69,12 +69,14 @@ public class SwerveDriveCommand extends Command {
       tSpeed = headingController.calculate(swerveSubsystem.getRotation2d().getDegrees());
     }
     
-    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
-      xSpeed, ySpeed, tSpeed);
+    //ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
+      //xSpeed, ySpeed, tSpeed);
 
-    SwerveModuleState[] moduleStates = Constants.Swerve.kKinematics.toSwerveModuleStates(chassisSpeeds);
+    //SwerveModuleState[] moduleStates = Constants.Swerve.kKinematics.toSwerveModuleStates(chassisSpeeds);
 
-    swerveSubsystem.setModuleState(moduleStates);
+    //swerveSubsystem.setModuleState(moduleStates);
+
+    swerveSubsystem.driveRobotRelative(new ChassisSpeeds(xSpeed, ySpeed, tSpeed));
   }
 
   public void addHeadingLock(double angleRadians){
