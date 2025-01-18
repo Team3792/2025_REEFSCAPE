@@ -9,6 +9,7 @@ import java.util.Optional;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Vision;
 import frc.robot.Subsystems.Swerve.SwerveSubsystem;
@@ -19,9 +20,9 @@ public class PrecisionAlignCommand extends Command {
   SwerveSubsystem swerveSubsystem;
   Vision vision;
 
-  PIDController xController = new PIDController(0, 0, 0);
+  PIDController xController = new PIDController(0.05, 0, 0);
   PIDController yController = new PIDController(0, 0, 0);
-  PIDController thetaController = new PIDController(0, 0, 0);
+  PIDController thetaController = new PIDController(0.0, 0, 0);
 
   public static enum AlignType{
     LeftAlign,
@@ -36,7 +37,7 @@ public class PrecisionAlignCommand extends Command {
     xController.setSetpoint(0.5);
 
 
-    thetaController.setSetpoint(0);
+    thetaController.setSetpoint(180);
     thetaController.enableContinuousInput(-180.0, 180.0);
 
     if(alignType == AlignType.LeftAlign){
@@ -63,17 +64,24 @@ public class PrecisionAlignCommand extends Command {
       double yTranslationMeters = cameraToTarget.get().getY();
       double thetaDegrees = cameraToTarget.get().getRotation().getZ() * 180.0 / Math.PI; //In 
 
-      System.out.println("x: " + xTranslationMeters + ", y: " + yTranslationMeters + ", theta: " + thetaDegrees);
+
+      SmartDashboard.putNumber("x", xTranslationMeters);
+      SmartDashboard.putNumber("y", yTranslationMeters);
+      SmartDashboard.putNumber("theta", thetaDegrees);
+
+
+      //System.out.println("x: " + xTranslationMeters + ", y: " + yTranslationMeters + ", theta: " + thetaDegrees);
 
       swerveSubsystem.driveRobotRelative(new ChassisSpeeds(
         xController.calculate(xTranslationMeters),
         yController.calculate(yTranslationMeters),
-        thetaController.calculate(thetaDegrees)
+        thetaController.calculate(-thetaDegrees)
       ));
-
-    } else {
-      System.out.println("No Camera Results");
     }
+
+    // } else {
+    //   System.out.println("No Camera Results");
+    // }
   }
 
   // Called once the command ends or is interrupted.

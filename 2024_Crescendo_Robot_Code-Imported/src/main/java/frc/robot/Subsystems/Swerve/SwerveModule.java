@@ -38,7 +38,11 @@ public class SwerveModule {
         pidController.enableContinuousInput(-Math.PI, Math.PI);
 
         //Configure settings in motors
-        driveMotor.setNeutralMode(NeutralModeValue.Brake);
+        TalonFXConfiguration driveConfiguration = new TalonFXConfiguration();
+        driveConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        driveConfiguration.Slot0.kP = 0.001;
+        driveConfiguration.Slot0.kV = 0.11;
+        driveMotor.getConfigurator().apply(driveConfiguration);
 
         TalonFXConfiguration turnConfiguration = new TalonFXConfiguration();
         turnConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;

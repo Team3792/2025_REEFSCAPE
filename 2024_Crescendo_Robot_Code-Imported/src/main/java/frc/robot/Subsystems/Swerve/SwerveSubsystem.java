@@ -34,7 +34,7 @@ public class SwerveSubsystem extends SubsystemBase {
     frontLeft, frontRight, backLeft, backRight
   };
   private final Field2d field = new Field2d();
-  Pigeon2 pigeon = new Pigeon2(9);
+  //Pigeon2 pigeon = new Pigeon2(9);
 
 
   // private final SwerveDriveOdometry odemetry = new SwerveDriveOdometry(Constants.Swerve.kKinematics, getRotation2d(), new SwerveModulePosition[]{
@@ -69,11 +69,11 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void zeroHeading(double zero){
-    pigeon.setYaw(zero);
+    //pigeon.setYaw(zero);
   }
 
   public void zeroHeading(){
-    pigeon.reset();
+    //pigeon.reset();
   }
 
   public double getDistanceTraveled(){
@@ -92,8 +92,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
   public Rotation2d getRotation2d(){
-    
-    return pigeon.getRotation2d();
+    return new Rotation2d();
+    //return pigeon.getRotation2d();
   }
 
   @Override
@@ -211,7 +211,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void setModuleState(SwerveModuleState[] desiredStates){
    //TODO: normalize wheel speeds
     
-    System.out.println(desiredStates[0].angle.getDegrees());
+    //System.out.println(desiredStates[0].angle.getDegrees());
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
     backLeft.setDesiredState(desiredStates[2]);

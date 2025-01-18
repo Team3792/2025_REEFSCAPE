@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 /** Add your docs here. */
 public class Vision {
     private PhotonCamera coralCamera = new PhotonCamera("low camera");
+    
 
     public Optional<Transform3d> getTagToCamera(){
         var result = coralCamera.getLatestResult();

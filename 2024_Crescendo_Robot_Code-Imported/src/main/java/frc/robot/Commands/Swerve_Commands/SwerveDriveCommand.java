@@ -69,11 +69,8 @@ public class SwerveDriveCommand extends Command {
       tSpeed = headingController.calculate(swerveSubsystem.getRotation2d().getDegrees());
     }
     
-    ChassisSpeeds chassisSpeeds = 
-     ChassisSpeeds.fromFieldRelativeSpeeds(
-      xSpeed, ySpeed, tSpeed,
-      Rotation2d.fromDegrees(swerveSubsystem.getDriverOrientedHeading())
-      );
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
+      xSpeed, ySpeed, tSpeed);
 
     SwerveModuleState[] moduleStates = Constants.Swerve.kKinematics.toSwerveModuleStates(chassisSpeeds);
 
