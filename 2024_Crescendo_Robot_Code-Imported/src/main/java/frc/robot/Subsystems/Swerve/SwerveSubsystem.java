@@ -5,6 +5,9 @@
 package frc.robot.Subsystems.Swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -14,12 +17,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
+import frc.robot.Subsystems.Vision;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose3d;
 
 import java.util.Optional;
@@ -35,7 +40,8 @@ public class SwerveSubsystem extends SubsystemBase {
     frontLeft, frontRight, backLeft, backRight
   };
   private final Field2d field = new Field2d();
-  //Pigeon2 pigeon = new Pigeon2(9);
+  Pigeon2 pigeon = new Pigeon2(9);
+  Vision vision = new Vision();
 
   private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.kKinematics, getRotation2d(), new SwerveModulePosition[]{
     frontLeft.getPosition(),
@@ -48,26 +54,15 @@ public class SwerveSubsystem extends SubsystemBase {
     //For now, assume starting at origin.
 
   public SwerveSubsystem() {
-    //1 second after start up, zero heading
-    new Thread( () -> {
-      try{
-      Thread.sleep(1000);
-      zeroHeading();
-      resetEncoders();
-      } catch (Exception e){}
-    }).start();
-    resetEncoders();
-
-   
-
+    SmartDashboard.putData(field);
   }
 
   public void zeroHeading(double zero){
-    //pigeon.setYaw(zero);
+    pigeon.setYaw(zero);
   }
 
   public void zeroHeading(){
-    //pigeon.reset();
+    pigeon.reset();
   }
 
   public void resetEncoders(){
@@ -81,15 +76,32 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
   public Rotation2d getRotation2d(){
-    return new Rotation2d();
-    //return pigeon.getRotation2d();
+    return pigeon.getRotation2d();
   }
 
   @Override
   public void periodic() {
-    //Update swerve odemetry
-    //updateOdemetry();
-    //updateVision();
+    Optional<Pose2d> poseFromTarget = vision.getTagToCamera();
+    if(poseFromTarget.isPresent()){
+      Pose2d pose = poseFromTarget.get();//.plus(new Transform2d(-5, -5, new Rotation2d()));
+      poseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+      double xTranslationMeters = pose.getX(); //In m
+      double yTranslationMeters = pose.getY();
+      double thetaDegrees = pose.getRotation().getDegrees();
+
+      //field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new Translation2d(5, 5), new Rotation2d(0))));
+
+
+      SmartDashboard.putNumber("vision/x", xTranslationMeters);
+      SmartDashboard.putNumber("vision/y", yTranslationMeters);
+      SmartDashboard.putNumber("vision/theta", thetaDegrees);
+      SmartDashboard.putBoolean("vision/low_camera", true);
+    } else{
+      SmartDashboard.putBoolean("vision/low_camera", false);
+    }
+
+
+    //Update odemetry of pose estimator
     poseEstimator.update(getRotation2d(),
       new SwerveModulePosition[]{
         frontLeft.getPosition(),
@@ -98,25 +110,21 @@ public class SwerveSubsystem extends SubsystemBase {
         backRight.getPosition()
       }
       );
-      showPose();
-      
-    //showPose();
+      showReefPose();
   }
 
-  public Pose2d getPose(){
-    return poseEstimator.getEstimatedPosition();//poseEstimator.getEstimatedPosition();
+  public Pose2d getReefPose(){
+    return poseEstimator.getEstimatedPosition();
   }
 
-  public void showPose(){
-    field.setRobotPose(getPose());
-    //SmartDashboard.putNumber("Drive x", getPose().getX());
+  public void showReefPose(){
+    field.setRobotPose(getReefPose());
   }
  
 
 
   public void addVisionMeasurement(Pose3d visionMeasurement){
     poseEstimator.addVisionMeasurement(visionMeasurement.toPose2d(), Timer.getFPGATimestamp());
-    //poseEstimator.setVisionMeasurementStdDevs(Matrix)
   }
 
   public void resetPose(Pose2d newPose){
@@ -132,7 +140,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   //Return the heading that should be fed into telop driving, uses the offset present in pose estimator
-  public double getDriverOrientedHeading(){
+  public Rotation2d getDriverOrientedHeading(){
     Optional<Alliance> alliance = DriverStation.getAlliance();
     double angle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
       if (alliance.isPresent()) {
@@ -140,7 +148,7 @@ public class SwerveSubsystem extends SubsystemBase {
           angle += 180; 
         }
       }
-    return angle;   
+    return new Rotation2d(angle);   
   }
 
 
@@ -160,7 +168,7 @@ public class SwerveSubsystem extends SubsystemBase {
         frontRight.getPosition(),
         backLeft.getPosition(),
         backRight.getPosition()},
-      new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(angle))
+      new Pose2d(getReefPose().getTranslation(), Rotation2d.fromDegrees(angle))
     );
   }
 
@@ -189,6 +197,14 @@ public class SwerveSubsystem extends SubsystemBase {
 
     SwerveModuleState[] targetStates = Swerve.kKinematics.toSwerveModuleStates(targetSpeeds);
     setStates(targetStates);
+  }
+
+  public void driveFieldRelative(ChassisSpeeds robotRelativeSpeeds) {
+    ChassisSpeeds targetSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ChassisSpeeds.discretize(robotRelativeSpeeds, 0.002), poseEstimator.getEstimatedPosition().getRotation());
+    //System.out.println("x: " + robotRelativeSpeeds.vxMetersPerSecond + ", y: " + robotRelativeSpeeds.vyMetersPerSecond + ", theta: " + robotRelativeSpeeds.omegaRadiansPerSecond);
+
+    SwerveModuleState[] moduleStates = Constants.Swerve.kKinematics.toSwerveModuleStates(targetSpeeds);
+    setModuleState(moduleStates);
   }
 
   public void setStates(SwerveModuleState[] targetStates) {
