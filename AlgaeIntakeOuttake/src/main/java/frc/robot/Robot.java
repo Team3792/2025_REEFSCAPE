@@ -138,6 +138,14 @@ public class Robot extends TimedRobot {
       elevatorMotorRight.set(0);
     }
 
+    if(operator.getCrossButton()){
+      led.set(0.61);//L1solid red
+    }if(operator.getCircleButton()){
+      led.set(0.65);//L2,solid orange
+    }if(operator.getTriangleButton()){
+      led.set(0.69);//L3,solid yellow
+    }
+
     if(operator.getR3Button()){
       climbMotorLeft.set(0.3);
       climbMotorRight.set(0.3);
