@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
+import frc.robot.Commands.Swerve_Commands.AlignToAlgae;
 import frc.robot.Commands.Swerve_Commands.PrecisionAlignCommand;
 import frc.robot.Commands.Swerve_Commands.SwerveDriveCommand;
 import frc.robot.Commands.Swerve_Commands.PrecisionAlignCommand.AlignType;
@@ -61,10 +62,11 @@ public class RobotContainer {
 
     
     //Heading Lock
-    driverJoystick.triangle().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(0)));
-    driverJoystick.square().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(90)));
-    driverJoystick.cross().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(180)));
-    driverJoystick.circle().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(-90)));
+    // driverJoystick.triangle().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(0)));
+    // driverJoystick.square().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(90)));
+    // driverJoystick.cross().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(180)));
+    // driverJoystick.circle().onTrue(new InstantCommand(() -> driveCommand.addHeadingLock(-90)));
+    driverJoystick.triangle().whileTrue(new AlignToAlgae(swerveSubsystem));
 
     driverJoystick.L1().whileTrue(new PrecisionAlignCommand(swerveSubsystem, visionSubsystem, AlignType.LeftAlign));
     driverJoystick.R1().whileTrue(new PrecisionAlignCommand(swerveSubsystem, visionSubsystem, AlignType.RightAlign));

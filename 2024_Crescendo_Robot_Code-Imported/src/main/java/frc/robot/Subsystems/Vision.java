@@ -40,4 +40,15 @@ public class Vision {
 
         return Optional.of(new Pose2d(tagX, tagY, theta.unaryMinus()));
     }
+
+    public Optional<PhotonTrackedTarget> getBestTargetOptional(){
+        var result = coralCamera.getLatestResult();
+
+        //Check for targets
+        if(!result.hasTargets()){
+            return Optional.empty();
+        }
+        return Optional.of(result.getBestTarget());
+    }
+
 }

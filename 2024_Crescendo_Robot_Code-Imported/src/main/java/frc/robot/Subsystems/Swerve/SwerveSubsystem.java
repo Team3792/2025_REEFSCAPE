@@ -41,7 +41,7 @@ public class SwerveSubsystem extends SubsystemBase {
   };
   private final Field2d field = new Field2d();
   Pigeon2 pigeon = new Pigeon2(9);
-  Vision vision = new Vision();
+  public Vision vision = new Vision();
 
   private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.kKinematics, getRotation2d(), new SwerveModulePosition[]{
     frontLeft.getPosition(),
@@ -141,6 +141,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   //Return the heading that should be fed into telop driving, uses the offset present in pose estimator
   public Rotation2d getDriverOrientedHeading(){
+    
     Optional<Alliance> alliance = DriverStation.getAlliance();
     double angle = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
       if (alliance.isPresent()) {
