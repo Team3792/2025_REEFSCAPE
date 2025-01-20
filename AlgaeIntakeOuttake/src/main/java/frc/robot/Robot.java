@@ -4,13 +4,20 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -25,6 +32,7 @@ public class Robot extends TimedRobot {
   
    //motors
     SparkMax algaeControlMotor = new SparkMax(10, MotorType.kBrushless);
+    TalonFX algaeRotateMotor = new TalonFX(22);
     
     SparkMax coralControlMotorRight = new SparkMax(11, MotorType.kBrushless);
     SparkMax coralControlMotorLeft = new SparkMax(12, MotorType.kBrushless);
@@ -35,12 +43,35 @@ public class Robot extends TimedRobot {
     TalonFX climbMotorRight = new TalonFX(0);
     TalonFX climbMotorLeft = new TalonFX(0);
 
+    Spark led = new Spark(0);
   //controllers
     PS5Controller driver = new PS5Controller(0);
     PS5Controller operator = new PS5Controller(1);
 
+    
 
-  public Robot() {}
+  public Robot() {
+
+    TalonFXConfiguration algaeConfiguration = new TalonFXConfiguration();
+    algaeConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    algaeConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    algaeConfiguration.CurrentLimits.StatorCurrentLimit = 40;
+    algaeConfiguration.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    //Set PID
+
+    //Soft limits
+    algaeConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 2.2;
+    algaeConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+    algaeConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+    algaeConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+
+
+
+    //Apply config
+    algaeRotateMotor.getConfigurator().apply(algaeConfiguration);
+    
+  }
 
   @Override
   public void robotPeriodic() {}
@@ -53,20 +84,36 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //algaeControlMotor.set(.2);
+    algaeRotateMotor.setPosition(0); //Zero 
+    //algaeRotateMotor.setPosition(0);
+    //algaeRotateMotor.set(0);
+    
+    //algaeRotateMotor.setPosition(100);
+  
   }
 
   @Override
   public void teleopPeriodic() {
+    System.out.println("rotate pos"+ algaeRotateMotor.getPosition());
+
     //driver controls
+    //algaeRotateMotor.setVoltage(-1*(driver.getR2Axis() - driver.getL2Axis()));
 
     if(driver.getR1Button()){
-     algaeControlMotor.set(1);
+     algaeControlMotor.set(0.25);
+     led.set(0.79);
+
     }else if(driver.getL1Button()){
-    algaeControlMotor.set(-0.3);
+    algaeControlMotor.set(-0.25);
     }else{
       algaeControlMotor.set(0);
     }
+    // if(driver.getR2Button() & algaeRotateMotor.getPosition() ){
+      
+    // }else{
+    //   //algaeRotateMotor.setPosition(100);
+    // }
+    
 
     //operator controls
     if(operator.getR1Button()){
