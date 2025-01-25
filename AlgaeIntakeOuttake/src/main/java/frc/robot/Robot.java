@@ -31,6 +31,8 @@ public class Robot extends TimedRobot {
    */
   
    //motors
+    SparkMax deAlgaefyerMotor = new SparkMan(0, MotorType.kBrushless);
+
     SparkMax algaeControlMotor = new SparkMax(10, MotorType.kBrushless);
     TalonFX algaeRotateMotor = new TalonFX(22);
     
@@ -99,15 +101,26 @@ public class Robot extends TimedRobot {
     //driver controls
     //algaeRotateMotor.setVoltage(-1*(driver.getR2Axis() - driver.getL2Axis()));
 
-    if(driver.getR1Button()){
-     algaeControlMotor.set(0.25);
+if(driver.getR2utton()){
+     deAlgaefyerMotor.set(0.25);
      led.set(0.79);
 
-    }else if(driver.getL1Button()){
-    algaeControlMotor.set(-0.25);
+    }else if(driver.getL2Button()){
+    deAlgaefyerMotor.set(-0.25);
     }else{
-      algaeControlMotor.set(0);
+      deAlgaefyerMotor.set(0);
     }
+
+    // if(driver.getR1Button()){
+    //  algaeControlMotor.set(0.25);
+    //  led.set(0.79);
+
+    // }else if(driver.getL1Button()){
+    // algaeControlMotor.set(-0.25);
+    // }else{
+    //   algaeControlMotor.set(0);
+    // }
+
     // if(driver.getR2Button() & algaeRotateMotor.getPosition() ){
       
     // }else{
