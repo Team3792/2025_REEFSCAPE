@@ -102,11 +102,11 @@ public class Robot extends TimedRobot {
     //algaeRotateMotor.setVoltage(-1*(driver.getR2Axis() - driver.getL2Axis()));
 
 if(driver.getR2Button()){
-     deAlgaefyerMotor.set(0.25);
+     deAlgaefyerMotor.set(0.05);
      led.set(0.79);
 
     }else if(driver.getL2Button()){
-    deAlgaefyerMotor.set(-0.25);
+    deAlgaefyerMotor.set(-0.05);
     }else{
       deAlgaefyerMotor.set(0);
     }
