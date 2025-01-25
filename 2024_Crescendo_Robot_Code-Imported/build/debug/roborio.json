@@ -1,0 +1,9 @@
+[
+  {
+    "type": "java",
+    "name": "frcJava",
+    "port": 8349,
+    "target": "10.37.92.2",
+    "project": "2024_Crescendo_Robot_Code-Imported"
+  }
+]
