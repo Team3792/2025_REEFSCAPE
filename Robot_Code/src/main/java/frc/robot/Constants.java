@@ -15,6 +15,8 @@ public class Constants {
         public static final int frontSwitchID = 0;
         public static final int backSwitchID = 0;
 
+        public static final int AlgaeRemoverID = 40;
+
 
     }
     public class CoralSubsystem{
