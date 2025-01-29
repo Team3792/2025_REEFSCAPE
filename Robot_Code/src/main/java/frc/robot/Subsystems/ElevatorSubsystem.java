@@ -16,13 +16,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
   private TalonFX follow = new TalonFX(Constants.HardwareAddresses.elevatorFollowMotorID);
   private TalonFX lead = new TalonFX(Constants.HardwareAddresses.elevatorLeadMotorID);
-  public ElevatorState state = ElevatorState.Stow;
+
+  public ElevatorState targetState = ElevatorState.Stow;
+
 
   
 
@@ -57,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     InTransit
   }
 
+
   //apply voltage to left motor, right motor will follow; useful for testing
   private void setVoltage(double voltage){
     lead.setVoltage(voltage);
@@ -67,17 +71,35 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
   
   //returns true when carriage is at correct position =/- a given constant
-  public boolean atPosition(double tolerance){
-    return Math.abs(lead.getClosedLoopError().getValueAsDouble()) < tolerance 
-        && Math.abs(follow.getClosedLoopError().getValueAsDouble()) < tolerance;
+  public Trigger atPositionTrigger(double tolerance){
+    return new Trigger(
+      () -> (Math.abs(lead.getClosedLoopError().getValueAsDouble()) < tolerance 
+        && Math.abs(follow.getClosedLoopError().getValueAsDouble()) < tolerance));
+  }
+
+  public Trigger atPositionTrigger(){
+    return atPositionTrigger(Constants.ElevatorSubsystem.kDefaultTolerance);
+  }
+
+
+  //Set position and target state
+  public Command setStateCommand(ElevatorState state){
+    return this.runOnce(() -> {
+      setPosition(getStatePosition(state));
+      targetState = state;
+    }
+    );
+  }
+
+  public double getStatePosition(ElevatorState state){
+    switch(state){
+      
+    }
+    return 0;
   }
 
   public void setPosition(double setPoint){
     lead.setControl(positionControl.withPosition(setPoint));
-  }
-  
-  public Command setPositionCommand(double position){
-    return this.runOnce(()-> {setPosition(position);});
   }
 
   @Override

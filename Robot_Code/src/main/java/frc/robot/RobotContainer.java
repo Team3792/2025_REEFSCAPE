@@ -29,7 +29,7 @@ public class RobotContainer {
   AlgaeRemoverSubsystem algaeRemoverSubsystem = new AlgaeRemoverSubsystem();
   // ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   // CoralSubsystem coralSubsystem = new CoralSubsystem();
-  // ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   AlgaeIntakeSubsystem algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
 
   public RobotContainer() {
@@ -55,6 +55,15 @@ public class RobotContainer {
       .onTrue(algaeIntakeSubsystem.intakeVoltageCommand(Constants.AlgaeIntakeSubsystem.kEjectVoltage));
 
     driverController.R1().onFalse(algaeIntakeSubsystem.stowCommand());
+
+    operatorController.cross().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L1));
+    operatorController.square().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L2));
+    operatorController.triangle().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L1));
+
+
+    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeHigh));
+    operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeLow));
+
   }
 
   public Command getAutonomousCommand() {

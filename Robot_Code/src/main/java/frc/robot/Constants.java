@@ -50,6 +50,7 @@ public class Constants {
         public static final double kElevatorLowerAlgaePosition = 0;//remove lower level algae
         public static final double kElevatorUpperAlgaePosition = 0;//remove upper level algae
         public static final double kElevatorAtPositionParameters = 0.01; //used to set atPosition method true-> if elevator is within 1 cm
+        public static final double kDefaultTolerance = 0;
     }
     public class AlgaeIntakeSubsystem{
         public static final double kG = 0;
