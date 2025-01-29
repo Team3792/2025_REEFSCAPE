@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -19,6 +20,8 @@ public class ClimbSubsystem extends SubsystemBase {
   TalonFX leftMotor = new TalonFX(Constants.HardwareAddresses.climbLeftMotorID);
   TalonFX rightMotor = new TalonFX(Constants.HardwareAddresses.climbRightMotorID);
 
+  private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
+
 
   public ClimbSubsystem() {
     //Motor configuration
@@ -26,12 +29,18 @@ public class ClimbSubsystem extends SubsystemBase {
     TalonFXConfiguration climbMotorConfiguration = new TalonFXConfiguration();
     climbMotorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
+    climbMotorConfiguration.Slot0.kG = Constants.ClimbSubsystem.kG;
+    climbMotorConfiguration.Slot0.kP = Constants.ClimbSubsystem.kP;
+    climbMotorConfiguration.Slot0.kI = Constants.ClimbSubsystem.kI;
+    climbMotorConfiguration.Slot0.kD = Constants.ClimbSubsystem.kD;
+
     leftMotor.getConfigurator().apply(climbMotorConfiguration);
     rightMotor.getConfigurator().apply(climbMotorConfiguration);
   }
 
   public void setPosition(double leftDegrees, double rightDegrees){
-
+    leftMotor.setControl(positionControl.withPosition(leftDegrees));
+    rightMotor.setControl(positionControl.withPosition(rightDegrees));
   }
 
 

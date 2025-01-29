@@ -25,16 +25,12 @@ public class Constants {
         public static final int kAlgaeRotateID = 30;
         public static final int kAlgaeSpinID = 31;
 
-        
-
-        
-
         public static final int AlgaeRemoverID = 40;
 
 
     }
     public class CoralSubsystem{
-        public static final double switchVoltageThreshold = 0;
+        public static final double kswitchVoltageThreshold = 0;
     }
     public class ElevatorSubsystem{
         //pid constants
@@ -56,7 +52,7 @@ public class Constants {
         public static final double kG = 0;
         public static final double kP = 0;
         public static final double kI = 0;
-        public static final double KD = 0;
+        public static final double kD = 0;
 
         public static final double kAlgaeOuttakePosition = 0;
         public static final double kAlgaeIntakePosition = 0;
@@ -65,6 +61,12 @@ public class Constants {
         public static final double kIntakeVoltage = 8;
         public static final double kStowPosition = 0;
         public static final double kEjectVoltage = -8;
+    }
+    public class ClimbSubsystem{
+        public static final double kG = 0;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
     }
     public class LEDSubsystem{
         public static final double kIdleLED = 0.99;//(rainbow) robot has no game pieces, and is not moving -> use at start of match?

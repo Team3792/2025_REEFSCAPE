@@ -45,7 +45,7 @@ public class AlgaeIntakeSubsystem extends SubsystemBase {
     talonConfig.Slot0.kG = Constants.AlgaeIntakeSubsystem.kG;
     talonConfig.Slot0.kP = Constants.AlgaeIntakeSubsystem.kP;
     talonConfig.Slot0.kI = Constants.AlgaeIntakeSubsystem.kI;
-    talonConfig.Slot0.kD = Constants.AlgaeIntakeSubsystem.KD;
+    talonConfig.Slot0.kD = Constants.AlgaeIntakeSubsystem.kD;
 
     pivot.getConfigurator().apply(talonConfig);
   }

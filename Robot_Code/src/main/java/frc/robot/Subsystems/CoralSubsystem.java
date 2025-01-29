@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import com.revrobotics.spark.SparkMax;
 
@@ -25,16 +26,16 @@ public class CoralSubsystem extends SubsystemBase {
   AnalogInput frontSwitch = new AnalogInput(Constants.HardwareAddresses.frontSwitchID);
   AnalogInput backSwitch = new AnalogInput(Constants.HardwareAddresses.backSwitchID);
 
-  public CoralSubsystem() {
+  public Trigger hasCoral = new Trigger(this::getBackSwitch);
 
-  }
+  public CoralSubsystem() {}
 
   public boolean getFrontSwitch(){
-    return frontSwitch.getVoltage() > Constants.CoralSubsystem.switchVoltageThreshold; 
+    return frontSwitch.getVoltage() > Constants.CoralSubsystem.kswitchVoltageThreshold; 
   }
 
   public boolean getBackSwitch (){
-    return backSwitch.getVoltage() > Constants.CoralSubsystem.switchVoltageThreshold; 
+    return backSwitch.getVoltage() > Constants.CoralSubsystem.kswitchVoltageThreshold; 
   }
 
   public void setVoltage(double leftVoltage, double rightVoltage){
@@ -46,7 +47,7 @@ public class CoralSubsystem extends SubsystemBase {
     return this.runOnce(()-> {setVoltage(leftVoltage, rightVoltage);});
   }
 
-  public Command intakeCommandFactory(){
+  public Command intakeCommand(){
     return new SequentialCommandGroup(
       setVoltageCommandFactory(5, 5), //Fast
       Commands.waitUntil(this::getFrontSwitch),
@@ -55,6 +56,8 @@ public class CoralSubsystem extends SubsystemBase {
       setVoltageCommandFactory(0, 0) //Stop
     );
   }
+
+ 
   
 
   @Override

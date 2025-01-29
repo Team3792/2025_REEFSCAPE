@@ -25,7 +25,7 @@ public class RobotContainer {
 
   //Create subsystems
   //ClimbSubsystem climbSubsystem = new ClimbSubsystem();
-  //CoralSubsystem coralSubsystem = new CoralSubsystem();
+  CoralSubsystem coralSubsystem = new CoralSubsystem();
   AlgaeRemoverSubsystem algaeRemoverSubsystem = new AlgaeRemoverSubsystem();
   // ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   // CoralSubsystem coralSubsystem = new CoralSubsystem();
@@ -64,6 +64,12 @@ public class RobotContainer {
     operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeHigh));
     operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeLow));
 
+    operatorController.R2().and(coralSubsystem.hasCoral.negate())
+    .onTrue(coralSubsystem.intakeCommand());
+
+    //needs to find the state of elevator
+    operatorController.R2().and(coralSubsystem.hasCoral)
+    .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
   }
 
   public Command getAutonomousCommand() {

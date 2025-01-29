@@ -26,9 +26,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public ElevatorState targetState = ElevatorState.Stow;
 
-
-  
-
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
   public ElevatorSubsystem() {
@@ -70,7 +67,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     return this.runOnce(()-> {setVoltage(voltage);});
   }
   
-  //returns true when carriage is at correct position =/- a given constant
+  //returns true when carriage is at correct position +/- a given tolerance
   public Trigger atPositionTrigger(double tolerance){
     return new Trigger(
       () -> (Math.abs(lead.getClosedLoopError().getValueAsDouble()) < tolerance 
@@ -93,7 +90,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getStatePosition(ElevatorState state){
     switch(state){
-      
     }
     return 0;
   }
