@@ -59,6 +59,11 @@ public class Constants {
 
         public static final double kAlgaeOuttakePosition = 0;
         public static final double kAlgaeIntakePosition = 0;
+        public static final double kProximityMin = 80.0;
+        public static final double kDeployPosition = 0;
+        public static final double kIntakeVoltage = 8;
+        public static final double kStowPosition = 0;
+        public static final double kEjectVoltage = -8;
     }
     public class LEDSubsystem{
         public static final double kIdleLED = 0.99;//(rainbow) robot has no game pieces, and is not moving -> use at start of match?

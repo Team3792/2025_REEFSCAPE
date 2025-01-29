@@ -31,7 +31,6 @@ public class RobotContainer {
   // CoralSubsystem coralSubsystem = new CoralSubsystem();
   // ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
   AlgaeIntakeSubsystem algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
-  Constants constants = new Constants();
 
   public RobotContainer() {
     configureBindings();
@@ -44,33 +43,18 @@ public class RobotContainer {
 
 
   private void configureBindings() {
-    //driverController.povUp().whileTrue(climbSubsystem.voltageClimbCommandFactory(5));
-    //operatorController.R1().whileTrue(coralSubsystem.intakeCommandFactory());
 
     driverController.triangle().onTrue(algaeRemoverSubsystem.setPositionCommand(180));
     driverController.square().onTrue(algaeRemoverSubsystem.setPositionCommand(90));
     driverController.cross().onTrue(algaeRemoverSubsystem.setPositionCommand(0));
-    
-    //elevator
-  //  operatorController.cross().onTrue(elevatorSubsystem.setPositionCommandFactory(Constants.ElevatorSubsystem.kElevatorL1Position));
-  //  operatorController.square().onTrue(elevatorSubsystem.setPositionCommandFactory(Constants.ElevatorSubsystem.kElevatorL2Position));
-  //   operatorController.triangle().onTrue(elevatorSubsystem.setPositionCommandFactory(Constants.ElevatorSubsystem.kElevatorL3Position));
-    
-    //climb
-    // driverController.povUp().whileTrue(climbSubsystem.voltageClimbCommandFactory(1));
-    // operatorController.povDown().whileTrue(climbSubsystem.voltageClimbCommandFactory(-1));
-    // //coral
-    // operatorController.R2().whileTrue(coralSubsystem.intakeCommandFactory());
-    //algae
-    // driverController.R1().and(new Trigger(() -> (algaeIntakeSubsystem.colorSensorV3.getProximity() < 80.0)))
-    // .whileTrue(algaeIntakeSubsystem.runIntake(8));
-    driverController.R1().whileTrue(algaeIntakeSubsystem.runIntakeCommandFactory(8));
-    driverController.L1().whileTrue(algaeIntakeSubsystem.intakeVoltageCommand(-8));
-    driverController.R2().onTrue(algaeIntakeSubsystem.setPositionCommand(Constants.AlgaeIntakeSubsystem.kAlgaeIntakePosition));
-    driverController.L2().onTrue(algaeIntakeSubsystem.setPositionCommand(Constants.AlgaeIntakeSubsystem.kAlgaeOuttakePosition));
-    
 
+    driverController.R1().and(algaeIntakeSubsystem.hasAlgae.negate())
+      .onTrue(algaeIntakeSubsystem.deployAndIntakeCommand());
 
+    driverController.R1().and(algaeIntakeSubsystem.hasAlgae)
+      .onTrue(algaeIntakeSubsystem.intakeVoltageCommand(Constants.AlgaeIntakeSubsystem.kEjectVoltage));
+
+    driverController.R1().onFalse(algaeIntakeSubsystem.stowCommand());
   }
 
   public Command getAutonomousCommand() {
