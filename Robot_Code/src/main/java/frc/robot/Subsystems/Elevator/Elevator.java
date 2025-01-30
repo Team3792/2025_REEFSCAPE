@@ -87,16 +87,10 @@ public class Elevator extends SubsystemBase {
   //Set position and target state
   public Command setStateCommand(ElevatorState state){
     return this.runOnce(() -> {
-      setPosition(getStatePosition(state));
+      setPosition(ElevatorConstants.getStateTargetPosition(state));
       targetState = state;
     }
     );
-  }
-
-  public double getStatePosition(ElevatorState state){
-    switch(state){
-    }
-    return 0;
   }
 
   public void setPosition(double setPoint){
