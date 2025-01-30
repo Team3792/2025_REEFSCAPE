@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.lang.annotation.ElementType;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -12,6 +14,7 @@ import frc.robot.Subsystems.Coral;
 import frc.robot.Subsystems.AlgaeRemover;
 import frc.robot.Subsystems.AlgaeRemover;
 import frc.robot.Subsystems.Elevator;
+import frc.robot.Subsystems.Elevator.ElevatorState;
 import frc.robot.Subsystems.AlgaeIntake;
 import frc.robot.Subsystems.Climb;
 import frc.robot.Subsystems.AlgaeIntake;
@@ -61,9 +64,30 @@ public class RobotContainer {
     operatorController.triangle().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.L1));
 
 
-    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.AlgaeHigh));
+    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(frc.robot.Subsystems.Elevator.ElevatorState.AlgaeHigh));
     operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.AlgaeLow));
-  } 
+
+    operatorController.R1().and(coralSubsystem.hasCoral.negate())
+    .onTrue(coralSubsystem.intakeCommand());
+
+    //needs to find the state of elevator
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(frc.robot.Subsystems.Elevator.ElevatorState.L1))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L2))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+    
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L3))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+
+    operatorController.R1().onFalse(coralSubsystem.setVoltageCommandFactory(0, 0));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
