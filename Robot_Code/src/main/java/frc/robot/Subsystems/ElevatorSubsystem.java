@@ -63,6 +63,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     lead.setVoltage(voltage);
   }
 
+  public Trigger atStateTrigger(ElevatorState state){
+    return atPositionTrigger().and(new Trigger(() -> state == targetState));
+  }
+
+
   public Command setVoltageCommand(double voltage){
     return this.runOnce(()-> {setVoltage(voltage);});
   }

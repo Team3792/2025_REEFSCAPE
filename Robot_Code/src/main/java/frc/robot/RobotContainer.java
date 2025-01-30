@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.lang.annotation.ElementType;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -12,6 +14,7 @@ import frc.robot.Subsystems.CoralSubsystem;
 import frc.robot.Subsystems.AlgaeRemoverSubsystem;
 import frc.robot.Subsystems.AlgaeRemoverSubsystem;
 import frc.robot.Subsystems.ElevatorSubsystem;
+import frc.robot.Subsystems.ElevatorSubsystem.ElevatorState;
 import frc.robot.Subsystems.AlgaeIntakeSubsystem;
 import frc.robot.Subsystems.ClimbSubsystem;
 import frc.robot.Subsystems.AlgaeIntakeSubsystem;
@@ -64,12 +67,26 @@ public class RobotContainer {
     operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeHigh));
     operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeLow));
 
-    operatorController.R2().and(coralSubsystem.hasCoral.negate())
+    operatorController.R1().and(coralSubsystem.hasCoral.negate())
     .onTrue(coralSubsystem.intakeCommand());
 
     //needs to find the state of elevator
-    operatorController.R2().and(coralSubsystem.hasCoral)
-    .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L1))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L2))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+    
+    operatorController.R1()
+      .and(coralSubsystem.hasCoral)
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L3))
+      .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
+
+    operatorController.R1().onFalse(coralSubsystem.setVoltageCommandFactory(0, 0));
   }
 
   public Command getAutonomousCommand() {
