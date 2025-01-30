@@ -6,5 +6,4 @@ package frc.robot;
 
 /** Add your docs here. */
 public class HardwareMap {
-    final static int exampleCanId = 0; 
 }
