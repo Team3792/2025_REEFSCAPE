@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 
-public class ElevatorSubsystem extends SubsystemBase {
+public class Elevator extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
   private TalonFX follow = new TalonFX(Constants.HardwareAddresses.elevatorFollowMotorID);
   private TalonFX lead = new TalonFX(Constants.HardwareAddresses.elevatorLeadMotorID);
@@ -28,7 +28,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
-  public ElevatorSubsystem() {
+  public Elevator() {
     
     var slot0Configs = new Slot0Configs();
 

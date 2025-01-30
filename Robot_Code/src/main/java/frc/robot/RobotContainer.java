@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Subsystems.CoralSubsystem;
-import frc.robot.Subsystems.AlgaeRemoverSubsystem;
-import frc.robot.Subsystems.AlgaeRemoverSubsystem;
-import frc.robot.Subsystems.ElevatorSubsystem;
-import frc.robot.Subsystems.AlgaeIntakeSubsystem;
-import frc.robot.Subsystems.ClimbSubsystem;
-import frc.robot.Subsystems.AlgaeIntakeSubsystem;
+import frc.robot.Subsystems.Coral;
+import frc.robot.Subsystems.AlgaeRemover;
+import frc.robot.Subsystems.AlgaeRemover;
+import frc.robot.Subsystems.Elevator;
+import frc.robot.Subsystems.AlgaeIntake;
+import frc.robot.Subsystems.Climb;
+import frc.robot.Subsystems.AlgaeIntake;
 import frc.robot.Constants;
 
 public class RobotContainer {
@@ -25,12 +25,12 @@ public class RobotContainer {
 
   //Create subsystems
   //ClimbSubsystem climbSubsystem = new ClimbSubsystem();
-  CoralSubsystem coralSubsystem = new CoralSubsystem();
-  AlgaeRemoverSubsystem algaeRemoverSubsystem = new AlgaeRemoverSubsystem();
+  Coral coralSubsystem = new Coral();
+  AlgaeRemover algaeRemoverSubsystem = new AlgaeRemover();
   // ClimbSubsystem climbSubsystem = new ClimbSubsystem();
   // CoralSubsystem coralSubsystem = new CoralSubsystem();
-  ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
-  AlgaeIntakeSubsystem algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
+  Elevator elevatorSubsystem = new Elevator();
+  AlgaeIntake algaeIntakeSubsystem = new AlgaeIntake();
 
   public RobotContainer() {
     configureBindings();
@@ -56,21 +56,14 @@ public class RobotContainer {
 
     driverController.R1().onFalse(algaeIntakeSubsystem.stowCommand());
 
-    operatorController.cross().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L1));
-    operatorController.square().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L2));
-    operatorController.triangle().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.L1));
+    operatorController.cross().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.L1));
+    operatorController.square().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.L2));
+    operatorController.triangle().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.L1));
 
 
-    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeHigh));
-    operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(ElevatorSubsystem.ElevatorState.AlgaeLow));
-
-    operatorController.R2().and(coralSubsystem.hasCoral.negate())
-    .onTrue(coralSubsystem.intakeCommand());
-
-    //needs to find the state of elevator
-    operatorController.R2().and(coralSubsystem.hasCoral)
-    .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
-  }
+    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.AlgaeHigh));
+    operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.AlgaeLow));
+  } 
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

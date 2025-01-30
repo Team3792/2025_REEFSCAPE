@@ -21,11 +21,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class AlgaeRemoverSubsystem extends SubsystemBase {
+public class AlgaeRemover extends SubsystemBase {
   /** Creates a new AlgaeRemover. */
   SparkMax pivotMotor = new SparkMax(Constants.HardwareAddresses.AlgaeRemoverID, MotorType.kBrushless);
   SparkClosedLoopController pivotController = pivotMotor.getClosedLoopController();
-  public AlgaeRemoverSubsystem() {
+  public AlgaeRemover() {
     //Configure motors
     SparkMaxConfig config = new SparkMaxConfig();
 
@@ -34,7 +34,7 @@ public class AlgaeRemoverSubsystem extends SubsystemBase {
       .idleMode(IdleMode.kBrake);
     
     config.encoder
-      .positionConversionFactor(360.0/25);
+      .positionConversionFactor(360.0/Constants.AlgaeIntakeSubsystem.kGearRatio);
     config.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(0.005, 0.0, 0.0); 

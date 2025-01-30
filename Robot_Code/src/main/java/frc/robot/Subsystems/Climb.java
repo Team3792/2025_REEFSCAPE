@@ -15,7 +15,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-public class ClimbSubsystem extends SubsystemBase {
+public class Climb extends SubsystemBase {
   //Define hardware
   TalonFX leftMotor = new TalonFX(Constants.HardwareAddresses.climbLeftMotorID);
   TalonFX rightMotor = new TalonFX(Constants.HardwareAddresses.climbRightMotorID);
@@ -23,7 +23,7 @@ public class ClimbSubsystem extends SubsystemBase {
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
 
-  public ClimbSubsystem() {
+  public Climb() {
     //Motor configuration
     
     TalonFXConfiguration climbMotorConfiguration = new TalonFXConfiguration();

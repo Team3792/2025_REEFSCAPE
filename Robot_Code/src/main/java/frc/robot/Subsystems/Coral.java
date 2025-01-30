@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import com.revrobotics.spark.SparkMax;
 
-public class CoralSubsystem extends SubsystemBase {
+public class Coral extends SubsystemBase {
   /** Creates a new CoralSubsystem. */
   //define hardware
   SparkMax leftMotor = new SparkMax(Constants.HardwareAddresses.coralLeftMotorID, MotorType.kBrushless);
@@ -28,7 +28,7 @@ public class CoralSubsystem extends SubsystemBase {
 
   public Trigger hasCoral = new Trigger(this::getBackSwitch);
 
-  public CoralSubsystem() {}
+  public Coral() {}
 
   public boolean getFrontSwitch(){
     return frontSwitch.getVoltage() > Constants.CoralSubsystem.kswitchVoltageThreshold; 

@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 
-public class AlgaeIntakeSubsystem extends SubsystemBase {
+public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
   TalonFX pivot = new TalonFX(Constants.HardwareAddresses.kAlgaeRotateID);
   SparkMax drive = new SparkMax(Constants.HardwareAddresses.kAlgaeSpinID, MotorType.kBrushless);
@@ -34,7 +34,7 @@ public class AlgaeIntakeSubsystem extends SubsystemBase {
 
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
 
-  public AlgaeIntakeSubsystem() {
+  public AlgaeIntake() {
     //Configure drive motor
     SparkMaxConfig sparkConfig = new SparkMaxConfig();
     sparkConfig.smartCurrentLimit(40, 40);
