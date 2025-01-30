@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.Subsystems.Coral;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -12,30 +12,30 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants;
+import frc.robot.HardwareMap;
+
 import com.revrobotics.spark.SparkMax;
 
 public class Coral extends SubsystemBase {
   /** Creates a new CoralSubsystem. */
   //define hardware
-  SparkMax leftMotor = new SparkMax(Constants.HardwareAddresses.coralLeftMotorID, MotorType.kBrushless);
-  SparkMax rightMotor = new SparkMax(Constants.HardwareAddresses.coralRightMotorID, MotorType.kBrushless);
+  SparkMax leftMotor = new SparkMax(HardwareMap.kcoralLeftMotor, MotorType.kBrushless);
+  SparkMax rightMotor = new SparkMax(HardwareMap.kcoralRightMotor, MotorType.kBrushless);
 
-  AnalogInput frontSwitch = new AnalogInput(Constants.HardwareAddresses.frontSwitchID);
-  AnalogInput backSwitch = new AnalogInput(Constants.HardwareAddresses.backSwitchID);
+  AnalogInput frontSwitch = new AnalogInput(HardwareMap.kfrontSwitch);
+  AnalogInput backSwitch = new AnalogInput(HardwareMap.kbackSwitch);
 
   public Trigger hasCoral = new Trigger(this::getBackSwitch);
 
   public Coral() {}
 
   public boolean getFrontSwitch(){
-    return frontSwitch.getVoltage() > Constants.CoralSubsystem.kswitchVoltageThreshold; 
+    return frontSwitch.getVoltage() > CoralConstants.kswitchVoltageThreshold; 
   }
 
   public boolean getBackSwitch (){
-    return backSwitch.getVoltage() > Constants.CoralSubsystem.kswitchVoltageThreshold; 
+    return backSwitch.getVoltage() > CoralConstants.kswitchVoltageThreshold; 
   }
 
   public void setVoltage(double leftVoltage, double rightVoltage){

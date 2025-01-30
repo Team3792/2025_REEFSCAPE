@@ -4,25 +4,21 @@
 
 package frc.robot.Subsystems.Elevator;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants;
+import frc.robot.HardwareMap;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
-  private TalonFX follow = new TalonFX(Constants.HardwareAddresses.elevatorFollowMotorID);
-  private TalonFX lead = new TalonFX(Constants.HardwareAddresses.elevatorLeadMotorID);
+  private TalonFX follow = new TalonFX(HardwareMap.kelevatorFollowMotor);
+  private TalonFX lead = new TalonFX(HardwareMap.kelevatorLeadMotor);
 
   public ElevatorState targetState = ElevatorState.Stow;
 
@@ -30,7 +26,6 @@ public class Elevator extends SubsystemBase {
 
   public Elevator() {
     
-    var slot0Configs = new Slot0Configs();
 
     TalonFXConfiguration config = new TalonFXConfiguration();
 

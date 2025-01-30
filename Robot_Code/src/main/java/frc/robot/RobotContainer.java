@@ -4,21 +4,15 @@
 
 package frc.robot;
 
-import java.lang.annotation.ElementType;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Subsystems.Coral;
+import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
+import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
+import frc.robot.Subsystems.AlgaeRemover.AlgaeRemover;
+import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Elevator.Elevator;
 import frc.robot.Subsystems.Elevator.Elevator.ElevatorState;
-import frc.robot.Subsystems.AlgaeRemover;
-import frc.robot.Subsystems.AlgaeRemover;
-import frc.robot.Subsystems.AlgaeIntake;
-import frc.robot.Subsystems.Climb;
-import frc.robot.Subsystems.AlgaeIntake;
-import frc.robot.Constants;
 
 public class RobotContainer {
 
@@ -55,7 +49,7 @@ public class RobotContainer {
       .onTrue(algaeIntakeSubsystem.deployAndIntakeCommand());
 
     driverController.R1().and(algaeIntakeSubsystem.hasAlgae)
-      .onTrue(algaeIntakeSubsystem.intakeVoltageCommand(Constants.AlgaeIntakeSubsystem.kEjectVoltage));
+      .onTrue(algaeIntakeSubsystem.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
 
     driverController.R1().onFalse(algaeIntakeSubsystem.stowCommand());
 
@@ -64,7 +58,7 @@ public class RobotContainer {
     operatorController.triangle().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.L1));
 
 
-    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(frc.robot.Subsystems.Elevator.Elevator.ElevatorState.AlgaeHigh));
+    operatorController.povUp().onTrue(elevatorSubsystem.setStateCommand(ElevatorState.AlgaeHigh));
     operatorController.povDown().onTrue(elevatorSubsystem.setStateCommand(Elevator.ElevatorState.AlgaeLow));
 
     operatorController.R1().and(coralSubsystem.hasCoral.negate())
@@ -73,7 +67,7 @@ public class RobotContainer {
     //needs to find the state of elevator
     operatorController.R1()
       .and(coralSubsystem.hasCoral)
-      .and(elevatorSubsystem.atStateTrigger(frc.robot.Subsystems.Elevator.Elevator.ElevatorState.L1))
+      .and(elevatorSubsystem.atStateTrigger(ElevatorState.L1))
       .onTrue(coralSubsystem.setVoltageCommandFactory(0, 0));
 
     operatorController.R1()

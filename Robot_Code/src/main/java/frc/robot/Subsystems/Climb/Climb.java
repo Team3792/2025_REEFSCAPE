@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.Subsystems.Climb;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.HardwareMap;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -17,8 +17,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Climb extends SubsystemBase {
   //Define hardware
-  TalonFX leftMotor = new TalonFX(Constants.HardwareAddresses.climbLeftMotorID);
-  TalonFX rightMotor = new TalonFX(Constants.HardwareAddresses.climbRightMotorID);
+  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeftMotor);
+  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRightMotor);
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
@@ -29,10 +29,10 @@ public class Climb extends SubsystemBase {
     TalonFXConfiguration climbMotorConfiguration = new TalonFXConfiguration();
     climbMotorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-    climbMotorConfiguration.Slot0.kG = Constants.ClimbSubsystem.kG;
-    climbMotorConfiguration.Slot0.kP = Constants.ClimbSubsystem.kP;
-    climbMotorConfiguration.Slot0.kI = Constants.ClimbSubsystem.kI;
-    climbMotorConfiguration.Slot0.kD = Constants.ClimbSubsystem.kD;
+    climbMotorConfiguration.Slot0.kG = ClimbConstants.kG;
+    climbMotorConfiguration.Slot0.kP = ClimbConstants.kP;
+    climbMotorConfiguration.Slot0.kI = ClimbConstants.kI;
+    climbMotorConfiguration.Slot0.kD = ClimbConstants.kD;
 
     leftMotor.getConfigurator().apply(climbMotorConfiguration);
     rightMotor.getConfigurator().apply(climbMotorConfiguration);

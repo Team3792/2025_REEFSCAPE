@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.Subsystems.AlgaeIntake;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -20,12 +20,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants;
+import frc.robot.HardwareMap;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
-  TalonFX pivot = new TalonFX(Constants.HardwareAddresses.kAlgaeRotateID);
-  SparkMax drive = new SparkMax(Constants.HardwareAddresses.kAlgaeSpinID, MotorType.kBrushless);
+  TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate);
+  SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin, MotorType.kBrushless);
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
@@ -42,17 +42,17 @@ public class AlgaeIntake extends SubsystemBase {
 
     //Configure pivot motor
     TalonFXConfiguration talonConfig = new TalonFXConfiguration();
-    talonConfig.Slot0.kG = Constants.AlgaeIntakeSubsystem.kG;
-    talonConfig.Slot0.kP = Constants.AlgaeIntakeSubsystem.kP;
-    talonConfig.Slot0.kI = Constants.AlgaeIntakeSubsystem.kI;
-    talonConfig.Slot0.kD = Constants.AlgaeIntakeSubsystem.kD;
+    talonConfig.Slot0.kG = AlgaeIntakeConstants.kG;
+    talonConfig.Slot0.kP = AlgaeIntakeConstants.kP;
+    talonConfig.Slot0.kI = AlgaeIntakeConstants.kI;
+    talonConfig.Slot0.kD = AlgaeIntakeConstants.kD;
 
     pivot.getConfigurator().apply(talonConfig);
   }
 
   //Returns true when there is algae in manipulator
   public boolean hasAlgae(){
-    return colorSensorV3.getProximity() > Constants.AlgaeIntakeSubsystem.kProximityMin;
+    return colorSensorV3.getProximity() > AlgaeIntakeConstants.kProximityMin;
   }
   
   public void setDriveVoltage(double voltage){
@@ -67,14 +67,14 @@ public class AlgaeIntake extends SubsystemBase {
 
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
-    return setPositionCommand(Constants.AlgaeIntakeSubsystem.kDeployPosition)
-          .alongWith(intakeVoltageCommand(Constants.AlgaeIntakeSubsystem.kIntakeVoltage))
+    return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
+          .alongWith(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
           .onlyWhile(hasAlgae.negate());
   }
 
   //Stows and stops intake
   public Command stowCommand(){
-    return setPositionCommand(Constants.AlgaeIntakeSubsystem.kStowPosition)
+    return setPositionCommand(AlgaeIntakeConstants.kStowPosition)
           .alongWith(this.runOnce(() -> {setDriveVoltage(0);}));
   }
 
