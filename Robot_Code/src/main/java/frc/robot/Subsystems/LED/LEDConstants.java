@@ -7,11 +7,13 @@ package frc.robot.Subsystems.LED;
 /** Add your docs here. */
 public class LEDConstants {
     public static final double 
-        kIdleL = 0.99,//(rainbow) robot has no game pieces, and is not moving -> use at start of match?
+        kIdleLED = 0.99,//(rainbow) robot has no game pieces, and is not moving -> use at start of match?
         kDriveLED = 0.71, //(lawn green) no game pieces being controlled
         kElevatorL1LED = 0.61,//(solid red) elevator at level 1 position
         kEelvatorL2LED = 0.65,//(solid orange) elevator at level 2 position
         kElevatorL3LED = 0.69,//(solid yellow) elevator at level 3 position
+        kELevatorAlgaeHighLED = 0.97,//(Dark gray) elevator at high algae remover height
+        KElevatorAlgaeLowLED = 0.97,//(Dark Gray) elevator at lower algae remover height
         kCoralControlledLED = 0.93, //(white) coral is in mainpulator
         kReadyToIntakeCoralLED = -0.05, //(strobing white) robot is ligned up to recieve coral from station -> human player indicator
         kRightAlignedLED = 0.63, //(red orange) // robot is ligned up with right branch on reef

@@ -40,6 +40,9 @@ public class HardwareMap {
     //climb
     public static final int kclimbLeftMotor = 50;
     public static final int kclimbRightMotor = 51;
+
+    //LED
+    public static final int kLED = 60;
     
     
 
