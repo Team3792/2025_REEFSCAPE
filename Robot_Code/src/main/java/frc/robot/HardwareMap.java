@@ -8,16 +8,9 @@ package frc.robot;
 public class HardwareMap {
     //final static int exampleCanId = 0; 
 
-    //swerve 0-9
-    public static final int 
-    kfrontLeftDriveMotor = 0,
-    kfrontLeftTurnMotor = 1,
-    kfrontRightDriveMotor = 2,
-    kfrontRightTurnMotor = 3,
-    kbackLeftDriveMotor = 4,
-    kbackLeftTurnMotor = 5,
-    kbackRightDriveMotor = 6,
-    kbackRightTurnMotor = 7;
+    //swerve 0-9 (see ModuleConstants)
+
+    public static final int kPigeon = 12;
 
     //Coral
     public static final int kCoralPivot = 20;
