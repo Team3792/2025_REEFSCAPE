@@ -40,6 +40,14 @@ public class SwerveModule {
         return drive.getPosition().getValueAsDouble() * ModuleConstants.kMetersPerRotation;
     }
 
+    private double getDriveVelocity(){
+        return drive.getVelocity().getValueAsDouble() * ModuleConstants.kMetersPerRotation;
+    }
+
+    public SwerveModuleState getState(){
+        return new SwerveModuleState(getDriveVelocity(), getTurnPosition());
+    }
+
     private Rotation2d getTurnPosition(){
         return new Rotation2d(turn.getPosition().getValueAsDouble() * ModuleConstants.kWheelRadiansPerRotation);
     }

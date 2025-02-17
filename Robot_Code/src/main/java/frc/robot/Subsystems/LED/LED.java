@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LED extends SubsystemBase {
   /** Creates a new LED. */
-  Spark LED = new Spark(60);
+  //Spark LED = new Spark(60);
   public LED() {
 
   }
   private void LEDPatterns(double LEDPattern){
-    LED.set(LEDPattern);
+    //LED.set(LEDPattern);
   }
   public Command setLEDPatternCommand(double LEDPattern){
     return this.runOnce(()-> {LEDPatterns(LEDPattern);});

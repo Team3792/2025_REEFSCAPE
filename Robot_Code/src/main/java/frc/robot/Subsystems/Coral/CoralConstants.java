@@ -20,6 +20,10 @@ public class CoralConstants {
     public static final double kGravityFF = 0.0;
     public static final double kVelocityFF = 0.0;
 
+    //Pivot constants
+    public static final double kAutoIntakeTime = 1;
+    public static final double kAutoDumpTime = 1;
+
 
     //Motor configuration for pivot. Literal values are permitted 
     public static SparkMaxConfig pivotConfig(){

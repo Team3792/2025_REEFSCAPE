@@ -6,6 +6,11 @@ package frc.robot;
 
 import java.rmi.server.Operation;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -17,6 +22,7 @@ import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
+import frc.robot.Subsystems.Swerve.Swerve;
 
 public class RobotContainer {
 
@@ -29,14 +35,33 @@ public class RobotContainer {
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
   LED led = new LED();
+  Swerve swerve = new Swerve();
+
+  private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    NamedCommands.registerCommand("IntakePosition", coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
+    NamedCommands.registerCommand("DumpPosition", coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
+
     configureBindings();
 
     // defaults coral manipulator to stop
     // coralSubsystem.setDefaultCommand(coralSubsystem.setVoltageCommandFactory(0,0));
     led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
+      // For convenience a programmer could change this when going to competition.
+      boolean isCompetition = false;
+
+      // Build an auto chooser. This will use Commands.none() as the default option.
+      // As an example, this will only show autos that start with "comp" while at
+      // competition as defined by the programmer
+      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+        (stream) -> isCompetition
+          ? stream.filter(auto -> auto.getName().startsWith("comp"))
+          : stream
+      );
+
+      SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
@@ -63,6 +88,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser.getSelected();
   }
 }
