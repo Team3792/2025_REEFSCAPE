@@ -19,33 +19,16 @@ public class HardwareMap {
     kbackRightDriveMotor = 6,
     kbackRightTurnMotor = 7;
 
-    //elevator 10-19
-    public static final int kelevatorLeadMotor = 10;
-    public static final int kelevatorFollowMotor = 11;
-    
-    //coral
-    public static final int kcoralLeftMotor = 20;
-    public static final int kcoralRightMotor = 21;
-
-    public static final int kfrontSwitch = 0;
-    public static final int kbackSwitch = 1;
-
     //AlgaeIntake
     public static final int kAlgaeRotate = 30;
     public static final int kAlgaeSpin = 31;
 
-    //AlgaeRemover
-    public static final int kAlgaeRemover = 40;
-
-    //climb
-    public static final int kclimbLeftMotor = 50;
-    public static final int kclimbRightMotor = 51;
+    //Climb
+    public static final int kclimbLeft = 50;
+    public static final int kclimbRight = 51;
 
     //LED
     public static final int kLED = 60;
     
-    
-
-    
-    
+    //Bucket
 }
