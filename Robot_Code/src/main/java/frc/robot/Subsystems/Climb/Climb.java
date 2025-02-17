@@ -17,8 +17,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Climb extends SubsystemBase {
   //Define hardware
-  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeftMotor);
-  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRightMotor);
+  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeft);
+  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRight);
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 

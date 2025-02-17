@@ -19,6 +19,9 @@ public class HardwareMap {
     kbackRightDriveMotor = 6,
     kbackRightTurnMotor = 7;
 
+    //Coral
+    public static final int kCoralPivot = 20;
+
     //AlgaeIntake
     public static final int kAlgaeRotate = 30;
     public static final int kAlgaeSpin = 31;
@@ -29,6 +32,4 @@ public class HardwareMap {
 
     //LED
     public static final int kLED = 60;
-    
-    //Bucket
 }

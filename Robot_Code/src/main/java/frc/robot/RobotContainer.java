@@ -13,45 +13,53 @@ import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
 import frc.robot.Subsystems.Climb.Climb;
 import frc.robot.Subsystems.Climb.ClimbConstants;
+import frc.robot.Subsystems.Coral.Coral;
+import frc.robot.Subsystems.Coral.CoralConstants;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
 
 public class RobotContainer {
 
-  //Create controllers
+  // Create controllers
   CommandPS5Controller driverController = new CommandPS5Controller(0);
   CommandPS5Controller operatorController = new CommandPS5Controller(1);
 
-  //Create subsystems
-  Climb climbSubsystem = new Climb();
-  AlgaeIntake algaeIntakeSubsystem = new AlgaeIntake();
-  LED LEDSubsystem = new LED();
+  // Create subsystems
+  Climb climb = new Climb();
+  AlgaeIntake algaeIntake = new AlgaeIntake();
+  Coral coral = new Coral();
+  LED led = new LED();
 
   public RobotContainer() {
     configureBindings();
-    
-    //defaults coral manipulator to stop 
-    //coralSubsystem.setDefaultCommand(coralSubsystem.setVoltageCommandFactory(0,0));
-    // algaeIntakeSubsystem.setDefaultCommand(algaeIntakeSubsystem.runIntake(0));
-    LEDSubsystem.setDefaultCommand(LEDSubsystem.setLEDPatternCommand(LEDConstants.kIdleLED));
-  
-  }
 
+    // defaults coral manipulator to stop
+    // coralSubsystem.setDefaultCommand(coralSubsystem.setVoltageCommandFactory(0,0));
+    led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
+
+  }
 
   private void configureBindings() {
 
-    //algae intake/eject
-    driverController.R1().and(algaeIntakeSubsystem.hasAlgae.negate())
-      .onTrue(algaeIntakeSubsystem.deployAndIntakeCommand());
+    // algae intake/eject
+    driverController.R1().and(algaeIntake.hasAlgae.negate())
+        .onTrue(algaeIntake
+            .deployAndIntakeCommand());
 
-    driverController.R1().and(algaeIntakeSubsystem.hasAlgae)
-      .onTrue(algaeIntakeSubsystem.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
-      .alongWith(LEDSubsystem.setLEDPatternCommand(LEDConstants.kAlgaeControlledLED)));
+    driverController.R1().and(algaeIntake.hasAlgae)
+        .onTrue(algaeIntake
+            .intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
+            .alongWith(led.setLEDPatternCommand(LEDConstants.kAlgaeControlledLED)));
 
-    driverController.R1().onFalse(algaeIntakeSubsystem.stowCommand());
+    driverController.R1().onFalse(algaeIntake
+        .stowCommand());
 
-    //climb 
-    operatorController.R2().whileTrue(climbSubsystem.voltageClimbCommandFactory(ClimbConstants.kVoltage));
+    // climb
+    operatorController.R2().whileTrue(climb.voltageClimbCommandFactory(ClimbConstants.kVoltage));
+
+    //Coral
+    operatorController.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
+    operatorController.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
   }
 
   public Command getAutonomousCommand() {
