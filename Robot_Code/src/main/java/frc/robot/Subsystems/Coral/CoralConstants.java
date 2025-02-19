@@ -16,7 +16,7 @@ public class CoralConstants {
     public static final double kDumpPosition = 0.0;
 
     //PID control constants - tune gravity and velocity FF first (after max v and a), then tune the PID
-    public static final ProfiledPIDConfig kPivotPID = new ProfiledPIDConfig(0, 0, 0, 0, 0);
+    public static final  ProfiledPIDConfig kPivotPID = new ProfiledPIDConfig(0, 0, 0, 0, 0);
     public static final double kGravityFF = 0.0;
     public static final double kVelocityFF = 0.0;
 

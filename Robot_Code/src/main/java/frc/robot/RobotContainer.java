@@ -9,6 +9,8 @@ import java.rmi.server.Operation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,6 +28,8 @@ import frc.robot.Subsystems.Swerve.Swerve;
 
 public class RobotContainer {
 
+  PowerDistribution pdh = new PowerDistribution(1, ModuleType.kRev);
+
   // Create controllers
   CommandPS5Controller driverController = new CommandPS5Controller(0);
   CommandPS5Controller operatorController = new CommandPS5Controller(1);
@@ -40,6 +44,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    pdh.clearStickyFaults();
     NamedCommands.registerCommand("IntakePosition", coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
     NamedCommands.registerCommand("DumpPosition", coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
 
