@@ -1,0 +1,62 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "B2 - J"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DumpPosition"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "J - Left Station"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Station - L"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "L - Left Station"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Station - L"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "dump position"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
