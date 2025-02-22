@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Middle - Right Station - C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of C - Right Station Loop"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of D - Right Station - F"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

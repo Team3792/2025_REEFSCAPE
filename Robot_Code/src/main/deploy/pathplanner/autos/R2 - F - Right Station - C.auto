@@ -5,43 +5,50 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "R2 - F"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DumpPosition"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F - Right Station"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakePosition"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B2 - J"
+                  "pathName": "Right Station - C"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "DumpPosition"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "J - Left Station"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Station - L"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "L - Left Station"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Station - L"
                 }
               }
             ]
