@@ -5,6 +5,7 @@
 package frc.robot.Subsystems.Coral;
 
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -20,15 +21,17 @@ import frc.robot.HardwareMap;
 
 public class Coral extends SubsystemBase {
   /** Creates a new Coral. */
-  SparkMax pivot = new SparkMax(HardwareMap.kCoralPivot, MotorType.kBrushless);
+  TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot);
   AbsoluteEncoder absoluteEncoder;
 
   ProfiledPIDController pidController = CoralConstants.kPivotPID.getController();
 
   public Coral() {
     //Configure motor
-    pivot.configure(CoralConstants.pivotConfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    absoluteEncoder = pivot.getAbsoluteEncoder();
+    pivot.getConfigurator().apply(CoralConstants.pivotTalonFXConfig());
+    pivot.setPosition(0);
+    pidController.setGoal(0);
+    //absoluteEncoder = pivot.getAbsoluteEncoder();
   }
 
 
@@ -47,7 +50,8 @@ public class Coral extends SubsystemBase {
 
   //Returns the tilted forward angle of the bucket where 0 is vertical
   public double getAngleDegrees(){
-    return absoluteEncoder.getPosition();
+    //return absoluteEncoder.getPosition();
+    return pivot.getPosition().getValueAsDouble() / 5.0 * 360;
   }
 
   private void runToPosition(){

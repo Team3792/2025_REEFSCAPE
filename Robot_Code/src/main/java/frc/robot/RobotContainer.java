@@ -35,13 +35,13 @@ public class RobotContainer {
   CommandPS5Controller operatorController = new CommandPS5Controller(1);
 
   // Create subsystems
-  Climb climb = new Climb();
-  AlgaeIntake algaeIntake = new AlgaeIntake();
-  Coral coral = new Coral();
-  LED led = new LED();
-  Swerve swerve = new Swerve();
+  // Climb climb = new Climb();
+  // AlgaeIntake algaeIntake = new AlgaeIntake();
+   Coral coral = new Coral();
+  // LED led = new LED();
+  // Swerve swerve = new Swerve();
 
-  private final SendableChooser<Command> autoChooser;
+ // private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     pdh.clearStickyFaults();
@@ -52,7 +52,7 @@ public class RobotContainer {
 
     // defaults coral manipulator to stop
     // coralSubsystem.setDefaultCommand(coralSubsystem.setVoltageCommandFactory(0,0));
-    led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
+    //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
       // For convenience a programmer could change this when going to competition.
       boolean isCompetition = false;
@@ -60,32 +60,32 @@ public class RobotContainer {
       // Build an auto chooser. This will use Commands.none() as the default option.
       // As an example, this will only show autos that start with "comp" while at
       // competition as defined by the programmer
-      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-        (stream) -> isCompetition
-          ? stream.filter(auto -> auto.getName().startsWith("comp"))
-          : stream
-      );
+      // autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+      //   (stream) -> isCompetition
+      //     ? stream.filter(auto -> auto.getName().startsWith("comp"))
+      //     : stream
+      // );
 
-      SmartDashboard.putData("Auto Chooser", autoChooser);
+      // SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
 
     // algae intake/eject
-    driverController.R1().and(algaeIntake.hasAlgae.negate())
-        .onTrue(algaeIntake
-            .deployAndIntakeCommand());
+    // driverController.R1().and(algaeIntake.hasAlgae.negate())
+    //     .onTrue(algaeIntake
+    //         .deployAndIntakeCommand());
 
-    driverController.R1().and(algaeIntake.hasAlgae)
-        .onTrue(algaeIntake
-            .intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
-            .alongWith(led.setLEDPatternCommand(LEDConstants.kAlgaeControlledLED)));
+    // driverController.R1().and(algaeIntake.hasAlgae)
+    //     .onTrue(algaeIntake
+    //         .intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
+    //         .alongWith(led.setLEDPatternCommand(LEDConstants.kAlgaeControlledLED)));
 
-    driverController.R1().onFalse(algaeIntake
-        .stowCommand());
+    // driverController.R1().onFalse(algaeIntake
+    //     .stowCommand());
 
     // climb
-    operatorController.R2().whileTrue(climb.voltageClimbCommandFactory(ClimbConstants.kVoltage));
+    //operatorController.R2().whileTrue(climb.voltageClimbCommandFactory(ClimbConstants.kVoltage));
 
     //Coral
     operatorController.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
@@ -93,6 +93,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return Commands.print("No Auto");
   }
 }
