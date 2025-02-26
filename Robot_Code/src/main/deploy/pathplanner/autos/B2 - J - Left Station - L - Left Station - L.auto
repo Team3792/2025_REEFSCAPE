@@ -15,12 +15,6 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "DumpPosition"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "J - Left Station"
@@ -51,6 +45,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "2 Coral Auto",
   "choreoAuto": false
 }
