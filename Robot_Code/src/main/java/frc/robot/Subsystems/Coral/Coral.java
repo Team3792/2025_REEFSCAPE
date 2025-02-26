@@ -13,25 +13,30 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import edu.wpi.first.math.trajectory.ExponentialProfile.State;
+
 
 public class Coral extends SubsystemBase {
   /** Creates a new Coral. */
   TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot);
-  AbsoluteEncoder absoluteEncoder;
+  DutyCycleEncoder encoder = new DutyCycleEncoder(HardwareMap.kCoralEncoder);
 
   ProfiledPIDController pidController = CoralConstants.kPivotPID.getController();
 
   public Coral() {
     //Configure motor
-    pivot.getConfigurator().apply(CoralConstants.pivotTalonFXConfig());
-    pivot.setPosition(0);
+    pivot.getConfigurator().apply(CoralConstants.pivotConfig());
+
+    pidController.reset(getAngleDegrees());
     pidController.setGoal(0);
-    //absoluteEncoder = pivot.getAbsoluteEncoder();
+    pidController.enableContinuousInput(0, 360.0);
   }
 
 
@@ -50,21 +55,22 @@ public class Coral extends SubsystemBase {
 
   //Returns the tilted forward angle of the bucket where 0 is vertical
   public double getAngleDegrees(){
-    //return absoluteEncoder.getPosition();
-    return pivot.getPosition().getValueAsDouble() / 5.0 * 360;
+    return (-360 * (encoder.get() - CoralConstants.kEncoderOffset) + 360) % 360;
   }
 
   private void runToPosition(){
-    double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0);
+    double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * CoralConstants.kGravityFF;
     double velocityFF = CoralConstants.kVelocityFF * pidController.getSetpoint().velocity;
     double pidOutput = pidController.calculate(getAngleDegrees());
 
     pivot.setVoltage(pidOutput + gravityFF + velocityFF);
+    SmartDashboard.putNumber("Coral/velocity", pivot.getVelocity().getValueAsDouble()/15*360.0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     runToPosition();
+    SmartDashboard.putNumber("Coral/encoder", getAngleDegrees());
   }
 }

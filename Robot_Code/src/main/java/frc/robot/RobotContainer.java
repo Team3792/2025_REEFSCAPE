@@ -39,9 +39,9 @@ public class RobotContainer {
   // AlgaeIntake algaeIntake = new AlgaeIntake();
    Coral coral = new Coral();
   // LED led = new LED();
-  // Swerve swerve = new Swerve();
+  Swerve swerve = new Swerve();
 
- // private final SendableChooser<Command> autoChooser;
+ private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     pdh.clearStickyFaults();
@@ -60,13 +60,13 @@ public class RobotContainer {
       // Build an auto chooser. This will use Commands.none() as the default option.
       // As an example, this will only show autos that start with "comp" while at
       // competition as defined by the programmer
-      // autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-      //   (stream) -> isCompetition
-      //     ? stream.filter(auto -> auto.getName().startsWith("comp"))
-      //     : stream
-      // );
+      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+         (stream) -> isCompetition
+           ? stream.filter(auto -> auto.getName().startsWith("comp"))
+           : stream
+       );
 
-      // SmartDashboard.putData("Auto Chooser", autoChooser);
+       SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
@@ -93,6 +93,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No Auto");
+    return autoChooser.getSelected();
   }
 }

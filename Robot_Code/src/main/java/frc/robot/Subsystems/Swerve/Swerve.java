@@ -141,7 +141,7 @@ public class Swerve extends SubsystemBase {
     ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(speeds, 0.002 );
 
     SwerveModuleState[] targetStates = SwerveConstants.kKinematics.toSwerveModuleStates(targetSpeeds);
-    setStates(targetStates);
+    //setStates(targetStates);
   }
 
   public void driveFieldRelative(ChassisSpeeds speeds){
@@ -164,7 +164,7 @@ public class Swerve extends SubsystemBase {
 
     //Apply states to each module
     for(int i = 0; i < 4; i++){
-      modules[i].setState(desiredStates[i]);
+      //modules[i].setState(desiredStates[i]);
     }
   }
 

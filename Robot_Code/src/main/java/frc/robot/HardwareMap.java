@@ -14,6 +14,7 @@ public class HardwareMap {
 
     //Coral
     public static final int kCoralPivot = 20;
+    public static final int kCoralEncoder = 0;
 
     //AlgaeIntake
     public static final int kAlgaeRotate = 30;

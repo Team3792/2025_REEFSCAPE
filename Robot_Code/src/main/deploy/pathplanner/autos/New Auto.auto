@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Middle - Right Station - C"
+            "pathName": "Copy of F - Right Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Station - C"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "DumpPosition"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C - Right Station Loop"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "D - Right Station - F"
           }
         }
       ]
