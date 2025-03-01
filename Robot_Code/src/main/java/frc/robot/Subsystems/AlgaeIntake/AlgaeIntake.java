@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,22 +39,13 @@ public class AlgaeIntake extends SubsystemBase {
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
 
   public AlgaeIntake() {
-    //Configure drive motor
-    SparkMaxConfig sparkConfig = new SparkMaxConfig();
-    sparkConfig.smartCurrentLimit(40, 40);
-    drive.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    pivot.getConfigurator().apply(AlgaeIntakeConstants.getPivotConfiguration());
+    //Configure motors
+    drive.configure(AlgaeIntakeConstants.getDriveConfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    pivot.getConfigurator().apply(AlgaeIntakeConstants.getPivotConfig());
 
-    //Configure pivot motor
-    TalonFXConfiguration talonConfig = new TalonFXConfiguration();
-    talonConfig.Slot0.kG = AlgaeIntakeConstants.kG;
-    talonConfig.Slot0.kP = AlgaeIntakeConstants.kP;
-    talonConfig.Slot0.kI = AlgaeIntakeConstants.kI;
-    talonConfig.Slot0.kD = AlgaeIntakeConstants.kD;
-
-    //pivot.getConfigurator().apply(talonConfig);
-    pivot.setPosition(0);
+    pivot.setPosition(0); //TODO: change to absolute encoder
     pidController.setGoal(0);
+    pidController.reset(getAngleDegrees()); //Reset position to current angle to generate profile to return to 0 at start
   }
 
   //Returns true when there is algae in manipulator
@@ -78,8 +70,8 @@ public class AlgaeIntake extends SubsystemBase {
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(intakeVoltageCommand(-5))
-          .onlyWhile(hasAlgae.negate()).andThen(setPositionCommand(0));
+          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
+          .onlyWhile(hasAlgae.negate());
   }
 
   public Command voltageCommand(double voltage){
@@ -93,7 +85,6 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
   public void setPosition(double setPointDegrees){
-    //pivot.setControl(positionControl.withPosition(setPoint));
     pidController.setGoal(setPointDegrees);
   }
   
