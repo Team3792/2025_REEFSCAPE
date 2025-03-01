@@ -19,5 +19,5 @@ public class SwerveConstants {
     );
 
     //Driving control
-    public static final double kMaxSpeedMetersPerSecond = 1;
+    public static final double kMaxSpeedMetersPerSecond = 5;
 }

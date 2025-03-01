@@ -12,6 +12,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Swerve.ModuleConstants.ModuleConfig;
 import edu.wpi.first.math.controller.PIDController;
 
@@ -21,11 +22,13 @@ public class SwerveModule {
     CANcoder encoder;
     VelocityVoltage driveController;
     PIDController turnController;
+    String name;
 
-    public SwerveModule(ModuleConfig moduleConfig){
+    public SwerveModule(ModuleConfig moduleConfig, String name){
         drive = new TalonFX(moduleConfig.driveID());
         turn = new TalonFX(moduleConfig.turnID());
         encoder = new CANcoder(moduleConfig.encoderID());
+        this.name = name;
 
         //Configure hardware
         drive.getConfigurator().apply(ModuleConstants.getDriveConfig());
@@ -41,7 +44,13 @@ public class SwerveModule {
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
         drive.setPosition(0);
-        turn.setPosition(0);
+        resetTurnEncoder();
+        //turn.setPosition(0);
+    }
+
+    private void resetTurnEncoder () {
+        double position = encoder.getPosition().getValueAsDouble() * ModuleConstants.kTurnRatio;
+        turn.setPosition(position);
     }
 
 
@@ -73,5 +82,9 @@ public class SwerveModule {
         double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
         turn.setVoltage(turnVoltage);
         //turn.setControl(turnController.withPosition(state.angle.getRadians() / ModuleConstants.kWheelRadiansPerRotation));
+    }
+
+    public void showEncoderPosition(){
+        SmartDashboard.putNumber("Swerve/" + name + "/encoder", encoder.getPosition().getValueAsDouble());
     }
 }

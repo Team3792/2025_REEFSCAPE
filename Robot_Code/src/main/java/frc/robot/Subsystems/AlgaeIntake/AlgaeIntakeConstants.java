@@ -31,7 +31,7 @@ public class AlgaeIntakeConstants {
         public static final double kPivotRatio = 25.0 * 26.0/15.0;
         
         public static final double kIntakeVoltage = 8;
-        public static final double kEjectVoltage = -8;
+        public static final double kEjectVoltage = -10;
 
 
         public static TalonFXConfiguration getPivotConfig(){
@@ -44,7 +44,7 @@ public class AlgaeIntakeConstants {
         public static SparkMaxConfig getDriveConfig(){
             SparkMaxConfig config = new SparkMaxConfig();
             config
-                .smartCurrentLimit(30, 30)
+                .smartCurrentLimit(60, 30)
                 .inverted(true)
                 .idleMode(IdleMode.kBrake);
 

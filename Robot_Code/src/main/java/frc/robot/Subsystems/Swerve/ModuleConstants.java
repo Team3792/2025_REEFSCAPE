@@ -30,15 +30,16 @@ public class ModuleConstants {
     public static final PIDConfig kTurnPIDConfig = new PIDConfig(0.8, 0, 0);
 
     //Module configs
-    public static final ModuleConfig kFrontLeftConfig = new ModuleConfig(0, 1, 2, 0);
-    public static final ModuleConfig kFrontRightConfig = new ModuleConfig(3, 4, 5, 0);
-    public static final ModuleConfig kBackLeftConfig = new ModuleConfig(6, 7, 8, 0);
-    public static final ModuleConfig kBackRightConfig = new ModuleConfig(9, 10, 11, 0);
+    public static final ModuleConfig kFrontLeftConfig = new ModuleConfig(0, 1, 2, 0.6298828125);
+    public static final ModuleConfig kFrontRightConfig = new ModuleConfig(3, 4, 5, -0.484619140625);
+    public static final ModuleConfig kBackLeftConfig = new ModuleConfig(6, 7, 8, -0.24560546875);
+    public static final ModuleConfig kBackRightConfig = new ModuleConfig(9, 10, 11, 0.3505859375);
 
     public static MagnetSensorConfigs getEncoderConfiguration(double offset){
         MagnetSensorConfigs config = new MagnetSensorConfigs();
         config.MagnetOffset = offset;
         config.SensorDirection = SensorDirectionValue.CounterClockwise_Positive; //Can be changed
+        config.AbsoluteSensorDiscontinuityPoint = 1.0;
         return config;
     }
 

@@ -36,6 +36,7 @@ public class Climb extends SubsystemBase {
 
     leftMotor.getConfigurator().apply(climbMotorConfiguration);
     rightMotor.getConfigurator().apply(climbMotorConfiguration);
+    
   }
 
   public void setPosition(double leftDegrees, double rightDegrees){

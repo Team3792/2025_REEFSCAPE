@@ -74,19 +74,20 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    driverController.povUp().whileTrue(algaeIntake.voltageCommand(-1));
-    driverController.povDown().whileTrue(algaeIntake.voltageCommand(1));
+    //driverController.povUp().whileTrue(algaeIntake.voltageCommand(-1));
+    //driverController.povDown().whileTrue(algaeIntake.voltageCommand(1));
 
     // algae intake/eject
     // driverController.R1().and(algaeIntake.hasAlgae.negate())
     //     .onTrue(algaeIntake
     //         .deployAndIntakeCommand());
 
-    driverController.triangle().onTrue(algaeIntake.setPositionCommand(45));
-    driverController.triangle().onFalse(algaeIntake.setPositionCommand(0));
+    //driverController.triangle().onTrue(algaeIntake.setPositionCommand(45));
+    //driverController.triangle().onFalse(algaeIntake.setPositionCommand(0));
     driverController.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     driverController.R1().onFalse(algaeIntake.setPositionCommand(0));
-    driverController.L1().whileTrue(algaeIntake.intakeVoltageCommand(5));
+    driverController.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
+    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.25));
     //driverController.cross().onTrue(algaeIntake.setPositionCommand(0));
 
     // driverController.R1().and(algaeIntake.hasAlgae)
@@ -101,8 +102,8 @@ public class RobotContainer {
     //operatorController.R2().whileTrue(climb.voltageClimbCommandFactory(ClimbConstants.kVoltage));
 
     //Coral
-    operatorController.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
-    operatorController.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
+    driverController.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
+    driverController.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
   }
 
   public Command getAutonomousCommand() {

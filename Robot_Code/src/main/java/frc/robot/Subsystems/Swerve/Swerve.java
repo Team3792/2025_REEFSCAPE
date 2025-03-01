@@ -30,14 +30,14 @@ import frc.robot.Subsystems.Vision.Vision;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
-  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig);
-  SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig);
-  SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig);
-  SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig);
+  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
+  SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
+  SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
+  SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
 
   SwerveModule[] modules = {frontLeft, frontRight, backLeft, backRight};
 
-  //Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
+  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
   Vision vision = new Vision();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -54,6 +54,7 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     configureAutoBuilder();
+    pigeon.reset();
   }
 
   private void configureAutoBuilder(){
@@ -95,6 +96,9 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     updatePoseEstimator();
+    for(int i = 0; i < 4; i++){
+      modules[i].showEncoderPosition();
+    }
   }
   
   private void updatePoseEstimator(){
@@ -149,7 +153,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public Rotation2d getPigeonRotation2d(){
-    return new Rotation2d();//pigeon.getRotation2d();
+    return pigeon.getRotation2d();
   }
 
   public void drive(ChassisSpeeds speeds, boolean fieldCentric){
