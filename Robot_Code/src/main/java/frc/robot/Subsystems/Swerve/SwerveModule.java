@@ -13,13 +13,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Subsystems.Swerve.ModuleConstants.ModuleConfig;
+import edu.wpi.first.math.controller.PIDController;
 
 /** Add your docs here. */
 public class SwerveModule {
     TalonFX drive, turn;
     CANcoder encoder;
     VelocityVoltage driveController;
-    PositionVoltage turnController;
+    PIDController turnController;
 
     public SwerveModule(ModuleConfig moduleConfig){
         drive = new TalonFX(moduleConfig.driveID());
@@ -28,11 +29,19 @@ public class SwerveModule {
 
         //Configure hardware
         drive.getConfigurator().apply(ModuleConstants.getDriveConfig());
+        turn.getConfigurator().apply(ModuleConstants.getTurnConfig());
         encoder.getConfigurator().apply(ModuleConstants.getEncoderConfiguration(moduleConfig.encoderOffset()));
 
         //Create controller
         driveController = new VelocityVoltage(0).withSlot(0);
-        turnController = new PositionVoltage(0).withSlot(0);
+        //turnController = new PositionVoltage(0).withSlot(0);
+
+        turnController = ModuleConstants.kTurnPIDConfig.getController(); 
+        //PIDController
+        turnController.enableContinuousInput(-Math.PI, Math.PI);
+
+        drive.setPosition(0);
+        turn.setPosition(0);
     }
 
 
@@ -60,6 +69,9 @@ public class SwerveModule {
         state.optimize(getTurnPosition());
 
         drive.setControl(driveController.withVelocity(state.speedMetersPerSecond / ModuleConstants.kMetersPerRotation));
-        turn.setControl(turnController.withPosition(state.angle.getRadians() / ModuleConstants.kWheelRadiansPerRotation));
+        
+        double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
+        turn.setVoltage(turnVoltage);
+        //turn.setControl(turnController.withPosition(state.angle.getRadians() / ModuleConstants.kWheelRadiansPerRotation));
     }
 }

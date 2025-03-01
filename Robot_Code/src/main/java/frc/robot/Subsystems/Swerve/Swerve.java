@@ -37,7 +37,7 @@ public class Swerve extends SubsystemBase {
 
   SwerveModule[] modules = {frontLeft, frontRight, backLeft, backRight};
 
-  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
+  //Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
   Vision vision = new Vision();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -141,7 +141,7 @@ public class Swerve extends SubsystemBase {
     ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(speeds, 0.002 );
 
     SwerveModuleState[] targetStates = SwerveConstants.kKinematics.toSwerveModuleStates(targetSpeeds);
-    //setStates(targetStates);
+    setStates(targetStates);
   }
 
   public void driveFieldRelative(ChassisSpeeds speeds){
@@ -149,7 +149,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public Rotation2d getPigeonRotation2d(){
-    return pigeon.getRotation2d();
+    return new Rotation2d();//pigeon.getRotation2d();
   }
 
   public void drive(ChassisSpeeds speeds, boolean fieldCentric){
@@ -164,7 +164,7 @@ public class Swerve extends SubsystemBase {
 
     //Apply states to each module
     for(int i = 0; i < 4; i++){
-      //modules[i].setState(desiredStates[i]);
+      modules[i].setState(desiredStates[i]);
     }
   }
 

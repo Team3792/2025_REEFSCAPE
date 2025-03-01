@@ -8,9 +8,13 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import edu.wpi.first.math.util.Units;
 
 import frc.robot.HardwareMap;
+import frc.robot.Util.PIDConfig;
 
 /** All constants that relate to physical constants of the modules, including module-specific values and those shared by all modules
  * 
@@ -18,8 +22,12 @@ import frc.robot.HardwareMap;
 public class ModuleConstants {
 
     //Conversion factors
-    public static final double kMetersPerRotation = 0;
-    public static final double kWheelRadiansPerRotation = 0;
+    public static final double kTurnRatio = 15.4299;
+    public static final double kMetersPerRotation = Math.PI/6.11*Units.inchesToMeters(4);
+    public static final double kWheelRadiansPerRotation = Math.PI*2/(kTurnRatio);
+
+    //Turn PID
+    public static final PIDConfig kTurnPIDConfig = new PIDConfig(0.8, 0, 0);
 
     //Module configs
     public static final ModuleConfig kFrontLeftConfig = new ModuleConfig(0, 1, 2, 0);
@@ -34,14 +42,25 @@ public class ModuleConstants {
         return config;
     }
 
-    public static Slot0Configs getDriveConfig(){
-        //TalonFXConfiguration config = new TalonFXConfiguration();
-        Slot0Configs config = new Slot0Configs();
-        config.kS = 0;
-        config.kP = 0;
-        config.kI = 0;
-        config.kD = 0;
+    public static TalonFXConfiguration getDriveConfig(){
+        TalonFXConfiguration config = new TalonFXConfiguration();
+        Slot0Configs slot0Config = config.Slot0;
+        slot0Config.kS = 0;
+        slot0Config.kV = 0.11;
+        slot0Config.kP = 0.001;
+        slot0Config.kI = 0;
+        slot0Config.kD = 0;
 
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+
+
+        return config;
+    }
+
+    public static TalonFXConfiguration getTurnConfig(){
+        TalonFXConfiguration config = new TalonFXConfiguration();
+        config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         return config;
     }
 

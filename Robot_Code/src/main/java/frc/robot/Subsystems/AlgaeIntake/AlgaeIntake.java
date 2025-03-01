@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
+import frc.robot.Subsystems.Coral.CoralConstants;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
@@ -28,6 +30,7 @@ public class AlgaeIntake extends SubsystemBase {
   SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin, MotorType.kBrushless);
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
+  private ProfiledPIDController pidController = AlgaeIntakeConstants.pivotPIDConfig.getController();
 
   I2C.Port i2cPort = I2C.Port.kOnboard;
   ColorSensorV3 colorSensorV3 = new ColorSensorV3(i2cPort);
@@ -39,6 +42,7 @@ public class AlgaeIntake extends SubsystemBase {
     SparkMaxConfig sparkConfig = new SparkMaxConfig();
     sparkConfig.smartCurrentLimit(40, 40);
     drive.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    pivot.getConfigurator().apply(AlgaeIntakeConstants.getPivotConfiguration());
 
     //Configure pivot motor
     TalonFXConfiguration talonConfig = new TalonFXConfiguration();
@@ -47,7 +51,9 @@ public class AlgaeIntake extends SubsystemBase {
     talonConfig.Slot0.kI = AlgaeIntakeConstants.kI;
     talonConfig.Slot0.kD = AlgaeIntakeConstants.kD;
 
-    pivot.getConfigurator().apply(talonConfig);
+    //pivot.getConfigurator().apply(talonConfig);
+    pivot.setPosition(0);
+    pidController.setGoal(0);
   }
 
   //Returns true when there is algae in manipulator
@@ -64,26 +70,44 @@ public class AlgaeIntake extends SubsystemBase {
     return Commands.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);}, this);
   }
 
+  private double getAngleDegrees(){
+    return pivot.getPosition().getValueAsDouble()/AlgaeIntakeConstants.kPivotRatio * 360;
+  }
+
 
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .alongWith(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
-          .onlyWhile(hasAlgae.negate());
+          .andThen(intakeVoltageCommand(-5))
+          .onlyWhile(hasAlgae.negate()).andThen(setPositionCommand(0));
+  }
+
+  public Command voltageCommand(double voltage){
+    return Commands.startEnd(() -> pivot.setVoltage(voltage), () -> pivot.setVoltage(0), this);
   }
 
   //Stows and stops intake
   public Command stowCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kStowPosition)
-          .alongWith(this.runOnce(() -> {setDriveVoltage(0);}));
+          .alongWith(this.runOnce(() -> {setDriveVoltage(-0.25);}));
   }
 
-  public void setPosition(double setPoint){
-    pivot.setControl(positionControl.withPosition(setPoint));
+  public void setPosition(double setPointDegrees){
+    //pivot.setControl(positionControl.withPosition(setPoint));
+    pidController.setGoal(setPointDegrees);
   }
   
   public Command setPositionCommand(double position){
     return this.runOnce(()-> {setPosition(position);});
+  }
+
+  private void runToPosition(){
+    double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
+    double velocityFF = 0;//CoralConstants.kVelocityFF * pidController.getSetpoint().velocity;
+    double pidOutput = pidController.calculate(getAngleDegrees());
+
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF);
+    //SmartDashboard.putNumber("Coral/velocity", pivot.getVelocity().getValueAsDouble()/15*360.0);
   }
   
   @Override
@@ -92,5 +116,10 @@ public class AlgaeIntake extends SubsystemBase {
     SmartDashboard.putNumber("Algae current", drive.getOutputCurrent());
     SmartDashboard.putNumber("Algae speed", drive.getEncoder().getVelocity());
     SmartDashboard.putNumber("Distance", colorSensorV3.getProximity());
+    SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
+
+    //double pidOutput = pidController.calculate(getAngleDegrees());
+    runToPosition();
+    //double gFF = getAngleDegrees()
   }
 }

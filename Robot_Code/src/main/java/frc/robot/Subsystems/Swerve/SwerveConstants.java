@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 
 /** All swerve constants that don't relate to the modules*/
 public class SwerveConstants {
-    public static final double kTrackWidth = Units.inchesToMeters(0);
+    public static final double kTrackWidth = Units.inchesToMeters(22.5);
     public static final SwerveDriveKinematics kKinematics = new SwerveDriveKinematics(
         new Translation2d(kTrackWidth/2, kTrackWidth/2), //Front left
         new Translation2d(kTrackWidth/2, -kTrackWidth/2), //Front right
@@ -19,5 +19,5 @@ public class SwerveConstants {
     );
 
     //Driving control
-    public static final double kMaxSpeedMetersPerSecond = 0;
+    public static final double kMaxSpeedMetersPerSecond = 1;
 }

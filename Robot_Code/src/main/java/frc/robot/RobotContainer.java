@@ -9,6 +9,7 @@ import java.rmi.server.Operation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,6 +25,7 @@ import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
+import frc.robot.Subsystems.Swerve.DriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 
 public class RobotContainer {
@@ -36,7 +38,7 @@ public class RobotContainer {
 
   // Create subsystems
   // Climb climb = new Climb();
-  // AlgaeIntake algaeIntake = new AlgaeIntake();
+  AlgaeIntake algaeIntake = new AlgaeIntake();
    Coral coral = new Coral();
   // LED led = new LED();
   Swerve swerve = new Swerve();
@@ -47,7 +49,8 @@ public class RobotContainer {
     pdh.clearStickyFaults();
     NamedCommands.registerCommand("IntakePosition", coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
     NamedCommands.registerCommand("DumpPosition", coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
-
+    swerve.setDefaultCommand(new DriveCommand(
+      swerve, () -> -driverController.getLeftY(), () -> -driverController.getLeftX(), () -> -driverController.getRightX()));
     configureBindings();
 
     // defaults coral manipulator to stop
@@ -71,10 +74,20 @@ public class RobotContainer {
 
   private void configureBindings() {
 
+    driverController.povUp().whileTrue(algaeIntake.voltageCommand(-1));
+    driverController.povDown().whileTrue(algaeIntake.voltageCommand(1));
+
     // algae intake/eject
     // driverController.R1().and(algaeIntake.hasAlgae.negate())
     //     .onTrue(algaeIntake
     //         .deployAndIntakeCommand());
+
+    driverController.triangle().onTrue(algaeIntake.setPositionCommand(45));
+    driverController.triangle().onFalse(algaeIntake.setPositionCommand(0));
+    driverController.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
+    driverController.R1().onFalse(algaeIntake.setPositionCommand(0));
+    driverController.L1().whileTrue(algaeIntake.intakeVoltageCommand(5));
+    //driverController.cross().onTrue(algaeIntake.setPositionCommand(0));
 
     // driverController.R1().and(algaeIntake.hasAlgae)
     //     .onTrue(algaeIntake
@@ -93,6 +106,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return autoChooser.getSelected();//Commands.runOnce(() -> swerve.drive(new ChassisSpeeds(1, 0, 0), false), swerve);//autoChooser.getSelected();
   }
 }
