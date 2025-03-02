@@ -32,7 +32,7 @@ public class DriveCommand extends Command {
   @Override
   public void execute() {
     System.out.println(y.get());
-    swerve.drive(new ChassisSpeeds(x.get()*3, y.get()*3, t.get()*5), true);
+    swerve.drive(new ChassisSpeeds(x.get()*3, y.get()*3, t.get()*3), true);
   }
 
   // Called once the command ends or is interrupted.

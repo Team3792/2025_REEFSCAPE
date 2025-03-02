@@ -39,7 +39,7 @@ public class AlgaeIntakeConstants {
             config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
             return config;
-        }
+        }  
 
         public static SparkMaxConfig getDriveConfig(){
             SparkMaxConfig config = new SparkMaxConfig();

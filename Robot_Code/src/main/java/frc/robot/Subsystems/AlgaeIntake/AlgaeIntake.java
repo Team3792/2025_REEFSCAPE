@@ -38,6 +38,7 @@ public class AlgaeIntake extends SubsystemBase {
 
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
 
+  
   public AlgaeIntake() {
     //Configure motors
     drive.configure(AlgaeIntakeConstants.getDriveConfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -70,8 +71,8 @@ public class AlgaeIntake extends SubsystemBase {
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
-          .onlyWhile(hasAlgae.negate());
+          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+          //.onlyWhile(hasAlgae.negate());
   }
 
   public Command voltageCommand(double voltage){
@@ -110,7 +111,7 @@ public class AlgaeIntake extends SubsystemBase {
     SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
 
     //double pidOutput = pidController.calculate(getAngleDegrees());
-    runToPosition();
+    //runToPosition();
     //double gFF = getAngleDegrees()
   }
 }
