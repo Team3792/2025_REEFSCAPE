@@ -4,7 +4,6 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -35,17 +34,13 @@ public class SwerveModule {
         turn.getConfigurator().apply(ModuleConstants.getTurnConfig());
         encoder.getConfigurator().apply(ModuleConstants.getEncoderConfiguration(moduleConfig.encoderOffset()));
 
-        //Create controller
+        //System controllers
         driveController = new VelocityVoltage(0).withSlot(0);
-        //turnController = new PositionVoltage(0).withSlot(0);
-
         turnController = ModuleConstants.kTurnPIDConfig.getController(); 
-        //PIDController
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
         drive.setPosition(0);
         resetTurnEncoder();
-        //turn.setPosition(0);
     }
 
     private void resetTurnEncoder () {
@@ -81,7 +76,7 @@ public class SwerveModule {
         
         double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
         turn.setVoltage(turnVoltage);
-        //turn.setControl(turnController.withPosition(state.angle.getRadians() / ModuleConstants.kWheelRadiansPerRotation));
+        
     }
 
     public void showEncoderPosition(){

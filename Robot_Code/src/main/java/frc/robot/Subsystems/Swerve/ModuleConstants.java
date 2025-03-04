@@ -4,16 +4,13 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
 
-import frc.robot.HardwareMap;
 import frc.robot.Util.PIDConfig;
 
 /** All constants that relate to physical constants of the modules, including module-specific values and those shared by all modules

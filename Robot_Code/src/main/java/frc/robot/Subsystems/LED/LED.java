@@ -7,23 +7,21 @@ package frc.robot.Subsystems.LED;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.HardwareMap;
 
 public class LED extends SubsystemBase {
   /** Creates a new LED. */
-  //Spark LED = new Spark(60);
-  public LED() {
+  Spark led = new Spark(HardwareMap.kLED);
+  
+  public LED() {}
 
-  }
   private void LEDPatterns(double LEDPattern){
-    //LED.set(LEDPattern);
+    led.set(LEDPattern);
   }
   public Command setLEDPatternCommand(double LEDPattern){
     return this.runOnce(()-> {LEDPatterns(LEDPattern);});
   }
 
   @Override
-  public void periodic() {
-    // // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Subsystems/LED/LED/LEDPatterns", LED.getVoltage())
-  }
+  public void periodic() {}
 }

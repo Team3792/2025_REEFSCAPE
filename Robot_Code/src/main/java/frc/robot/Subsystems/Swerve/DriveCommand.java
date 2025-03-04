@@ -31,7 +31,7 @@ public class DriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(y.get());
+    //System.out.println(y.get());
     swerve.drive(new ChassisSpeeds(x.get()*3, y.get()*3, t.get()*3), true);
   }
 

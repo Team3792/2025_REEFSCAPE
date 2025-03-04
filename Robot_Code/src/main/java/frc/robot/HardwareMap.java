@@ -6,10 +6,12 @@ package frc.robot;
 
 /** Add your docs here. */
 public class HardwareMap {
-    //final static int exampleCanId = 0; 
+    //Controllers
+    public static final int kControllerPort = 0;
 
-    //swerve 0-9 (see ModuleConstants)
+    public static final int kPDH = 1; //On the REV CAN bus
 
+    //swerve 0-12 (see ModuleConstants)
     public static final int kPigeon = 12;
 
     //Coral

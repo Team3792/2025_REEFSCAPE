@@ -10,8 +10,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Util.ProfiledPIDConfig;
 
 /** Add your docs here. */

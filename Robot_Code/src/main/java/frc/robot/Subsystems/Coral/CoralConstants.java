@@ -3,11 +3,6 @@ package frc.robot.Subsystems.Coral;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import frc.robot.Util.PIDConfig;
 import frc.robot.Util.ProfiledPIDConfig;
 
 public class CoralConstants {
@@ -16,6 +11,7 @@ public class CoralConstants {
 
     public static final double kStowPosition = 0.0;
     public static final double kIntakePosition = 45.0;
+    public static final double kMidPosition = 90.0;
     public static final double kDumpPosition = 120.0;
 
     //PID control constants - tune gravity and velocity FF first (after max v and a), then tune the PID

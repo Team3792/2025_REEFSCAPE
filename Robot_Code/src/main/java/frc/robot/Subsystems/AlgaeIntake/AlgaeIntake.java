@@ -5,16 +5,12 @@
 package frc.robot.Subsystems.AlgaeIntake;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,14 +19,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
-import frc.robot.Subsystems.Coral.CoralConstants;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
   TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate);
   SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin, MotorType.kBrushless);
 
-  private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
   private ProfiledPIDController pidController = AlgaeIntakeConstants.pivotPIDConfig.getController();
 
   I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -71,8 +65,8 @@ public class AlgaeIntake extends SubsystemBase {
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
-          //.onlyWhile(hasAlgae.negate());
+          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
+          .onlyWhile(hasAlgae.negate());
   }
 
   public Command voltageCommand(double voltage){
@@ -111,7 +105,7 @@ public class AlgaeIntake extends SubsystemBase {
     SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
 
     //double pidOutput = pidController.calculate(getAngleDegrees());
-    //runToPosition();
+    runToPosition();
     //double gFF = getAngleDegrees()
   }
 }

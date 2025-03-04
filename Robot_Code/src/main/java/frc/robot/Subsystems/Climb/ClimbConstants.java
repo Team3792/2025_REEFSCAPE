@@ -11,12 +11,14 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 /** Add your docs here. */
 public class ClimbConstants {
     //voltage for running climb (robot goes up)
-    public static final double kVoltage = 5.0;
+    public static final double kUpVoltage = 5.0;
+    public static final double kDownVoltage = -3.0;
     public static final double kGearRatio = 45.0;
-    public static final double kForwardLimitDegrees = 170;
+    public static final double kForwardLimitDegrees = 170.0;
 
     public static TalonFXConfiguration getConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();
+        
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = kForwardLimitDegrees * kGearRatio / 360.0;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
