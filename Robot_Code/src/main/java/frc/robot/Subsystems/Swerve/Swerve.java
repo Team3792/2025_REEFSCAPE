@@ -33,7 +33,7 @@ public class Swerve extends SubsystemBase {
 
   SwerveModule[] modules = {frontLeft, frontRight, backLeft, backRight};
 
-  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
+  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
   Vision vision = new Vision();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(

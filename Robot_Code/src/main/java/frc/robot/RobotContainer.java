@@ -27,7 +27,7 @@ import frc.robot.Subsystems.Swerve.Swerve;
 public class RobotContainer {
 
   PowerDistribution pdh = new PowerDistribution(HardwareMap.kPDH, ModuleType.kRev);
-  
+
   // Create controllers
   CommandPS5Controller controller = new CommandPS5Controller(HardwareMap.kControllerPort);
 
@@ -56,7 +56,7 @@ public class RobotContainer {
                                                                                                     
     configureBindings();
    
-    led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
+    //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
     // Auto builder
     boolean isCompetition = false;

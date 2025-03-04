@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
-import frc.robot.Util.ConnectionAlert;
+import frc.robot.Util.CANManager;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -17,8 +17,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 public class Climb extends SubsystemBase {
   //Define hardware
-  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeft);
-  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRight);
+  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeft.id());
+  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRight.id());
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
@@ -33,8 +33,10 @@ public class Climb extends SubsystemBase {
     zeroPosition();
 
     //Connection
-    ConnectionAlert.createConnection("Left Climb", leftMotor::isConnected);
-    ConnectionAlert.createConnection("Right Climb", rightMotor::isConnected);
+    CANManager.addConnection(HardwareMap.kclimbLeft, leftMotor);
+    CANManager.addConnection(HardwareMap.kclimbRight, rightMotor);
+    // ConnectionAlert.createConnection("Left Climb", leftMotor::isConnected);
+    // ConnectionAlert.createConnection("Right Climb", rightMotor::isConnected);
   }
 
   public void zeroPosition(){

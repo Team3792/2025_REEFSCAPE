@@ -12,20 +12,22 @@ public class HardwareMap {
     public static final int kPDH = 1; //On the REV CAN bus
 
     //swerve 0-12 (see ModuleConstants)
-    public static final int kPigeon = 12;
+    public static final CANAddress kPigeon = new CANAddress(12, "pigeon", 0);
 
     //Coral
-    public static final int kCoralPivot = 20;
+    public static final CANAddress kCoralPivot = new CANAddress(20, "coral pivot", 1);
     public static final int kCoralEncoder = 0;
 
     //AlgaeIntake
-    public static final int kAlgaeRotate = 30;
-    public static final int kAlgaeSpin = 31;
+    public static final CANAddress kAlgaeRotate = new CANAddress(30, "algae pivot", 2);
+    public static final CANAddress kAlgaeSpin = new CANAddress(31, "algae spin", 3);
 
     //Climb
-    public static final int kclimbLeft = 50;
-    public static final int kclimbRight = 51;
+    public static final CANAddress kclimbLeft = new CANAddress(50, "climb left", 4);
+    public static final CANAddress kclimbRight = new CANAddress(51, "climb right", 5);
 
     //LED
     public static final int kLED = 60;
+
+    public record CANAddress(int id, String name, int index){}
 }

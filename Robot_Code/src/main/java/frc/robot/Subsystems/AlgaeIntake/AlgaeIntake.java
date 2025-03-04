@@ -19,11 +19,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
+import frc.robot.Util.CANManager;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
-  TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate);
-  SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin, MotorType.kBrushless);
+  TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate.id());
+  SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin.id(), MotorType.kBrushless);
 
   private ProfiledPIDController pidController = AlgaeIntakeConstants.pivotPIDConfig.getController();
 
@@ -41,6 +42,8 @@ public class AlgaeIntake extends SubsystemBase {
     pivot.setPosition(0); //TODO: change to absolute encoder
     pidController.setGoal(0);
     pidController.reset(getAngleDegrees()); //Reset position to current angle to generate profile to return to 0 at start
+
+    CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
   }
 
   //Returns true when there is algae in manipulator

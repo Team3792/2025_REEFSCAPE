@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.Util.CANManager;
 
 
 public class Coral extends SubsystemBase {
   /** Creates a new Coral. */
-  TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot);
+  TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot.id());
   DutyCycleEncoder encoder = new DutyCycleEncoder(HardwareMap.kCoralEncoder);
 
   ProfiledPIDController pidController = CoralConstants.kPivotPID.getController();
@@ -28,6 +29,7 @@ public class Coral extends SubsystemBase {
     pidController.reset(getAngleDegrees());
     pidController.setGoal(0);
     pidController.enableContinuousInput(0, 360.0);
+    CANManager.addConnection(HardwareMap.kCoralPivot, pivot);
   }
 
 
