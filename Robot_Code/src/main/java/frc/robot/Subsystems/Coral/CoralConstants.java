@@ -3,6 +3,7 @@ package frc.robot.Subsystems.Coral;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import frc.robot.Util.ProfiledPIDConfig;
 
 public class CoralConstants {

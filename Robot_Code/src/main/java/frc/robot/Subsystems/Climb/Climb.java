@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.Util.ConnectionAlert;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -30,6 +31,10 @@ public class Climb extends SubsystemBase {
     leftMotor.getConfigurator().apply(config);
     rightMotor.getConfigurator().apply(config);
     zeroPosition();
+
+    //Connection
+    ConnectionAlert.createConnection("Left Climb", leftMotor::isConnected);
+    ConnectionAlert.createConnection("Right Climb", rightMotor::isConnected);
   }
 
   public void zeroPosition(){

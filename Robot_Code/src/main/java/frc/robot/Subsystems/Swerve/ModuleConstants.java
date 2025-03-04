@@ -10,7 +10,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
-
 import frc.robot.Util.PIDConfig;
 
 /** All constants that relate to physical constants of the modules, including module-specific values and those shared by all modules
