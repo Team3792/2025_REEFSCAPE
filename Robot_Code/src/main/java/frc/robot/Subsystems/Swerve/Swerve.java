@@ -4,8 +4,6 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import java.util.Optional;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -22,22 +20,20 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
 import frc.robot.Subsystems.Vision.Vision;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
-  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig);
-  SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig);
-  SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig);
-  SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig);
+  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
+  SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
+  SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
+  SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
 
   SwerveModule[] modules = {frontLeft, frontRight, backLeft, backRight};
 
-  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon);
+  Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
   Vision vision = new Vision();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -54,6 +50,7 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     configureAutoBuilder();
+    pigeon.reset();
   }
 
   private void configureAutoBuilder(){
@@ -95,6 +92,9 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     updatePoseEstimator();
+    for(int i = 0; i < 4; i++){
+      modules[i].showEncoderPosition();
+    }
   }
   
   private void updatePoseEstimator(){
@@ -141,7 +141,7 @@ public class Swerve extends SubsystemBase {
     ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(speeds, 0.002 );
 
     SwerveModuleState[] targetStates = SwerveConstants.kKinematics.toSwerveModuleStates(targetSpeeds);
-    //setStates(targetStates);
+    setStates(targetStates);
   }
 
   public void driveFieldRelative(ChassisSpeeds speeds){
@@ -164,7 +164,7 @@ public class Swerve extends SubsystemBase {
 
     //Apply states to each module
     for(int i = 0; i < 4; i++){
-      //modules[i].setState(desiredStates[i]);
+      modules[i].setState(desiredStates[i]);
     }
   }
 

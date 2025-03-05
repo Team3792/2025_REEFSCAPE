@@ -4,7 +4,6 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -12,27 +11,41 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Swerve.ModuleConstants.ModuleConfig;
+import edu.wpi.first.math.controller.PIDController;
 
 /** Add your docs here. */
 public class SwerveModule {
     TalonFX drive, turn;
     CANcoder encoder;
     VelocityVoltage driveController;
-    PositionVoltage turnController;
+    PIDController turnController;
+    String name;
 
-    public SwerveModule(ModuleConfig moduleConfig){
+    public SwerveModule(ModuleConfig moduleConfig, String name){
         drive = new TalonFX(moduleConfig.driveID());
         turn = new TalonFX(moduleConfig.turnID());
         encoder = new CANcoder(moduleConfig.encoderID());
+        this.name = name;
 
         //Configure hardware
         drive.getConfigurator().apply(ModuleConstants.getDriveConfig());
+        turn.getConfigurator().apply(ModuleConstants.getTurnConfig());
         encoder.getConfigurator().apply(ModuleConstants.getEncoderConfiguration(moduleConfig.encoderOffset()));
 
-        //Create controller
+        //System controllers
         driveController = new VelocityVoltage(0).withSlot(0);
-        turnController = new PositionVoltage(0).withSlot(0);
+        turnController = ModuleConstants.kTurnPIDConfig.getController(); 
+        turnController.enableContinuousInput(-Math.PI, Math.PI);
+
+        drive.setPosition(0);
+        resetTurnEncoder();
+    }
+
+    private void resetTurnEncoder () {
+        double position = encoder.getPosition().getValueAsDouble() * ModuleConstants.kTurnRatio;
+        turn.setPosition(position);
     }
 
 
@@ -60,6 +73,13 @@ public class SwerveModule {
         state.optimize(getTurnPosition());
 
         drive.setControl(driveController.withVelocity(state.speedMetersPerSecond / ModuleConstants.kMetersPerRotation));
-        turn.setControl(turnController.withPosition(state.angle.getRadians() / ModuleConstants.kWheelRadiansPerRotation));
+        
+        double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
+        turn.setVoltage(turnVoltage);
+        
+    }
+
+    public void showEncoderPosition(){
+        SmartDashboard.putNumber("Swerve/" + name + "/encoder", encoder.getPosition().getValueAsDouble());
     }
 }

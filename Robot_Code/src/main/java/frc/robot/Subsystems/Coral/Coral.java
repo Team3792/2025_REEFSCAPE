@@ -4,28 +4,20 @@
 
 package frc.robot.Subsystems.Coral;
 
-import com.revrobotics.spark.SparkBase.ResetMode;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
-import edu.wpi.first.math.trajectory.ExponentialProfile.State;
+import frc.robot.Util.CANManager;
 
 
 public class Coral extends SubsystemBase {
   /** Creates a new Coral. */
-  TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot);
+  TalonFX pivot = new TalonFX(HardwareMap.kCoralPivot.id());
   DutyCycleEncoder encoder = new DutyCycleEncoder(HardwareMap.kCoralEncoder);
 
   ProfiledPIDController pidController = CoralConstants.kPivotPID.getController();
@@ -37,6 +29,7 @@ public class Coral extends SubsystemBase {
     pidController.reset(getAngleDegrees());
     pidController.setGoal(0);
     pidController.enableContinuousInput(0, 360.0);
+    CANManager.addConnection(HardwareMap.kCoralPivot, pivot);
   }
 
 

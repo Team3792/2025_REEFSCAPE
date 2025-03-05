@@ -4,13 +4,35 @@
 
 package frc.robot.Subsystems.Climb;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 /** Add your docs here. */
 public class ClimbConstants {
-    //pid+g constants for positionVoltage control
-    public static final double kG = 0;
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
     //voltage for running climb (robot goes up)
-    public static final double kVoltage = 0;
+    public static final double kUpVoltage = 5.0;
+    public static final double kDownVoltage = -3.0;
+    public static final double kGearRatio = 45.0;
+    public static final double kForwardLimitDegrees = 170.0;
+
+    public static TalonFXConfiguration getConfig(){
+        TalonFXConfiguration config = new TalonFXConfiguration();
+        
+        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = kForwardLimitDegrees * kGearRatio / 360.0;
+        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+        config.CurrentLimits.StatorCurrentLimit = 100;
+        config.CurrentLimits.StatorCurrentLimitEnable = true;
+
+        return config;
+    }
+
+
+
 }

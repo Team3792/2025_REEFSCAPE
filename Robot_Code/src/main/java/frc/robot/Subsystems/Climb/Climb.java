@@ -9,16 +9,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.Util.CANManager;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Climb extends SubsystemBase {
   //Define hardware
-  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeft);
-  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRight);
+  TalonFX leftMotor = new TalonFX(HardwareMap.kclimbLeft.id());
+  TalonFX rightMotor = new TalonFX(HardwareMap.kclimbRight.id());
 
   private PositionVoltage positionControl = new PositionVoltage(0).withSlot(0);
 
@@ -26,16 +26,22 @@ public class Climb extends SubsystemBase {
   public Climb() {
     //Motor configuration
     
-    TalonFXConfiguration climbMotorConfiguration = new TalonFXConfiguration();
-    climbMotorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    TalonFXConfiguration config = ClimbConstants.getConfig();
 
-    climbMotorConfiguration.Slot0.kG = ClimbConstants.kG;
-    climbMotorConfiguration.Slot0.kP = ClimbConstants.kP;
-    climbMotorConfiguration.Slot0.kI = ClimbConstants.kI;
-    climbMotorConfiguration.Slot0.kD = ClimbConstants.kD;
+    leftMotor.getConfigurator().apply(config);
+    rightMotor.getConfigurator().apply(config);
+    zeroPosition();
 
-    leftMotor.getConfigurator().apply(climbMotorConfiguration);
-    rightMotor.getConfigurator().apply(climbMotorConfiguration);
+    //Connection
+    CANManager.addConnection(HardwareMap.kclimbLeft, leftMotor);
+    CANManager.addConnection(HardwareMap.kclimbRight, rightMotor);
+    // ConnectionAlert.createConnection("Left Climb", leftMotor::isConnected);
+    // ConnectionAlert.createConnection("Right Climb", rightMotor::isConnected);
+  }
+
+  public void zeroPosition(){
+    leftMotor.setPosition(0);
+    rightMotor.setPosition(0);
   }
 
   public void setPosition(double leftDegrees, double rightDegrees){
@@ -50,7 +56,7 @@ public class Climb extends SubsystemBase {
     rightMotor.setVoltage(rightVoltage);
   }
 
-  public Command voltageClimbCommandFactory(double voltage){
+  public Command voltageClimbCommand(double voltage){
     return Commands.startEnd(
       () -> {applyVoltage(voltage, voltage);}, 
       () -> {applyVoltage(0, 0);},

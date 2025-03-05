@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import java.rmi.server.Operation;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -14,7 +12,6 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
@@ -24,72 +21,70 @@ import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
+import frc.robot.Subsystems.Swerve.DriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 
 public class RobotContainer {
 
-  PowerDistribution pdh = new PowerDistribution(1, ModuleType.kRev);
+  PowerDistribution pdh = new PowerDistribution(HardwareMap.kPDH, ModuleType.kRev);
 
   // Create controllers
-  CommandPS5Controller driverController = new CommandPS5Controller(0);
-  CommandPS5Controller operatorController = new CommandPS5Controller(1);
+  CommandPS5Controller controller = new CommandPS5Controller(HardwareMap.kControllerPort);
 
   // Create subsystems
-  // Climb climb = new Climb();
-  // AlgaeIntake algaeIntake = new AlgaeIntake();
-   Coral coral = new Coral();
-  // LED led = new LED();
+  Climb climb = new Climb();
+  AlgaeIntake algaeIntake = new AlgaeIntake();
+  Coral coral = new Coral();
+  LED led = new LED();
   Swerve swerve = new Swerve();
 
- private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     pdh.clearStickyFaults();
-    NamedCommands.registerCommand("IntakePosition", coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
-    NamedCommands.registerCommand("DumpPosition", coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
 
+    NamedCommands.registerCommand("IntakePosition",
+        coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
+    NamedCommands.registerCommand("DumpPosition",
+        coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
+    
+        swerve.setDefaultCommand(
+          new DriveCommand(swerve, 
+            () -> -controller.getLeftY(), 
+            () -> -controller.getLeftX(), 
+            () -> -controller.getRightX()));
+                                                                                                    
     configureBindings();
-
-    // defaults coral manipulator to stop
-    // coralSubsystem.setDefaultCommand(coralSubsystem.setVoltageCommandFactory(0,0));
+   
     //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
-      // For convenience a programmer could change this when going to competition.
-      boolean isCompetition = false;
+    // Auto builder
+    boolean isCompetition = false;
+    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+        (stream) -> isCompetition
+            ? stream.filter(auto -> auto.getName().startsWith("comp"))
+            : stream);
 
-      // Build an auto chooser. This will use Commands.none() as the default option.
-      // As an example, this will only show autos that start with "comp" while at
-      // competition as defined by the programmer
-      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-         (stream) -> isCompetition
-           ? stream.filter(auto -> auto.getName().startsWith("comp"))
-           : stream
-       );
-
-       SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
 
-    // algae intake/eject
-    // driverController.R1().and(algaeIntake.hasAlgae.negate())
-    //     .onTrue(algaeIntake
-    //         .deployAndIntakeCommand());
+    //Climb
+    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
+    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
 
-    // driverController.R1().and(algaeIntake.hasAlgae)
-    //     .onTrue(algaeIntake
-    //         .intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
-    //         .alongWith(led.setLEDPatternCommand(LEDConstants.kAlgaeControlledLED)));
+   //Algae
+    controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
+    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
+    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
 
-    // driverController.R1().onFalse(algaeIntake
-    //     .stowCommand());
+    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
 
-    // climb
-    //operatorController.R2().whileTrue(climb.voltageClimbCommandFactory(ClimbConstants.kVoltage));
-
-    //Coral
-    operatorController.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
-    operatorController.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
+    // Coral
+    controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
+    controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition));
+    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
   }
 
   public Command getAutonomousCommand() {
