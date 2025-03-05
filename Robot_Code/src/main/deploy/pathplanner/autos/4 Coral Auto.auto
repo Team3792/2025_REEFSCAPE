@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "DumpPosition"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "C - Right Station Loop"
@@ -32,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "4 Coral",
   "choreoAuto": false
 }

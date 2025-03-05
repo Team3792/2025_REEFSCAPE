@@ -15,9 +15,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "DumpPosition"
+                  "waitTime": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "J - Left Station"
                 }
               },
               {
@@ -30,34 +43,9 @@
           }
         },
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "J - Left Station"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakePosition"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -65,9 +53,9 @@
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "DumpPosition"
+                  "waitTime": 0.5
                 }
               }
             ]
@@ -77,6 +65,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "2 Coral Auto",
   "choreoAuto": false
 }
