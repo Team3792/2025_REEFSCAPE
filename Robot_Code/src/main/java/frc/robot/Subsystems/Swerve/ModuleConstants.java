@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Util.PIDConfig;
@@ -19,7 +20,7 @@ public class ModuleConstants {
 
     //Conversion factors
     public static final double kTurnRatio = 15.4299;
-    public static final double kMetersPerRotation = Math.PI/6.11*Units.inchesToMeters(4);
+    public static final double kMetersPerRotation = Math.PI/7.36*Units.inchesToMeters(4);
     public static final double kWheelRadiansPerRotation = Math.PI*2/(kTurnRatio);
 
     //Turn PID
@@ -49,6 +50,7 @@ public class ModuleConstants {
         slot0Config.kD = 0;
 
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
 
 
@@ -57,6 +59,7 @@ public class ModuleConstants {
 
     public static TalonFXConfiguration getTurnConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         return config;
     }

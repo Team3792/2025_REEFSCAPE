@@ -40,8 +40,8 @@ public class SwerveModule {
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
         drive.setPosition(0);
-        turn.setPosition(0);
-        //resetTurnEncoder();
+        //turn.setPosition(0);
+        resetTurnEncoder();
     }
 
     private void resetTurnEncoder () {
