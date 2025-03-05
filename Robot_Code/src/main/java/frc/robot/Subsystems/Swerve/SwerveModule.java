@@ -40,7 +40,8 @@ public class SwerveModule {
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
         drive.setPosition(0);
-        resetTurnEncoder();
+        turn.setPosition(0);
+        //resetTurnEncoder();
     }
 
     private void resetTurnEncoder () {
@@ -80,6 +81,7 @@ public class SwerveModule {
     }
 
     public void showEncoderPosition(){
-        SmartDashboard.putNumber("Swerve/" + name + "/encoder", encoder.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Swerve/" + name + "/turn rotations", getTurnPosition().getRotations());
+        SmartDashboard.putNumber("Swerve/" + name + "/drive position meters", getDrivePosition());
     }
 }

@@ -7,6 +7,7 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,7 +30,8 @@ public class RobotContainer {
   PowerDistribution pdh = new PowerDistribution(HardwareMap.kPDH, ModuleType.kRev);
 
   // Create controllers
-  CommandPS5Controller controller = new CommandPS5Controller(HardwareMap.kControllerPort);
+  CommandPS5Controller driver = new CommandPS5Controller(HardwareMap.kDriverPort);
+  CommandPS5Controller operator = new CommandPS5Controller(HardwareMap.kOperatorPort);
 
   // Create subsystems
   Climb climb = new Climb();
@@ -50,11 +52,12 @@ public class RobotContainer {
     
         swerve.setDefaultCommand(
           new DriveCommand(swerve, 
-            () -> -controller.getLeftY(), 
-            () -> -controller.getLeftX(), 
-            () -> -controller.getRightX()));
+            () -> -driver.getLeftY(), 
+            () -> -driver.getLeftX(), 
+            () -> -driver.getRightX()));
                                                                                                     
-    configureBindings();
+    configureDriverBindings(driver);
+    configureOperatorBindings(driver);
    
     //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
@@ -68,23 +71,25 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
-  private void configureBindings() {
-
-    //Climb
-    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
-    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
-
-   //Algae
+  private void configureDriverBindings(CommandPS5Controller controller){
+    //Algae
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
 
     algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
 
-    // Coral
+  }
+
+  private void configureOperatorBindings(CommandPS5Controller controller){
+    //Coral
     controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
     controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition));
-    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
+    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition)); 
+
+    //Climb
+    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
+    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
   }
 
   public Command getAutonomousCommand() {

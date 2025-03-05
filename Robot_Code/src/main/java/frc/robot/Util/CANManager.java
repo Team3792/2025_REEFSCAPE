@@ -26,7 +26,7 @@ public class CANManager {
 
     public static void addConnection(CANAddress address, BooleanSupplier connectedFunction){
         //Sort array for index
-
+        //TODO: fix this sorting, it isn't respected in the dashboard
         for(int i = 0; i < canConnections.size(); i++){
             if(address.index() < canConnections.get(i).address.index()){
                 canConnections.add(i, new CANConnection(address, connectedFunction));
