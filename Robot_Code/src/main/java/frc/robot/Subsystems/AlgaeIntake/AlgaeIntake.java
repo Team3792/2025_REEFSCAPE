@@ -25,6 +25,7 @@ public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
   TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate.id());
   SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin.id(), MotorType.kBrushless);
+  double manualVoltage = 0;
 
   private ProfiledPIDController pidController = AlgaeIntakeConstants.pivotPIDConfig.getController();
 
@@ -73,7 +74,9 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
   public Command voltageCommand(double voltage){
-    return Commands.startEnd(() -> pivot.setVoltage(voltage), () -> pivot.setVoltage(0), this);
+    //return Commands.startEnd(() -> pivot.setVoltage(voltage), () -> pivot.setVoltage(0), this);
+    return Commands.startEnd(() -> {manualVoltage = voltage;}, () -> {manualVoltage = 0;}, this);
+  
   }
 
   //Stows and stops intake
@@ -95,7 +98,7 @@ public class AlgaeIntake extends SubsystemBase {
     double velocityFF = 0;//CoralConstants.kVelocityFF * pidController.getSetpoint().velocity;
     double pidOutput = pidController.calculate(getAngleDegrees());
 
-    pivot.setVoltage(pidOutput + gravityFF + velocityFF);
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF);// + manualVoltage);
     //SmartDashboard.putNumber("Coral/velocity", pivot.getVelocity().getValueAsDouble()/15*360.0);
   }
   

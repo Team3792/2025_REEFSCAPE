@@ -20,13 +20,15 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
 import frc.robot.Subsystems.Vision.Vision;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
-  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
+  public SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
   SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
   SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
   SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
@@ -35,6 +37,7 @@ public class Swerve extends SubsystemBase {
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
   Vision vision = new Vision();
+  Field2d field = new Field2d();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
     SwerveConstants.kKinematics, 
@@ -50,6 +53,10 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     configureAutoBuilder();
+    resetHeading();
+  }
+
+  public void resetHeading(){
     pigeon.reset();
   }
 
@@ -96,6 +103,12 @@ public class Swerve extends SubsystemBase {
       modules[i].showEncoderPosition();
     }
   }
+
+  public void driveForwardVoltage(double voltage){
+    for(int i = 0; i < 4; i++){
+      modules[i].driveVoltage(voltage);
+    }
+  }
   
   private void updatePoseEstimator(){
     // Optional<Pose2d> poseFromTarget = vision.getTagToCamera();
@@ -131,10 +144,17 @@ public class Swerve extends SubsystemBase {
         backRight.getPosition()
       }
       );
+
+    showRobotPose();
   }
 
   private Pose2d getPose(){
     return poseEstimator.getEstimatedPosition();
+  }
+
+  private void showRobotPose(){
+    field.setRobotPose(getPose());
+    SmartDashboard.putData("Field", field);
   }
 
   public void driveRobotRelative(ChassisSpeeds speeds){

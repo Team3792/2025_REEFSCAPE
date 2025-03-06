@@ -49,6 +49,12 @@ public class SwerveModule {
         turn.setPosition(position);
     }
 
+    public void driveVoltage(double voltage){
+        drive.setVoltage(voltage);
+        double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), 0);
+        turn.setVoltage(turnVoltage);
+    }
+
 
     private double getDrivePosition(){
         return drive.getPosition().getValueAsDouble() * ModuleConstants.kMetersPerRotation;

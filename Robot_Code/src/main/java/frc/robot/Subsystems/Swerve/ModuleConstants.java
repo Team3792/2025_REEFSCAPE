@@ -24,7 +24,7 @@ public class ModuleConstants {
     public static final double kWheelRadiansPerRotation = Math.PI*2/(kTurnRatio);
 
     //Turn PID
-    public static final PIDConfig kTurnPIDConfig = new PIDConfig(0.8, 0, 0);
+    public static final PIDConfig kTurnPIDConfig = new PIDConfig(5, 0, 0);
 
     //Module configs
     public static final ModuleConfig kFrontLeftConfig = new ModuleConfig(0, 1, 2, 0.6298828125);
@@ -43,14 +43,16 @@ public class ModuleConstants {
     public static TalonFXConfiguration getDriveConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();
         Slot0Configs slot0Config = config.Slot0;
-        slot0Config.kS = 0;
+        slot0Config.kS = 0.17;
         slot0Config.kV = 0.11;
         slot0Config.kP = 0.001;
         slot0Config.kI = 0;
         slot0Config.kD = 0;
 
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.CurrentLimits.StatorCurrentLimit = 60;
+        config.CurrentLimits.StatorCurrentLimitEnable = true;
 
 
 
@@ -59,7 +61,7 @@ public class ModuleConstants {
 
     public static TalonFXConfiguration getTurnConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();
-        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         return config;
     }
