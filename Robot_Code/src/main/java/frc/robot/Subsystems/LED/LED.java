@@ -12,16 +12,16 @@ import frc.robot.HardwareMap;
 
 public class LED extends SubsystemBase {
   /** Creates a new LED. */
-  //Spark led = new Spark(HardwareMap.kLED);
+  Spark led = new Spark(HardwareMap.kLED);
   
   public LED() {}
 
   private void LEDPatterns(double LEDPattern){
-    //led.set(LEDPattern);
+    led.set(LEDPattern);
   }
   public Command setLEDPatternCommand(double LEDPattern){
-    //return this.runOnce(()-> {LEDPatterns(LEDPattern);});
-    return Commands.none();
+    return this.runOnce(()-> {LEDPatterns(LEDPattern);});
+    //return Commands.none();
   }
 
   @Override

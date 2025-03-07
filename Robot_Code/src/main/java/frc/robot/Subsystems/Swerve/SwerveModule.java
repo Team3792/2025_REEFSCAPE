@@ -40,12 +40,19 @@ public class SwerveModule {
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
         drive.setPosition(0);
+        //turn.setPosition(0);
         resetTurnEncoder();
     }
 
     private void resetTurnEncoder () {
         double position = encoder.getPosition().getValueAsDouble() * ModuleConstants.kTurnRatio;
         turn.setPosition(position);
+    }
+
+    public void driveVoltage(double voltage){
+        drive.setVoltage(voltage);
+        double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), 0);
+        turn.setVoltage(turnVoltage);
     }
 
 
@@ -80,6 +87,7 @@ public class SwerveModule {
     }
 
     public void showEncoderPosition(){
-        SmartDashboard.putNumber("Swerve/" + name + "/encoder", encoder.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Swerve/" + name + "/turn rotations", getTurnPosition().getRotations());
+        SmartDashboard.putNumber("Swerve/" + name + "/drive position meters", getDrivePosition());
     }
 }

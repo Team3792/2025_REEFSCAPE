@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.TimeUnit;
 
 import edu.wpi.first.units.measure.Time;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Util.CANManager;
+import frc.robot.Util.Elastic;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -19,7 +21,8 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = new RobotContainer();
-    addPeriodic(CANManager::updateConnections, 1, 1);
+    
+    addPeriodic(CANManager::updateConnections, 1, 1); //Update CANManager every second
   }
 
   @Override
@@ -53,6 +56,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    Elastic.selectTab("TeleOp");
+    //m_robotContainer.swerve.frontLeft.setState(new SwerveModuleState(0, new Rotation))
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

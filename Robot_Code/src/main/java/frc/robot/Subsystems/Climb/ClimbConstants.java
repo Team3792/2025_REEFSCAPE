@@ -14,7 +14,7 @@ public class ClimbConstants {
     public static final double kUpVoltage = 5.0;
     public static final double kDownVoltage = -3.0;
     public static final double kGearRatio = 45.0;
-    public static final double kForwardLimitDegrees = 170.0;
+    public static final double kForwardLimitDegrees = 185.0;
 
     public static TalonFXConfiguration getConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();

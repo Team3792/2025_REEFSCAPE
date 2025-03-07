@@ -7,7 +7,8 @@ package frc.robot;
 /** Add your docs here. */
 public class HardwareMap {
     //Controllers
-    public static final int kControllerPort = 0;
+    public static final int kDriverPort = 0;
+    public static final int kOperatorPort = 1;
 
     public static final int kPDH = 1; //On the REV CAN bus
 

@@ -7,11 +7,14 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
@@ -29,18 +32,20 @@ public class RobotContainer {
   PowerDistribution pdh = new PowerDistribution(HardwareMap.kPDH, ModuleType.kRev);
 
   // Create controllers
-  CommandPS5Controller controller = new CommandPS5Controller(HardwareMap.kControllerPort);
+  CommandPS5Controller driver = new CommandPS5Controller(HardwareMap.kDriverPort);
+  CommandPS5Controller operator = new CommandPS5Controller(HardwareMap.kOperatorPort);
 
   // Create subsystems
   Climb climb = new Climb();
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
   LED led = new LED();
-  Swerve swerve = new Swerve();
+  public Swerve swerve = new Swerve();
 
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    SmartDashboard.putNumber("DriveVoltage", 0);
     pdh.clearStickyFaults();
 
     NamedCommands.registerCommand("IntakePosition",
@@ -50,11 +55,20 @@ public class RobotContainer {
     
         swerve.setDefaultCommand(
           new DriveCommand(swerve, 
-            () -> -controller.getLeftY(), 
-            () -> -controller.getLeftX(), 
-            () -> -controller.getRightX()));
+            () -> -driver.getLeftY(), 
+            () -> -driver.getLeftX(), 
+            () -> -driver.getRightX()));
+        // swerve.setDefaultCommand(
+        //   new FunctionalCommand(
+        //     () -> {}, 
+        //     () -> swerve.driveForwardVoltage(SmartDashboard.getNumber("DriveVoltage", 0)), 
+        //     (a) -> {}, 
+        //     () -> false, 
+        //     swerve)
+        //   );
                                                                                                     
-    configureBindings();
+    configureDriverBindings(driver);
+    configureOperatorBindings(operator);
    
     //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
@@ -68,26 +82,32 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
-  private void configureBindings() {
-
-    //Climb
-    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
-    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
-
-   //Algae
+  private void configureDriverBindings(CommandPS5Controller controller){
+    //Algae
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
 
     algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
+    controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(),  swerve));
+    
+  }
 
-    // Coral
+  private void configureOperatorBindings(CommandPS5Controller controller){
+    //Coral
     controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
     controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition));
-    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
+    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition)); 
+
+    //Climb
+    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
+    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
+
+    controller.R2().onTrue(algaeIntake.voltageCommand(1));
+    controller.L2().onTrue(algaeIntake.voltageCommand(-1));
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return autoChooser.getSelected();//AutoBuilder.buildAuto("Practice Field Test");
   }
 }

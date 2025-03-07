@@ -20,13 +20,15 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
 import frc.robot.Subsystems.Vision.Vision;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
-  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
+  public SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
   SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
   SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
   SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
@@ -35,6 +37,7 @@ public class Swerve extends SubsystemBase {
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
   Vision vision = new Vision();
+  Field2d field = new Field2d();
 
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
     SwerveConstants.kKinematics, 
@@ -50,6 +53,10 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     configureAutoBuilder();
+    resetHeading();
+  }
+
+  public void resetHeading(){
     pigeon.reset();
   }
 
@@ -71,7 +78,7 @@ public class Swerve extends SubsystemBase {
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(0, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {
@@ -94,6 +101,12 @@ public class Swerve extends SubsystemBase {
     updatePoseEstimator();
     for(int i = 0; i < 4; i++){
       modules[i].showEncoderPosition();
+    }
+  }
+
+  public void driveForwardVoltage(double voltage){
+    for(int i = 0; i < 4; i++){
+      modules[i].driveVoltage(voltage);
     }
   }
   
@@ -131,10 +144,17 @@ public class Swerve extends SubsystemBase {
         backRight.getPosition()
       }
       );
+
+    showRobotPose();
   }
 
   private Pose2d getPose(){
     return poseEstimator.getEstimatedPosition();
+  }
+
+  private void showRobotPose(){
+    field.setRobotPose(getPose());
+    SmartDashboard.putData("Field", field);
   }
 
   public void driveRobotRelative(ChassisSpeeds speeds){
