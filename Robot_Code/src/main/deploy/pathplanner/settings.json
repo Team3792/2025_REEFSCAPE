@@ -3,11 +3,13 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "4 CORAL!!!"
+    "4 CORAL!!!",
+    "Quarter Field Auto Testing"
   ],
   "autoFolders": [
+    "2 Coral Auto",
     "4 Coral",
-    "2 Coral Auto"
+    "Quarter Field Auto Testing"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
