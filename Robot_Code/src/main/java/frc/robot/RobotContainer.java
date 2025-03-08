@@ -74,6 +74,9 @@ public class RobotContainer {
             ? stream.filter(auto -> auto.getName().startsWith("comp"))
             : stream);
 
+    //Absolute back up auto ---- Drive forward at voltage (literal constants here)
+    autoChooser.addOption("***Drive Forward***", swerve.driveForwardCommand(1.0, 2.0));
+
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 

@@ -93,7 +93,7 @@ public class SwerveModule {
         
     }
 
-    private void stop(){
+    public void stop(){
         turn.setVoltage(0);
         drive.setVoltage(0);
     }

@@ -24,6 +24,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
 import frc.robot.MatchData;
@@ -109,9 +110,19 @@ public class Swerve extends SubsystemBase {
   }
 
   public void driveForwardVoltage(double voltage) {
-    for (int i = 0; i < 4; i++) {
-      modules[i].driveVoltage(voltage);
+    for(SwerveModule m : modules){
+      m.driveVoltage(voltage);
     }
+  }
+
+  public void stop(){
+    for(SwerveModule m : modules){
+      m.stop();
+    }
+  }
+
+  public Command driveForwardCommand(double voltage, double seconds){
+    return this.startEnd(() -> driveForwardVoltage(voltage), this::stop).withTimeout(seconds);
   }
 
   private void updateFieldVision(){
