@@ -17,7 +17,7 @@ public class HardwareMap {
 
     //Coral
     public static final CANAddress kCoralPivot = new CANAddress(20, "coral pivot", 1);
-    public static final int kCoralEncoder = 0;
+    public static final int kCoralEncoder = 2;
 
     //AlgaeIntake
     public static final CANAddress kAlgaeRotate = new CANAddress(30, "algae pivot", 2);

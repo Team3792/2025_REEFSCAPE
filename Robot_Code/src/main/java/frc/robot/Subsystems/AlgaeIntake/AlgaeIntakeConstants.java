@@ -17,6 +17,7 @@ public class AlgaeIntakeConstants {
         //pid+g values for postionVoltage control
         public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 720, 720);
         public static final double kG = 0.3;
+        public static final double kVelocityFF = 0.0;
 
         //positions for manipulator
         public static final double kStowPosition = 0; //start of match position

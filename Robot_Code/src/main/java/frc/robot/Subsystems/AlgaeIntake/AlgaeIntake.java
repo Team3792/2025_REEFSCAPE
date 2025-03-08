@@ -95,23 +95,14 @@ public class AlgaeIntake extends SubsystemBase {
 
   private void runToPosition(){
     double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
-    double velocityFF = 0;//CoralConstants.kVelocityFF * pidController.getSetpoint().velocity;
+    double velocityFF = AlgaeIntakeConstants.kVelocityFF * pidController.getSetpoint().velocity;
     double pidOutput = pidController.calculate(getAngleDegrees());
 
-    pivot.setVoltage(pidOutput + gravityFF + velocityFF);// + manualVoltage);
-    //SmartDashboard.putNumber("Coral/velocity", pivot.getVelocity().getValueAsDouble()/15*360.0);
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF + manualVoltage);
   }
   
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Algae current", drive.getOutputCurrent());
-    SmartDashboard.putNumber("Algae speed", drive.getEncoder().getVelocity());
-    SmartDashboard.putNumber("Distance", colorSensorV3.getProximity());
-    SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
-
-    //double pidOutput = pidController.calculate(getAngleDegrees());
-    //runToPosition();
-    //double gFF = getAngleDegrees()
+    runToPosition();
   }
 }

@@ -24,7 +24,7 @@ import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
-import frc.robot.Subsystems.Swerve.DriveCommand;
+import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 
 public class RobotContainer {
@@ -53,11 +53,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("DumpPosition",
         coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
     
-        swerve.setDefaultCommand(
-          new DriveCommand(swerve, 
-            () -> -driver.getLeftY(), 
-            () -> -driver.getLeftX(), 
-            () -> -driver.getRightX()));
+        
         // swerve.setDefaultCommand(
         //   new FunctionalCommand(
         //     () -> {}, 
@@ -73,9 +69,8 @@ public class RobotContainer {
     //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
     // Auto builder
-    boolean isCompetition = false;
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-        (stream) -> isCompetition
+        (stream) -> MatchData.kIsCompetition
             ? stream.filter(auto -> auto.getName().startsWith("comp"))
             : stream);
 
@@ -87,10 +82,20 @@ public class RobotContainer {
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-
     algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
+
+
+    //Swerve
+
+    swerve.setDefaultCommand(
+          new ManualDriveCommand(swerve, 
+            () -> -controller.getLeftY(), 
+            () -> -controller.getLeftX(), 
+            () -> -controller.getRightX(),
+            () -> controller.L3().getAsBoolean(),
+            () -> controller.R3().getAsBoolean()));
+
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(),  swerve));
-    
   }
 
   private void configureOperatorBindings(CommandPS5Controller controller){
@@ -103,11 +108,11 @@ public class RobotContainer {
     controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
     controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
 
-    controller.R2().onTrue(algaeIntake.voltageCommand(1));
-    controller.L2().onTrue(algaeIntake.voltageCommand(-1));
+    controller.R2().whileTrue(algaeIntake.voltageCommand(1));
+    controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();//AutoBuilder.buildAuto("Practice Field Test");
+    return autoChooser.getSelected();
   }
 }

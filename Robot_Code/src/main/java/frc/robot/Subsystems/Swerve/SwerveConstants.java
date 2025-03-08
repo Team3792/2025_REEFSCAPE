@@ -4,9 +4,12 @@
 
 package frc.robot.Subsystems.Swerve;
 
+import com.pathplanner.lib.config.PIDConstants;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Util.PIDConfig;
 
 /** All swerve constants that don't relate to the modules*/
 public class SwerveConstants {
@@ -26,11 +29,20 @@ public class SwerveConstants {
     public static final double kDeadBandValue = 0.05;
 
     public static final double kMaxLinearVelocity = 3.0; //Left stick
-    public static final double kMaxOmega = 3.0; //Right stick 
+    public static final double kMaxOmega = 4.0; //Right stick 
 
     public static final double kSlowLinearVelocity = 1.0;
     public static final double kSlowOmega = 1.0;
 
+    //Auto/vision tuning
+    public static final PIDConstants kTranslationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
+    public static final PIDConstants kRotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
+
+    public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(3.0, 0.0, 0.0);
+    public static final PIDConfig kRotationAlignPIDConfig = new PIDConfig(0.21, 0.0, 0.0);
+
+    public static final Translation2d kCenterAlign = new Translation2d(0.05, 0);
+    public static final double kAutoAlignTranslationTolerance = 0.005;
 }
 
     

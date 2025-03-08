@@ -12,13 +12,13 @@ import frc.robot.Util.LinearJoystickMap;
 import frc.robot.Util.LinearJoystickMap.DriveMode;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class DriveCommand extends Command {
+public class ManualDriveCommand extends Command {
   /** Creates a new DriveCommand. */
   Swerve swerve;
   Supplier<Boolean> xySlowMode, tSlowMode;
   LinearJoystickMap xMap, yMap, tMap;
 
-  public DriveCommand(Swerve swerve, Supplier<Double> x, Supplier<Double> y, Supplier<Double> t, Supplier<Boolean> xySlowMode, Supplier<Boolean> tSlowMode) {
+  public ManualDriveCommand(Swerve swerve, Supplier<Double> x, Supplier<Double> y, Supplier<Double> t, Supplier<Boolean> xySlowMode, Supplier<Boolean> tSlowMode) {
     this.swerve = swerve;
 
     xMap = new LinearJoystickMap(x, SwerveConstants.kSlowLinearVelocity, SwerveConstants.kMaxLinearVelocity, SwerveConstants.kDeadBandValue);

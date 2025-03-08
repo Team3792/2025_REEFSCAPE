@@ -95,7 +95,7 @@ public class SwerveModule {
 
     private void stop(){
         turn.setVoltage(0);
-            drive.setVoltage(0);
+        drive.setVoltage(0);
     }
 
     public void showEncoderPosition(){

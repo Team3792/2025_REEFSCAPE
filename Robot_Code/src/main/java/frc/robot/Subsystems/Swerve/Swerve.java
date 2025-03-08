@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Swerve;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -24,98 +26,118 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.MatchData;
 import frc.robot.Subsystems.Vision.Vision;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
-  public SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
+  SwerveModule frontLeft = new SwerveModule(ModuleConstants.kFrontLeftConfig, "Front Left");
   SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
   SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
   SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
-
-  SwerveModule[] modules = {frontLeft, frontRight, backLeft, backRight};
+  SwerveModule[] modules = { frontLeft, frontRight, backLeft, backRight };
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
+
   Vision vision = new Vision();
   Field2d field = new Field2d();
 
-  SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
-    SwerveConstants.kKinematics, 
-    getPigeonRotation2d(), 
-    new SwerveModulePosition[]{
-      frontLeft.getPosition(),
-      frontRight.getPosition(),
-      backLeft.getPosition(),
-      backRight.getPosition()
-    }, 
-    new Pose2d()
-  );
+  SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
+      SwerveConstants.kKinematics,
+      getPigeonRotation2d(),
+      new SwerveModulePosition[] {
+          frontLeft.getPosition(),
+          frontRight.getPosition(),
+          backLeft.getPosition(),
+          backRight.getPosition()
+      },
+      new Pose2d());
+
+  SwerveDrivePoseEstimator tagPoseEstimator = new SwerveDrivePoseEstimator(
+    SwerveConstants.kKinematics,
+    getPigeonRotation2d(),
+    new SwerveModulePosition[] {
+        frontLeft.getPosition(),
+        frontRight.getPosition(),
+        backLeft.getPosition(),
+        backRight.getPosition()
+    },
+    new Pose2d());
 
   public Swerve() {
     configureAutoBuilder();
     resetHeading();
   }
 
-  public void resetHeading(){
+  public void resetHeading() {
     pigeon.reset();
+    fieldPoseEstimator.resetRotation(new Rotation2d());
   }
 
-  private void configureAutoBuilder(){
+  private void configureAutoBuilder() {
     RobotConfig config;
-    try{
+    try {
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       // Handle exception as needed
-      config = new RobotConfig(0, 0, new ModuleConfig(0, 0, 0, new DCMotor(0, 0,  0, 0, 0, 4), 0, 4)); //TODO: make this accurate
+      config = new RobotConfig(0, 0, new ModuleConfig(0, 0, 0, new DCMotor(0, 0, 0, 0, 0, 4), 0, 4)); // TODO: make this
+                                                                                                      // accurate
       e.printStackTrace();
     }
 
     // Configure AutoBuilder last
     AutoBuilder.configure(
-            this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0, 0.0, 0.0) // Rotation PID constants
-            ),
-            config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
+        this::getPose,
+        this::resetPose,
+        this::getRobotRelativeSpeeds, 
+        (speeds, feedforwards) -> drive(speeds, false), 
+        new PPHolonomicDriveController(
+          SwerveConstants.kTranslationPIDConstants,
+          SwerveConstants.kRotationPIDConstants
+        ),
+        config,
+        MatchData::flipFieldToRed,
+        this 
     );
   }
 
   @Override
   public void periodic() {
-    updatePoseEstimator();
-    for(int i = 0; i < 4; i++){
-      modules[i].showEncoderPosition();
-    }
+    updateFieldOdemetry();
+    updateFieldVision();
+    showRobotPose();
   }
 
-  public void driveForwardVoltage(double voltage){
-    for(int i = 0; i < 4; i++){
+  public void driveForwardVoltage(double voltage) {
+    for (int i = 0; i < 4; i++) {
       modules[i].driveVoltage(voltage);
     }
   }
 
-  
-  private void updatePoseEstimator(){
-    // Optional<Pose2d> poseFromTarget = vision.getTagToCamera();
+  private void updateFieldVision(){
+    var fieldPoseEstimate = vision.getFieldPoseEstimate();
+      if(fieldPoseEstimate.isPresent()){
+        fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(), fieldPoseEstimate.get().timestampSeconds);
+      }
+  }
+
+  private void updateFieldOdemetry(){
+    fieldPoseEstimator.update(getPigeonRotation2d(),
+      new SwerveModulePosition[]{
+        frontLeft.getPosition(),
+        frontRight.getPosition(),
+        backLeft.getPosition(),
+        backRight.getPosition()
+      }
+      );
+      
+  }
+
+  private void updateTagVision(){
+    var poseFromTarget = vision.getTagToCamera();
     // if(poseFromTarget.isPresent()){
     //   Pose2d pose = poseFromTarget.get();//.plus(new Transform2d(-5, -5, new Rotation2d()));
-    //   poseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+    //   fieldPoseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp());
 
     //   double xTranslationMeters = pose.getX(); 
     //   double yTranslationMeters = pose.getY();
@@ -136,69 +158,49 @@ public class Swerve extends SubsystemBase {
 
 
 
-    //Update odemetry of pose estimator
-    poseEstimator.update(getPigeonRotation2d(),
-      new SwerveModulePosition[]{
-        frontLeft.getPosition(),
-        frontRight.getPosition(),
-        backLeft.getPosition(),
-        backRight.getPosition()
-      }
-      );
-    showRobotPose();
   }
 
-  private Pose2d getPose(){
-    return poseEstimator.getEstimatedPosition();
+  private Pose2d getPose() {
+    return fieldPoseEstimator.getEstimatedPosition();
   }
 
-  private void showRobotPose(){
+  private void showRobotPose() {
     field.setRobotPose(getPose());
     SmartDashboard.putData("Field", field);
   }
 
-  public void driveRobotRelative(ChassisSpeeds speeds){
-    ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(speeds, 0.002 );
-
-    SwerveModuleState[] targetStates = SwerveConstants.kKinematics.toSwerveModuleStates(targetSpeeds);
-    setStates(targetStates);
-  }
-
-  public void driveFieldRelative(ChassisSpeeds speeds){
-
-  }
-
-  public Rotation2d getPigeonRotation2d(){
+  public Rotation2d getPigeonRotation2d() {
     return pigeon.getRotation2d();
   }
 
-  public void drive(ChassisSpeeds speeds, boolean fieldCentric){
-    //Convert field centric to robot centric if fieldCentric is true
-    if(fieldCentric){
+  public void drive(ChassisSpeeds speeds, boolean fieldCentric) {
+    speeds = ChassisSpeeds.discretize(speeds, 0.002);
+
+    // Convert field centric to robot centric if fieldCentric is true
+    if (fieldCentric) {
       speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, getPigeonRotation2d());
     }
 
-    //Using kinematics, determine individual module states
+    // Using kinematics, determine individual module states
     SwerveModuleState[] desiredStates = SwerveConstants.kKinematics.toSwerveModuleStates(speeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kMaxSpeedMetersPerSecond);
 
-    //Apply states to each module
-    for(int i = 0; i < 4; i++){
+    // Apply states to each module
+    for (int i = 0; i < 4; i++) {
       modules[i].setState(desiredStates[i]);
     }
   }
 
-  private ChassisSpeeds getRobotRelativeSpeeds(){
+  private ChassisSpeeds getRobotRelativeSpeeds() {
     return SwerveConstants.kKinematics.toChassisSpeeds(
-      frontLeft.getState(),
-      frontRight.getState(),
-      backLeft.getState(),
-      backRight.getState()
-    );
+        frontLeft.getState(),
+        frontRight.getState(),
+        backLeft.getState(),
+        backRight.getState());
   }
 
-  private void resetPose(Pose2d newPose){
-    poseEstimator.resetPose(newPose);
+  private void resetPose(Pose2d newPose) {
+    fieldPoseEstimator.resetPose(newPose);
   }
 
   public void setStates(SwerveModuleState[] targetStates) {
