@@ -13,6 +13,7 @@ public class LinearJoystickMap {
     public LinearJoystickMap(Supplier<Double> function, double slowValue, double maxValue, double deadBand){
         this.function = function;
         this.maxValue = maxValue;
+        this.slowValue = slowValue;
         this.deadBand = deadBand;
     }
 

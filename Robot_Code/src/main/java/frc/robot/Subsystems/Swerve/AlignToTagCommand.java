@@ -52,10 +52,12 @@ public class AlignToTagCommand extends Command {
   @Override
   public void execute() {
     swerve.updateTagVision();
-    Pose2d robotReefPose = new Pose2d(); //swerve.getReefPose();
-    double xTranslationMeters = robotReefPose.getX();
-    double yTranslationMeters = robotReefPose.getY();
-    double thetaDegrees = robotReefPose.getRotation().getDegrees();
+    swerve.updateTagOdemetry();
+
+    Pose2d tagPose = swerve.getTagPose();
+    double xTranslationMeters = tagPose.getX();
+    double yTranslationMeters = tagPose.getY();
+    double thetaDegrees = tagPose.getRotation().getDegrees();
 
 
       //System.out.println("x: " + xTranslationMeters + ", y: " + yTranslationMeters + ", theta: " + thetaDegrees);
@@ -64,7 +66,7 @@ public class AlignToTagCommand extends Command {
         clamp(-0.7, 0.7, xController.calculate(xTranslationMeters)),
         clamp(-0.5, 0.5, yController.calculate(yTranslationMeters)),
         clamp(-1, 1, thetaController.calculate(thetaDegrees))
-      ), true);
+      ), tagPose.getRotation());
     }
   
 

@@ -38,6 +38,7 @@ public class Swerve extends SubsystemBase {
 
   Vision vision = new Vision();
   Field2d field = new Field2d();
+  Field2d tag = new Field2d();
 
   SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveConstants.kKinematics,
@@ -64,6 +65,9 @@ public class Swerve extends SubsystemBase {
   public Swerve() {
     configureAutoBuilder();
     resetHeading();
+
+    SmartDashboard.putData("Field Pose", field);
+    SmartDashboard.putData("Tag Pose", tag);
   }
 
   public void resetHeading() {
@@ -84,7 +88,7 @@ public class Swerve extends SubsystemBase {
 
     // Configure AutoBuilder last
     AutoBuilder.configure(
-        this::getPose,
+        this::getFieldPose,
         this::resetPose,
         this::getRobotRelativeSpeeds, 
         (speeds, feedforwards) -> drive(speeds, false), 
@@ -124,6 +128,7 @@ public class Swerve extends SubsystemBase {
   private void updateFieldVision(){
     var fieldPoseEstimate = vision.getFieldPoseEstimate();
       if(fieldPoseEstimate.isPresent()){
+        System.out.println("vision present");
         fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(), fieldPoseEstimate.get().timestampSeconds);
       }
   }
@@ -141,43 +146,75 @@ public class Swerve extends SubsystemBase {
   }
 
   public void updateTagVision(){
-    //var poseFromTarget = vision.getTagToCamera();
-    // if(poseFromTarget.isPresent()){
-    //   Pose2d pose = poseFromTarget.get();//.plus(new Transform2d(-5, -5, new Rotation2d()));
-    //   fieldPoseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+    var poseFromTarget = vision.getTagToRobot();
+    if(poseFromTarget.isPresent()){
+      Pose2d pose = poseFromTarget.get().pose();
+      tagPoseEstimator.addVisionMeasurement(pose, poseFromTarget.get().timeStampSeconds());
 
-    //   double xTranslationMeters = pose.getX(); 
-    //   double yTranslationMeters = pose.getY();
-    //   double thetaDegrees = pose.getRotation().getDegrees();
-
-    //   //field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new Translation2d(5, 5), new Rotation2d(0))));
+      double xTranslationMeters = pose.getX(); 
+      double yTranslationMeters = pose.getY();
+      double thetaDegrees = pose.getRotation().getDegrees();
 
 
-    //   SmartDashboard.putNumber("vision/x", xTranslationMeters);
-    //   SmartDashboard.putNumber("vision/y", yTranslationMeters);
-    //   SmartDashboard.putNumber("vision/theta", thetaDegrees);
-    //   SmartDashboard.putBoolean("vision/low_camera", true);
-    // } else{
-    //   SmartDashboard.putBoolean("vision/low_camera", false);
-    // }
+      //field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new Translation2d(5, 5), new Rotation2d(0))));
 
 
-
-
-
+      SmartDashboard.putNumber("vision/x", xTranslationMeters);
+      SmartDashboard.putNumber("vision/y", yTranslationMeters);
+      SmartDashboard.putNumber("vision/theta", thetaDegrees);
+      SmartDashboard.putBoolean("vision/low_camera", true);
+    } else{
+      SmartDashboard.putBoolean("vision/low_camera", false);
+    }
   }
 
-  private Pose2d getPose() {
+  public void updateTagOdemetry(){
+    tagPoseEstimator.update(getPigeonRotation2d(),
+      new SwerveModulePosition[]{
+        frontLeft.getPosition(),
+        frontRight.getPosition(),
+        backLeft.getPosition(),
+        backRight.getPosition()
+      }
+      );
+  }
+
+  private Pose2d getFieldPose() {
     return fieldPoseEstimator.getEstimatedPosition();
   }
 
+  public Pose2d getTagPose(){
+    return tagPoseEstimator.getEstimatedPosition();
+  }
+
   private void showRobotPose() {
-    field.setRobotPose(getPose());
-    SmartDashboard.putData("Field", field);
+    field.setRobotPose(getFieldPose());
+    
+
+    tag.setRobotPose(getTagPose());
+
   }
 
   public Rotation2d getPigeonRotation2d() {
     return pigeon.getRotation2d();
+  }
+
+  public void drive(ChassisSpeeds speeds, Rotation2d rotation){
+    speeds = ChassisSpeeds.discretize(speeds, 0.002);
+
+    // Convert field centric to robot centric if fieldCentric is true
+    //if (fieldCentric) {
+      speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, rotation);
+    //}
+
+    // Using kinematics, determine individual module states
+    SwerveModuleState[] desiredStates = SwerveConstants.kKinematics.toSwerveModuleStates(speeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kMaxSpeedMetersPerSecond);
+
+    // Apply states to each module
+    for (int i = 0; i < 4; i++) {
+      modules[i].setState(desiredStates[i]);
+    }
   }
 
   public void drive(ChassisSpeeds speeds, boolean fieldCentric) {

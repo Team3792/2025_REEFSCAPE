@@ -20,8 +20,10 @@ import frc.robot.Subsystems.Climb.Climb;
 import frc.robot.Subsystems.Climb.ClimbConstants;
 import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
+import frc.robot.Subsystems.Swerve.AlignToTagCommand;
 import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
+import frc.robot.Subsystems.Swerve.SwerveConstants;
 
 public class RobotContainer {
 
@@ -78,10 +80,7 @@ public class RobotContainer {
 
   private void configureDriverBindings(CommandPS5Controller controller){
     //Algae
-    controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
-    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
+    
 
 
     //Swerve
@@ -93,6 +92,10 @@ public class RobotContainer {
             () -> -controller.getRightX(),
             () -> controller.L3().getAsBoolean(),
             () -> controller.R3().getAsBoolean()));
+
+    controller.cross().whileTrue(
+      new AlignToTagCommand(swerve, SwerveConstants.kCenterAlign)
+    );
 
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(),  swerve));
   }
@@ -109,6 +112,11 @@ public class RobotContainer {
 
     controller.R2().whileTrue(algaeIntake.voltageCommand(1));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
+
+    controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
+    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
+    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
+    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
   }
 
   public Command getAutonomousCommand() {

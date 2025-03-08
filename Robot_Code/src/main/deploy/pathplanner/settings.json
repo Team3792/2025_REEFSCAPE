@@ -4,11 +4,13 @@
   "holonomicMode": true,
   "pathFolders": [
     "4 CORAL!!!",
+    "Keaton Paths",
     "Quarter Field Auto Testing"
   ],
   "autoFolders": [
     "2 Coral Auto",
     "4 Coral",
+    "Keaton Auto",
     "Quarter Field Auto Testing"
   ],
   "defaultMaxVel": 3.0,
