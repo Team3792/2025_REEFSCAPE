@@ -7,14 +7,12 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
@@ -22,8 +20,6 @@ import frc.robot.Subsystems.Climb.Climb;
 import frc.robot.Subsystems.Climb.ClimbConstants;
 import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.Coral.CoralConstants;
-import frc.robot.Subsystems.LED.LED;
-import frc.robot.Subsystems.LED.LEDConstants;
 import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 

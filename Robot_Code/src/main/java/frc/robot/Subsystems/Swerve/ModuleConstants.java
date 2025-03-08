@@ -12,7 +12,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Util.PIDConfig;
-import frc.robot.HardwareMap.CANAddress;
 
 /** All constants that relate to physical constants of the modules, including module-specific values and those shared by all modules
  * 

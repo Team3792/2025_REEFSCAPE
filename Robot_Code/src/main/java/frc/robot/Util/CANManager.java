@@ -6,15 +6,11 @@ package frc.robot.Util;
 
 import java.util.function.BooleanSupplier;
 
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.HardwareMap.CANAddress;
 
 import com.ctre.phoenix6.hardware.ParentDevice;
-import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.Alert;
 
 import java.util.ArrayList;

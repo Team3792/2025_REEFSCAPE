@@ -4,12 +4,9 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import java.util.Optional;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
-import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
@@ -21,7 +18,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -144,8 +140,8 @@ public class Swerve extends SubsystemBase {
       
   }
 
-  private void updateTagVision(){
-    var poseFromTarget = vision.getTagToCamera();
+  public void updateTagVision(){
+    //var poseFromTarget = vision.getTagToCamera();
     // if(poseFromTarget.isPresent()){
     //   Pose2d pose = poseFromTarget.get();//.plus(new Transform2d(-5, -5, new Rotation2d()));
     //   fieldPoseEstimator.addVisionMeasurement(pose, Timer.getFPGATimestamp());

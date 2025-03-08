@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import org.photonvision.targeting.PhotonPipelineResult;
+import java.util.List;
 
 public class Vision {
   /** Creates a new VisionSubsystem. */
@@ -29,8 +30,10 @@ public class Vision {
   public Vision() {}
 
   public Optional<EstimatedRobotPose> getFieldPoseEstimate(){
-    PhotonPipelineResult result = coralCamera.getLatestResult();
-    return fieldPoseEstimator.update(result);
+    List<PhotonPipelineResult> results = coralCamera.getAllUnreadResults();
+    return fieldPoseEstimator.update(
+        results.get(results.size() - 1) //Update with latest result
+        );
   }
 
   public Optional<Pose2d> getTagToCamera(){

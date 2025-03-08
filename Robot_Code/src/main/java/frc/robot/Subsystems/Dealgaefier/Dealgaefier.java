@@ -9,8 +9,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.HardwareMap;
-import frc.robot.Subsystems.Coral.CoralConstants;
 
 public class Dealgaefier extends SubsystemBase {
   /** Creates a new Dealgaefier. */

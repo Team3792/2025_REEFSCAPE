@@ -2,18 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands.Swerve_Commands;
-
-import java.util.Optional;
+package frc.robot.Subsystems.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Swerve.Swerve;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignToTagCommand extends Command {
@@ -56,7 +51,8 @@ public class AlignToTagCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Pose2d robotReefPose = swerve.getReefPose();
+    swerve.updateTagVision();
+    Pose2d robotReefPose = new Pose2d(); //swerve.getReefPose();
     double xTranslationMeters = robotReefPose.getX();
     double yTranslationMeters = robotReefPose.getY();
     double thetaDegrees = robotReefPose.getRotation().getDegrees();
@@ -64,11 +60,11 @@ public class AlignToTagCommand extends Command {
 
       //System.out.println("x: " + xTranslationMeters + ", y: " + yTranslationMeters + ", theta: " + thetaDegrees);
       
-      swerveSubsystem.driveFieldRelative(new ChassisSpeeds(
+      swerve.drive(new ChassisSpeeds(
         clamp(-0.7, 0.7, xController.calculate(xTranslationMeters)),
         clamp(-0.5, 0.5, yController.calculate(yTranslationMeters)),
         clamp(-1, 1, thetaController.calculate(thetaDegrees))
-      ));
+      ), true);
     }
   
 
