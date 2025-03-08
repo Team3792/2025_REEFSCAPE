@@ -30,5 +30,6 @@ public class HardwareMap {
     //LED
     public static final int kLED = 60;
 
+    //public static final CANADress 
     public record CANAddress(int id, String name, int index){}
 }

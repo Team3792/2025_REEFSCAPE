@@ -111,7 +111,7 @@ public class AlgaeIntake extends SubsystemBase {
     SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
 
     //double pidOutput = pidController.calculate(getAngleDegrees());
-    runToPosition();
+    //runToPosition();
     //double gFF = getAngleDegrees()
   }
 }

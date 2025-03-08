@@ -20,13 +20,17 @@ public class SwerveConstants {
 
     //Driving control
     public static final double kMaxSpeedMetersPerSecond = 5;
-    //controller values
-    public static final double kDeadBandValue = 0.01;
 
-    public static double deadBandClamp(double value){
-        if(value < Math.abs(kDeadBandValue)){
-            return kDeadBandValue;
-        }
-        return 0;
-    }
+    //controller values
+
+    public static final double kDeadBandValue = 0.05;
+
+    public static final double kMaxLinearVelocity = 3.0; //Left stick
+    public static final double kMaxOmega = 3.0; //Right stick 
+
+    public static final double kSlowLinearVelocity = 1.0;
+    public static final double kSlowOmega = 1.0;
+
 }
+
+    

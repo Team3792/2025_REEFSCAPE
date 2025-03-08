@@ -14,8 +14,8 @@ import frc.robot.Subsystems.Coral.CoralConstants;
 
 public class Dealgaefier extends SubsystemBase {
   /** Creates a new Dealgaefier. */
-  TalonFX dealgaefier = new TalonFX(HardwareMap.kDealgaefier.id());
-  DutyCycleEncoder dealgaefierEncoder = new DutyCycleEncoder(HardwareMap.kDealgaefierEncoder);
+  TalonFX dealgaefier = new TalonFX(0);
+  DutyCycleEncoder dealgaefierEncoder = new DutyCycleEncoder(0);
   ProfiledPIDController pidController = DealgaefierConstants.kDealgaefierPID.getController();
 
   public Dealgaefier() {

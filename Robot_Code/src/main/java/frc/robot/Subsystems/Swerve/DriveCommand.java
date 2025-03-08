@@ -8,18 +8,25 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Util.LinearJoystickMap;
+import frc.robot.Util.LinearJoystickMap.DriveMode;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveCommand extends Command {
   /** Creates a new DriveCommand. */
   Swerve swerve;
-  Supplier<Double> x, y, t;
+  Supplier<Boolean> xySlowMode, tSlowMode;
+  LinearJoystickMap xMap, yMap, tMap;
 
-  public DriveCommand(Swerve swerve, Supplier<Double> x, Supplier<Double> y, Supplier<Double> t) {
+  public DriveCommand(Swerve swerve, Supplier<Double> x, Supplier<Double> y, Supplier<Double> t, Supplier<Boolean> xySlowMode, Supplier<Boolean> tSlowMode) {
     this.swerve = swerve;
-    this.x = x;
-    this.y = y;
-    this.t = t;
+
+    xMap = new LinearJoystickMap(x, SwerveConstants.kSlowLinearVelocity, SwerveConstants.kMaxLinearVelocity, SwerveConstants.kDeadBandValue);
+    yMap = new LinearJoystickMap(y, SwerveConstants.kSlowLinearVelocity, SwerveConstants.kMaxLinearVelocity, SwerveConstants.kDeadBandValue);
+    tMap = new LinearJoystickMap(t, SwerveConstants.kSlowLinearVelocity, SwerveConstants.kMaxOmega, SwerveConstants.kDeadBandValue);
+
+    this.xySlowMode = xySlowMode;
+    this.tSlowMode = tSlowMode;
     
     addRequirements(swerve);
   }
@@ -31,8 +38,17 @@ public class DriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println(y.get());
-    swerve.drive(new ChassisSpeeds(x.get()*3, y.get()*3, t.get()*3), true);
+    swerve.drive(
+      new ChassisSpeeds(
+        xMap.calculate(getDriveMode(xySlowMode.get())), 
+        yMap.calculate(getDriveMode(xySlowMode.get())), 
+        tMap.calculate(getDriveMode(tSlowMode.get()))
+        ), 
+        true);
+  }
+
+  private DriveMode getDriveMode(boolean slowMode){
+    return slowMode ? DriveMode.Slow : DriveMode.Fast;
   }
 
   // Called once the command ends or is interrupted.

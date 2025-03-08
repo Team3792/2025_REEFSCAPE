@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Util.PIDConfig;
+import frc.robot.HardwareMap.CANAddress;
 
 /** All constants that relate to physical constants of the modules, including module-specific values and those shared by all modules
  * 
@@ -22,6 +23,8 @@ public class ModuleConstants {
     public static final double kTurnRatio = 15.4299;
     public static final double kMetersPerRotation = Math.PI/7.36*Units.inchesToMeters(4);
     public static final double kWheelRadiansPerRotation = Math.PI*2/(kTurnRatio);
+
+    public static final double kMinSpeed = 0.1;
 
     //Turn PID
     public static final PIDConfig kTurnPIDConfig = new PIDConfig(5, 0, 0);
@@ -63,6 +66,8 @@ public class ModuleConstants {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        config.CurrentLimits.StatorCurrentLimit = 30;
+        config.CurrentLimits.StatorCurrentLimitEnable = true; 
         return config;
     }
 

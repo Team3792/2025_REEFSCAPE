@@ -109,6 +109,7 @@ public class Swerve extends SubsystemBase {
       modules[i].driveVoltage(voltage);
     }
   }
+
   
   private void updatePoseEstimator(){
     // Optional<Pose2d> poseFromTarget = vision.getTagToCamera();
@@ -144,7 +145,6 @@ public class Swerve extends SubsystemBase {
         backRight.getPosition()
       }
       );
-
     showRobotPose();
   }
 
