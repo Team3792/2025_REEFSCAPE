@@ -18,6 +18,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,15 +54,15 @@ public class Swerve extends SubsystemBase {
       new Pose2d());
 
   SwerveDrivePoseEstimator tagPoseEstimator = new SwerveDrivePoseEstimator(
-    SwerveConstants.kKinematics,
-    getPigeonRotation2d(),
-    new SwerveModulePosition[] {
-        frontLeft.getPosition(),
-        frontRight.getPosition(),
-        backLeft.getPosition(),
-        backRight.getPosition()
-    },
-    new Pose2d());
+      SwerveConstants.kKinematics,
+      getPigeonRotation2d(),
+      new SwerveModulePosition[] {
+          frontLeft.getPosition(),
+          frontRight.getPosition(),
+          backLeft.getPosition(),
+          backRight.getPosition()
+      },
+      new Pose2d());
 
   public Swerve() {
     configureAutoBuilder();
@@ -90,17 +92,17 @@ public class Swerve extends SubsystemBase {
     AutoBuilder.configure(
         this::getFieldPose,
         this::resetPose,
-        this::getRobotRelativeSpeeds, 
-        (speeds, feedforwards) -> drive(speeds, false), 
+        this::getRobotRelativeSpeeds,
+        (speeds, feedforwards) -> drive(speeds, false),
         new PPHolonomicDriveController(
-          SwerveConstants.kTranslationPIDConstants,
-          SwerveConstants.kRotationPIDConstants
-        ),
+            SwerveConstants.kTranslationPIDConstants,
+            SwerveConstants.kRotationPIDConstants),
         config,
         MatchData::flipFieldToRed,
-        this 
-    );
-  }
+        this);
+
+     addDashboardWidget();
+      }
 
   @Override
   public void periodic() {
@@ -110,86 +112,106 @@ public class Swerve extends SubsystemBase {
   }
 
   public void driveForwardVoltage(double voltage) {
-    for(SwerveModule m : modules){
+    for (SwerveModule m : modules) {
       m.driveVoltage(voltage);
     }
   }
 
-  public void stop(){
-    for(SwerveModule m : modules){
+  public void stop() {
+    for (SwerveModule m : modules) {
       m.stop();
     }
   }
 
-  public Command driveForwardCommand(double voltage, double seconds){
+  public Command driveForwardCommand(double voltage, double seconds) {
     return this.startEnd(() -> driveForwardVoltage(voltage), this::stop).withTimeout(seconds);
   }
 
-  private void updateFieldVision(){
+  private void updateFieldVision() {
     var fieldPoseEstimate = vision.getFieldPoseEstimate();
-      if(fieldPoseEstimate.isPresent()){
-        System.out.println("vision present");
-        fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(), fieldPoseEstimate.get().timestampSeconds);
-      }
+    if (fieldPoseEstimate.isPresent()) {
+      System.out.println("vision present");
+      fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(),
+          fieldPoseEstimate.get().timestampSeconds);
+    }
   }
 
-  private void updateFieldOdemetry(){
+  private void updateFieldOdemetry() {
     fieldPoseEstimator.update(getPigeonRotation2d(),
-      new SwerveModulePosition[]{
-        frontLeft.getPosition(),
-        frontRight.getPosition(),
-        backLeft.getPosition(),
-        backRight.getPosition()
-      }
-      );
-      
+        new SwerveModulePosition[] {
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            backLeft.getPosition(),
+            backRight.getPosition()
+        });
+
   }
 
-  public void updateTagVision(){
+  public void updateTagVision() {
     var poseFromTarget = vision.getTagToRobot();
-    if(poseFromTarget.isPresent()){
+    if (poseFromTarget.isPresent()) {
       Pose2d pose = poseFromTarget.get().pose();
       tagPoseEstimator.addVisionMeasurement(pose, poseFromTarget.get().timeStampSeconds());
 
-      double xTranslationMeters = pose.getX(); 
+      double xTranslationMeters = pose.getX();
       double yTranslationMeters = pose.getY();
       double thetaDegrees = pose.getRotation().getDegrees();
 
-
-      //field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new Translation2d(5, 5), new Rotation2d(0))));
-
+      // field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new
+      // Translation2d(5, 5), new Rotation2d(0))));
 
       SmartDashboard.putNumber("vision/x", xTranslationMeters);
       SmartDashboard.putNumber("vision/y", yTranslationMeters);
       SmartDashboard.putNumber("vision/theta", thetaDegrees);
       SmartDashboard.putBoolean("vision/low_camera", true);
-    } else{
+    } else {
       SmartDashboard.putBoolean("vision/low_camera", false);
     }
   }
 
-  public void updateTagOdemetry(){
-    tagPoseEstimator.update(getPigeonRotation2d(),
-      new SwerveModulePosition[]{
-        frontLeft.getPosition(),
-        frontRight.getPosition(),
-        backLeft.getPosition(),
-        backRight.getPosition()
+  private void addDashboardWidget() {
+    SmartDashboard.putData("Swerve Drive", new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveDrive");
+
+        builder.addDoubleProperty("Front Left Angle", () -> frontLeft.getTurnPosition().getRadians(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> frontLeft.getDriveVelocity(), null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> frontRight.getTurnPosition().getRadians(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> frontRight.getDriveVelocity(), null);
+
+        builder.addDoubleProperty("Back Left Angle", () -> backLeft.getTurnPosition().getRadians(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> backLeft.getDriveVelocity(), null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> backRight.getTurnPosition().getRadians(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> backRight.getDriveVelocity(), null);
+
+        builder.addDoubleProperty("Robot Angle", () -> getPigeonRotation2d().getRadians(), null);
       }
-      );
+    });
+  }
+
+  public void updateTagOdemetry() {
+    tagPoseEstimator.update(getPigeonRotation2d(),
+        new SwerveModulePosition[] {
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            backLeft.getPosition(),
+            backRight.getPosition()
+        });
   }
 
   private Pose2d getFieldPose() {
     return fieldPoseEstimator.getEstimatedPosition();
   }
 
-  public Pose2d getTagPose(){
+  public Pose2d getTagPose() {
     return tagPoseEstimator.getEstimatedPosition();
   }
 
   private void showRobotPose() {
     field.setRobotPose(getFieldPose());
-    
 
     tag.setRobotPose(getTagPose());
 
@@ -199,13 +221,13 @@ public class Swerve extends SubsystemBase {
     return pigeon.getRotation2d();
   }
 
-  public void drive(ChassisSpeeds speeds, Rotation2d rotation){
+  public void drive(ChassisSpeeds speeds, Rotation2d rotation) {
     speeds = ChassisSpeeds.discretize(speeds, 0.002);
 
     // Convert field centric to robot centric if fieldCentric is true
-    //if (fieldCentric) {
-      speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, rotation);
-    //}
+    // if (fieldCentric) {
+    speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, rotation);
+    // }
 
     // Using kinematics, determine individual module states
     SwerveModuleState[] desiredStates = SwerveConstants.kKinematics.toSwerveModuleStates(speeds);

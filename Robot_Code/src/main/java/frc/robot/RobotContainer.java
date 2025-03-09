@@ -7,6 +7,8 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -43,8 +45,11 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
     SmartDashboard.putNumber("DriveVoltage", 0);
+
     pdh.clearStickyFaults();
+    SmartDashboard.putData("PDH", pdh);
 
     NamedCommands.registerCommand("IntakePosition",
         coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
@@ -80,7 +85,24 @@ public class RobotContainer {
 
   private void configureDriverBindings(CommandPS5Controller controller){
     //Algae
-    
+    // controller.R2().whileTrue(algaeIntake.voltageCommand(1));
+    // controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
+    //algaeIntake.setDefaultCommand();
+    controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
+    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
+
+    controller.R1().and(algaeIntake.hasAlgae.negate()).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+
+
+    // controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
+    // controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
+    // controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
+    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(2));
+
+    // controller.R2().whileTrue(algaeIntake.voltageCommand(2));
+    // controller.L2().whileTrue(algaeIntake.voltageCommand(-2));
+
+   // controller.R1().whileTrue()
 
 
     //Swerve
@@ -116,7 +138,7 @@ public class RobotContainer {
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(0.5));
+   
   }
 
   public Command getAutonomousCommand() {

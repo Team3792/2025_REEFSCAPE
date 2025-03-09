@@ -14,13 +14,14 @@ public class ClimbConstants {
     public static final double kUpVoltage = 5.0;
     public static final double kDownVoltage = -3.0;
     public static final double kGearRatio = 45.0;
+    public static final double kRotationsToDegrees = 360.0/kGearRatio;
     public static final double kForwardLimitDegrees = 185.0;
 
     public static TalonFXConfiguration getConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration();
         
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = kForwardLimitDegrees * kGearRatio / 360.0;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = kForwardLimitDegrees * kRotationsToDegrees;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
 

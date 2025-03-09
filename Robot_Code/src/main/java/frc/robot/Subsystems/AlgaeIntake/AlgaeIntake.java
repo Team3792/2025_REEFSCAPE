@@ -13,6 +13,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -44,6 +45,8 @@ public class AlgaeIntake extends SubsystemBase {
     pidController.reset(getAngleDegrees()); //Reset position to current angle to generate profile to return to 0 at start
 
     CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
+
+    
   }
 
   //Returns true when there is algae in manipulator
@@ -57,7 +60,7 @@ public class AlgaeIntake extends SubsystemBase {
 
   //applies voltage to drive motor
   public Command intakeVoltageCommand(double voltage){
-    return Commands.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);}, this);
+    return Commands.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);});
   }
 
   private double getAngleDegrees(){
@@ -68,7 +71,8 @@ public class AlgaeIntake extends SubsystemBase {
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
+          .andThen(
+            intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
           .onlyWhile(hasAlgae.negate());
   }
 
@@ -89,7 +93,7 @@ public class AlgaeIntake extends SubsystemBase {
   }
   
   public Command setPositionCommand(double position){
-    return this.runOnce(()-> {setPosition(position);});
+    return Commands.runOnce(() -> {setPosition(position);});//, null)//this.runOnce(()-> {setPosition(position);});
   }
 
   private void runToPosition(){
@@ -103,5 +107,9 @@ public class AlgaeIntake extends SubsystemBase {
   @Override
   public void periodic() {
     runToPosition();
+    // if(hasAlgae()){
+    //   drive.setVoltage(2);
+    // }
+    SmartDashboard.putBoolean("Has Algae", hasAlgae());
   }
 }
