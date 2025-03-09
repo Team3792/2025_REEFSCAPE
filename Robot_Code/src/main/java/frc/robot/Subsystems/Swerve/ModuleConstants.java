@@ -23,6 +23,8 @@ public class ModuleConstants {
     public static final double kMetersPerRotation = Math.PI/7.36*Units.inchesToMeters(4);
     public static final double kWheelRadiansPerRotation = Math.PI*2/(kTurnRatio);
 
+    public static final double kMinSpeed = 0.1;
+
     //Turn PID
     public static final PIDConfig kTurnPIDConfig = new PIDConfig(5, 0, 0);
 
@@ -63,6 +65,8 @@ public class ModuleConstants {
         TalonFXConfiguration config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        config.CurrentLimits.StatorCurrentLimit = 30;
+        config.CurrentLimits.StatorCurrentLimitEnable = true; 
         return config;
     }
 

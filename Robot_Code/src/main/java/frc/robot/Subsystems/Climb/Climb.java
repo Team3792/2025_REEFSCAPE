@@ -68,7 +68,7 @@ public class Climb extends SubsystemBase {
     // This method will be called once per scheduler run
 
     //Telemetry
-    SmartDashboard.putNumber("subsystems/climb/right position", rightMotor.getPosition().getValueAsDouble());
-    SmartDashboard.putNumber("subsystems/climb/left position", leftMotor.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Subsystems/Climb/Front Position", rightMotor.getPosition().getValueAsDouble()*ClimbConstants.kRotationsToDegrees);
+    SmartDashboard.putNumber("Subsystems/Climb/Back Position", leftMotor.getPosition().getValueAsDouble()*ClimbConstants.kRotationsToDegrees);
   }
 }

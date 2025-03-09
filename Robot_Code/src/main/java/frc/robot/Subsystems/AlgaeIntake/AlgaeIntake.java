@@ -45,6 +45,8 @@ public class AlgaeIntake extends SubsystemBase {
     pidController.reset(getAngleDegrees()); //Reset position to current angle to generate profile to return to 0 at start
 
     CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
+
+    
   }
 
   //Returns true when there is algae in manipulator
@@ -58,7 +60,7 @@ public class AlgaeIntake extends SubsystemBase {
 
   //applies voltage to drive motor
   public Command intakeVoltageCommand(double voltage){
-    return Commands.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);}, this);
+    return Commands.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);});
   }
 
   private double getAngleDegrees(){
@@ -69,7 +71,8 @@ public class AlgaeIntake extends SubsystemBase {
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
+          .andThen(
+            intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
           .onlyWhile(hasAlgae.negate());
   }
 
@@ -90,28 +93,23 @@ public class AlgaeIntake extends SubsystemBase {
   }
   
   public Command setPositionCommand(double position){
-    return this.runOnce(()-> {setPosition(position);});
+    return Commands.runOnce(() -> {setPosition(position);});//, null)//this.runOnce(()-> {setPosition(position);});
   }
 
   private void runToPosition(){
     double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
-    double velocityFF = 0;//CoralConstants.kVelocityFF * pidController.getSetpoint().velocity;
+    double velocityFF = AlgaeIntakeConstants.kVelocityFF * pidController.getSetpoint().velocity;
     double pidOutput = pidController.calculate(getAngleDegrees());
 
-    pivot.setVoltage(pidOutput + gravityFF + velocityFF);// + manualVoltage);
-    //SmartDashboard.putNumber("Coral/velocity", pivot.getVelocity().getValueAsDouble()/15*360.0);
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF + manualVoltage);
   }
   
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Algae current", drive.getOutputCurrent());
-    SmartDashboard.putNumber("Algae speed", drive.getEncoder().getVelocity());
-    SmartDashboard.putNumber("Distance", colorSensorV3.getProximity());
-    SmartDashboard.putNumber("AlgaePivot", getAngleDegrees());
-
-    //double pidOutput = pidController.calculate(getAngleDegrees());
     runToPosition();
-    //double gFF = getAngleDegrees()
+    // if(hasAlgae()){
+    //   drive.setVoltage(2);
+    // }
+    SmartDashboard.putBoolean("Has Algae", hasAlgae());
   }
 }

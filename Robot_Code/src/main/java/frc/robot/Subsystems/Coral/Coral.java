@@ -64,6 +64,6 @@ public class Coral extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     runToPosition();
-    SmartDashboard.putNumber("Coral/encoder", getAngleDegrees());
+    SmartDashboard.putNumber("Subsystems/Coral", getAngleDegrees());
   }
 }

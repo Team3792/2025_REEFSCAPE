@@ -15,13 +15,14 @@ import frc.robot.Util.ProfiledPIDConfig;
 /** Add your docs here. */
 public class AlgaeIntakeConstants {
         //pid+g values for postionVoltage control
-        public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 720, 720);
+        public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 720, 1440);
         public static final double kG = 0.3;
+        public static final double kVelocityFF = 0.0;
 
         //positions for manipulator
         public static final double kStowPosition = 0; //start of match position
         public static final double kAlgaeEjectPosition = 0; //score into processor position
-        public static final double kAlgaeIntakePosition = 60;//intake from ground position
+        public static final double kAlgaeIntakePosition = 65;//intake from ground position
 
         //threshold for sensor to detect algae; less than threshold means theres algae
         public static final double kProximityMin = 250;

@@ -7,7 +7,6 @@ package frc.robot.Subsystems.Swerve;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -56,11 +55,11 @@ public class SwerveModule {
     }
 
 
-    private double getDrivePosition(){
+    public double getDrivePosition(){
         return drive.getPosition().getValueAsDouble() * ModuleConstants.kMetersPerRotation;
     }
 
-    private double getDriveVelocity(){
+    public double getDriveVelocity(){
         return drive.getVelocity().getValueAsDouble() * ModuleConstants.kMetersPerRotation;
     }
 
@@ -68,7 +67,7 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocity(), getTurnPosition());
     }
 
-    private Rotation2d getTurnPosition(){
+    public Rotation2d getTurnPosition(){
         return new Rotation2d(turn.getPosition().getValueAsDouble() * ModuleConstants.kWheelRadiansPerRotation);
     }
 
@@ -77,13 +76,24 @@ public class SwerveModule {
     }
 
     public void setState(SwerveModuleState state){
-        state.optimize(getTurnPosition());
+        System.out.println(state.speedMetersPerSecond);
+        if(Math.abs(state.speedMetersPerSecond) > ModuleConstants.kMinSpeed){
+            state.optimize(getTurnPosition());
 
-        drive.setControl(driveController.withVelocity(state.speedMetersPerSecond / ModuleConstants.kMetersPerRotation));
+            drive.setControl(driveController.withVelocity(state.speedMetersPerSecond / ModuleConstants.kMetersPerRotation));
+            
+            double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
+            turn.setVoltage(turnVoltage);
+        } else {
+            stop();
+        }
         
-        double turnVoltage = turnController.calculate(getTurnPosition().getRadians(), state.angle.getRadians());
-        turn.setVoltage(turnVoltage);
         
+    }
+
+    public void stop(){
+        turn.setVoltage(0);
+        drive.setVoltage(0);
     }
 
     public void showEncoderPosition(){

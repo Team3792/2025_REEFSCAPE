@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.097,
+        "y": 1.063
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2943232573195482,
+        "y": 1.2157377587647205
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.02834595959596,
+        "y": 1.4738005050505045
+      },
+      "prevControl": {
+        "x": 2.8150977733618516,
+        "y": 1.4770169300247837
+      },
+      "nextControl": {
+        "x": 4.278345081068636,
+        "y": 1.4731377359427689
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.187058080808081,
+        "y": 2.8662878787878787
+      },
+      "prevControl": {
+        "x": 5.024842997744607,
+        "y": 2.635752192932264
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 120.17352002964441
+  },
+  "reversed": false,
+  "folder": "Keaton Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -127.11039188265545
+  },
+  "useDefaultConstraints": true
+}
