@@ -49,12 +49,12 @@ public class RobotContainer {
     SmartDashboard.putNumber("DriveVoltage", 0);
 
     pdh.clearStickyFaults();
-    SmartDashboard.putData("PDH", pdh);
+    //SmartDashboard.putData("PDH", pdh);
 
     NamedCommands.registerCommand("IntakePosition",
         coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
     NamedCommands.registerCommand("DumpPosition",
-        coral.holdAngleCommand(CoralConstants.kDumpPosition).withTimeout(CoralConstants.kAutoDumpTime));
+        coral.holdAngleCommand(100).withTimeout(CoralConstants.kAutoDumpTime));
     
         
         // swerve.setDefaultCommand(

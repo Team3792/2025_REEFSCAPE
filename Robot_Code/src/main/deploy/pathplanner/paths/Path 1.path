@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.135,
-        "y": 2.868295454545454
+        "x": 5.2,
+        "y": 2.8
       },
       "prevControl": {
-        "x": 4.823555938450608,
-        "y": 2.946655413535341
+        "x": 4.888555938450608,
+        "y": 2.8783599589898867
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 118.4429286243633
   },
   "reversed": false,
-  "folder": "Keaton Paths",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
