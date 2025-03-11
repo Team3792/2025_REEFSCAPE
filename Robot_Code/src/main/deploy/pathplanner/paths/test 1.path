@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.250035737281767,
-        "y": 2.9957730195493366
+        "x": 7.08186277200575,
+        "y": 2.955277284597707
       },
       "isLocked": false,
       "linkedName": "Start"
     },
     {
       "anchor": {
-        "x": 5.224,
-        "y": 2.792
+        "x": 5.161512666590073,
+        "y": 2.872424316406249
       },
       "prevControl": {
-        "x": 5.473996442438637,
-        "y": 2.7906662953755186
+        "x": 5.407702551871617,
+        "y": 2.9159046612192823
       },
       "nextControl": null,
       "isLocked": false,
@@ -68,7 +68,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 117.2173813488923
+    "rotation": 120.79299999999999
   },
   "reversed": false,
   "folder": "4 CORAL!!!",

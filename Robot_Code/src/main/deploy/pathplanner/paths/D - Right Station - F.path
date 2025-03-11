@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.426,
-        "y": 3.006
+        "x": 3.7543352912454044,
+        "y": 2.881623750574448
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9910263959099266,
-        "y": 3.2727467256433824
+        "x": 2.3193616871553306,
+        "y": 3.148370476217831
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dump 2"
     },
     {
       "anchor": {
@@ -54,7 +54,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -69,7 +69,7 @@
   "folder": "4 CORAL!!!",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 49.4164827688698
+    "rotation": 57.48183287161216
   },
   "useDefaultConstraints": true
 }

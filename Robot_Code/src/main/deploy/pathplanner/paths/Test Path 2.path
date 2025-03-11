@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.224,
-        "y": 2.792
+        "x": 5.161512666590073,
+        "y": 2.872424316406249
       },
       "prevControl": {
-        "x": 5.579381409078806,
-        "y": 2.8497273156231295
+        "x": 5.516894075668879,
+        "y": 2.9301516320293786
       },
       "nextControl": {
-        "x": 4.868618590921194,
-        "y": 2.73427268437687
+        "x": 4.806131257511267,
+        "y": 2.814697000783119
       },
       "isLocked": false,
       "linkedName": "Dump 1"
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake 1"
     }
   ],
   "rotationTargets": [
@@ -86,7 +86,7 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
