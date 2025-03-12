@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.013,
-        "y": 4.021
+        "x": 7.131157729204963,
+        "y": 6.713209084903492
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.623833653388967,
-        "y": 4.022976545636865
+        "x": 6.68316203851851,
+        "y": 6.4103559050422625
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Start Left"
     },
     {
       "anchor": {
-        "x": 6.022,
-        "y": 4.021
+        "x": 5.18432222254136,
+        "y": 5.150817512063419
       },
       "prevControl": {
-        "x": 5.757540269782811,
-        "y": 4.021
+        "x": 5.457242494221062,
+        "y": 5.4142899360586005
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dump 1 Top Left"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.9116585597423
+    "rotation": -117.21576279250351
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.22356340392503
+    "rotation": 178.50645133618747
   },
   "useDefaultConstraints": true
 }

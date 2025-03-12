@@ -3,7 +3,6 @@
   "waypoints": [
     {
       "anchor": {
-<<<<<<< Updated upstream:Robot_Code/src/main/deploy/pathplanner/paths/R2 - F.path
         "x": 8.062232881433824,
         "y": 1.4783109777113963
       },
@@ -11,52 +10,18 @@
       "nextControl": {
         "x": 8.512411830707071,
         "y": 1.3178996063704753
-=======
-        "x": 7.240214646464648,
-        "y": 7.308017676767677
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 5.1320007656376685,
-        "y": 6.046580896270853
->>>>>>> Stashed changes:Robot_Code/src/main/deploy/pathplanner/paths/Path 1.path
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-<<<<<<< Updated upstream:Robot_Code/src/main/deploy/pathplanner/paths/R2 - F.path
         "x": 5.47126895680147,
         "y": 2.5293988396139695
       },
       "prevControl": {
         "x": 5.10647443403978,
         "y": 2.6397521989444703
-=======
-        "x": 5.115909090909091,
-        "y": 5.681755050505051
-      },
-      "prevControl": {
-        "x": 6.906982522313298,
-        "y": 6.25616823243733
-      },
-      "nextControl": {
-        "x": 4.575151203545362,
-        "y": 5.508329185719568
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.3106060606060606,
-        "y": 7.308017676767677
-      },
-      "prevControl": {
-        "x": 2.971367366443227,
-        "y": 6.794482423462217
->>>>>>> Stashed changes:Robot_Code/src/main/deploy/pathplanner/paths/Path 1.path
       },
       "nextControl": null,
       "isLocked": false,
@@ -68,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

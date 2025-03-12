@@ -11,9 +11,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "DumpPosition"
           }
         },
         {
@@ -23,15 +23,27 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Intake - Bottom Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DumpPosition"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Quarter Field Auto Testing",
+  "folder": "Competition Autos",
   "choreoAuto": false
 }
