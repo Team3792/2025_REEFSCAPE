@@ -33,13 +33,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "DumpPosition",
-      "waypointRelativePos": 1.0,
+      "name": "Prime Position",
+      "waypointRelativePos": 0.3563777994157774,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "DumpPosition"
+          "name": "Prime Position"
         }
       }
     }

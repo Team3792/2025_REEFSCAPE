@@ -39,7 +39,7 @@ public class RobotContainer {
   Climb climb = new Climb();
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
-  //LED led = new LED();
+  // LED led = new LED();
   public Swerve swerve = new Swerve();
 
   private final SendableChooser<Command> autoChooser;
@@ -49,27 +49,28 @@ public class RobotContainer {
     SmartDashboard.putNumber("DriveVoltage", 0);
 
     pdh.clearStickyFaults();
-    //SmartDashboard.putData("PDH", pdh);
+    // SmartDashboard.putData("PDH", pdh);
 
     NamedCommands.registerCommand("IntakePosition",
         coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
+    NamedCommands.registerCommand("Prime Position", coral.setAngleCommand(70));
     NamedCommands.registerCommand("DumpPosition",
         coral.holdAngleCommand(100).withTimeout(CoralConstants.kAutoDumpTime));
-    
-        
-        // swerve.setDefaultCommand(
-        //   new FunctionalCommand(
-        //     () -> {}, 
-        //     () -> swerve.driveForwardVoltage(SmartDashboard.getNumber("DriveVoltage", 0)), 
-        //     (a) -> {}, 
-        //     () -> false, 
-        //     swerve)
-        //   );
-                                                                                                    
+
+    // swerve.setDefaultCommand(
+    // new FunctionalCommand(
+    // () -> {},
+    // () -> swerve.driveForwardVoltage(SmartDashboard.getNumber("DriveVoltage",
+    // 0)),
+    // (a) -> {},
+    // () -> false,
+    // swerve)
+    // );
+
     configureDriverBindings(driver);
     configureOperatorBindings(operator);
-   
-    //led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
+
+    // led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
 
     // Auto builder
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -77,45 +78,44 @@ public class RobotContainer {
             ? stream.filter(auto -> auto.getName().startsWith("comp"))
             : stream);
 
-    //Absolute back up auto ---- Drive forward at voltage (literal constants here)
+    // Absolute back up auto ---- Drive forward at voltage (literal constants here)
     autoChooser.addOption("***Drive Forward***", swerve.driveForwardCommand(1.0, 2.0));
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
-  private void configureDriverBindings(CommandPS5Controller controller){
-    //Algae
+  private void configureDriverBindings(CommandPS5Controller controller) {
+    // Algae
     controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-    controller.R1().and(algaeIntake.hasAlgae.negate()).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+    controller.R1().and(algaeIntake.hasAlgae.negate())
+        .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
-    //algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kHoldingVoltage));
-    
+    // algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kHoldingVoltage));
 
-    //Swerve
+    // Swerve
 
     swerve.setDefaultCommand(
-          new ManualDriveCommand(swerve, 
-            () -> -controller.getLeftY(), 
-            () -> -controller.getLeftX(), 
+        new ManualDriveCommand(swerve,
+            () -> -controller.getLeftY(),
+            () -> -controller.getLeftX(),
             () -> -controller.getRightX(),
             () -> controller.L3().getAsBoolean(),
             () -> controller.R3().getAsBoolean()));
 
     controller.cross().whileTrue(
-      new AlignToTagCommand(swerve, SwerveConstants.kCenterAlign)
-    );
+        new AlignToTagCommand(swerve, SwerveConstants.kCenterAlign));
 
-    controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(),  swerve));
+    controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
   }
 
-  private void configureOperatorBindings(CommandPS5Controller controller){
-    //Coral
+  private void configureOperatorBindings(CommandPS5Controller controller) {
+    // Coral
     controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
     controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition));
-    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition)); 
+    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
 
-    //Climb
+    // Climb
     controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
     controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
 
@@ -125,7 +125,7 @@ public class RobotContainer {
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-   
+
   }
 
   public Command getAutonomousCommand() {
