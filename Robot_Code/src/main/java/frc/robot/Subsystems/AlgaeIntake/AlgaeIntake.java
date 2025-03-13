@@ -5,6 +5,9 @@
 package frc.robot.Subsystems.AlgaeIntake;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import java.util.function.Consumer;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.spark.SparkMax;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
@@ -68,6 +72,21 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
 
+  public Command getHoldCommand(){
+    return new FunctionalCommand(
+      () -> {}, 
+      () -> {
+        if(hasAlgae()){
+          setDriveVoltage(AlgaeIntakeConstants.kHoldingVoltage);
+        } else {
+          setDriveVoltage(AlgaeIntakeConstants.kHoldingVoltage);
+        }
+      },
+      (b) -> {},
+      () -> false, 
+      this);
+  }
+
   //Deploys and runs intake until algae is detected
   public Command deployAndIntakeCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
@@ -93,7 +112,7 @@ public class AlgaeIntake extends SubsystemBase {
   }
   
   public Command setPositionCommand(double position){
-    return Commands.runOnce(() -> {setPosition(position);});//, null)//this.runOnce(()-> {setPosition(position);});
+    return this.runOnce(() -> {setPosition(position);});
   }
 
   private void runToPosition(){
@@ -107,9 +126,6 @@ public class AlgaeIntake extends SubsystemBase {
   @Override
   public void periodic() {
     runToPosition();
-    // if(hasAlgae()){
-    //   drive.setVoltage(2);
-    // }
     SmartDashboard.putBoolean("Has Algae", hasAlgae());
   }
 }

@@ -85,25 +85,11 @@ public class RobotContainer {
 
   private void configureDriverBindings(CommandPS5Controller controller){
     //Algae
-    // controller.R2().whileTrue(algaeIntake.voltageCommand(1));
-    // controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
-    //algaeIntake.setDefaultCommand();
     controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-
     controller.R1().and(algaeIntake.hasAlgae.negate()).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
-
-
-    // controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
-    // controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-    // controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(2));
-
-    // controller.R2().whileTrue(algaeIntake.voltageCommand(2));
-    // controller.L2().whileTrue(algaeIntake.voltageCommand(-2));
-
-   // controller.R1().whileTrue()
-
+    algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
+    
 
     //Swerve
 

@@ -31,6 +31,7 @@ public class AlgaeIntakeConstants {
         
         public static final double kIntakeVoltage = 8;
         public static final double kEjectVoltage = -10;
+        public static final double kHoldingVoltage = 2;
 
 
         public static TalonFXConfiguration getPivotConfig(){
