@@ -53,9 +53,9 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("IntakePosition",
         coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
-    NamedCommands.registerCommand("Prime Position", coral.setAngleCommand(70));
+    NamedCommands.registerCommand("Prime Position", coral.setAngleCommand(60));
     NamedCommands.registerCommand("DumpPosition",
-        coral.holdAngleCommand(100).withTimeout(CoralConstants.kAutoDumpTime));
+        coral.holdAngleCommand(110).withTimeout(CoralConstants.kAutoDumpTime));
 
     // swerve.setDefaultCommand(
     // new FunctionalCommand(
@@ -91,6 +91,7 @@ public class RobotContainer {
     controller.R1().and(algaeIntake.hasAlgae.negate())
         .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
+    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
     // algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kHoldingVoltage));
 
     // Swerve

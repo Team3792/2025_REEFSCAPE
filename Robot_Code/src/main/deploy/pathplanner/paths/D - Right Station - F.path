@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 2.3193616871553306,
-        "y": 3.148370476217831
+        "y": 3.1483704762178313
       },
       "isLocked": false,
       "linkedName": "Dump 2"
@@ -54,7 +54,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,

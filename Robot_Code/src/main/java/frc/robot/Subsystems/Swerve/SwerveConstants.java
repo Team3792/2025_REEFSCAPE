@@ -38,8 +38,8 @@ public class SwerveConstants {
     public static final PIDConstants kTranslationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
     public static final PIDConstants kRotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
 
-    public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(5.0, 0.0, 0.0);
-    public static final PIDConfig kRotationAlignPIDConfig = new PIDConfig(5.0, 0.0, 0.0);
+    public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(3.0, 0.0, 0.0);
+    public static final PIDConfig kRotationAlignPIDConfig = new PIDConfig(0.21, 0.0, 0.0);
 
     public static final Translation2d kCenterAlign = new Translation2d(0.09, -0.18);
     public static final double kAutoAlignTranslationTolerance = 0.005;

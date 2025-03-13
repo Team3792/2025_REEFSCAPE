@@ -10,7 +10,7 @@
     "4 CORAL!!!",
     "Competition Autos"
   ],
-  "defaultMaxVel": 2.0,
+  "defaultMaxVel": 3.0,
   "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 500.0,
   "defaultMaxAngAccel": 650.0,

@@ -31,14 +31,14 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.49786458333333333,
-      "rotationDegrees": -49.379914398375504
+      "rotationDegrees": -49.37991439837551
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
