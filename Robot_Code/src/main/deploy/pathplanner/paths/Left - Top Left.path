@@ -48,7 +48,7 @@
   "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.50645133618747
+    "rotation": 178.5064513361875
   },
   "useDefaultConstraints": true
 }
