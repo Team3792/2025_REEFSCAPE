@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.032922753033205,
-        "y": 6.0946075790229886
+        "x": 5.815176571116727,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.651659655726224,
-        "y": 6.246050337384884
+        "x": 7.141659366383271,
+        "y": 2.1864993824678303
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dump 1 Top"
     },
     {
       "anchor": {
-        "x": 5.138,
-        "y": 5.29
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 5.011359862677116,
-        "y": 5.505551097466102
+        "x": 1.396394051714048,
+        "y": 1.153610994944375
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake 1 Right"
     }
   ],
   "rotationTargets": [],
@@ -33,34 +33,34 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "DumpPosition",
-      "waypointRelativePos": 0.9794040906909788,
+      "name": "IntakePosition",
+      "waypointRelativePos": 1.0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "DumpPosition"
+          "name": "IntakePosition"
         }
       }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.08753474109352
+    "rotation": -125.9837852426988
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.69831740517205
+    "rotation": 179.5927678403193
   },
   "useDefaultConstraints": true
 }

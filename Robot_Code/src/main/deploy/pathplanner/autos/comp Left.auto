@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "test 1"
+            "pathName": "Left - Top Left"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "test 2"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "DumpPosition"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "test 3"
+            "pathName": "Top Left - Left Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Intake - Bottom Left"
           }
         },
         {
@@ -44,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Practice",
+  "folder": "Competition Autos",
   "choreoAuto": false
 }

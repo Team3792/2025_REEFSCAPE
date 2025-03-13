@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.41,
-        "y": 2.995
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0360929977823456,
-        "y": 2.7354127330812195
+        "x": 1.7673925994284159,
+        "y": 1.7625285132990087
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake 1 Right"
     },
     {
       "anchor": {
-        "x": 1.3377825568704043,
-        "y": 1.097815659466911
+        "x": 3.7549825581460783,
+        "y": 2.8504440305998573
       },
       "prevControl": {
-        "x": 1.9017980543161832,
-        "y": 3.055912036107377
+        "x": 3.7851334835811565,
+        "y": 2.602268847119703
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dump 2 Bottom Right"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4290755208333337,
+      "rotationDegrees": 57.00000000000001
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -131.68922932938287
+    "rotation": 57.48183287161216
   },
   "reversed": false,
-  "folder": "4 CORAL!!!",
+  "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 49.04045608698467
+    "rotation": -125.9837852426988
   },
   "useDefaultConstraints": true
 }

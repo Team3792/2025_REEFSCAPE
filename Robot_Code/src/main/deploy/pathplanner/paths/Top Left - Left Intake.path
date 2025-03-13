@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.022,
-        "y": 4.021
+        "x": 5.18432222254136,
+        "y": 5.150817512063419
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.58814697265625,
-        "y": 3.1804583381204043
+        "x": 5.7406149471507355,
+        "y": 5.521609317555146
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dump 1 Top Left"
     },
     {
       "anchor": {
-        "x": 1.3330358168658087,
-        "y": 1.133
+        "x": 1.3997002096737132,
+        "y": 7.11983247644761
       },
       "prevControl": {
-        "x": 1.7160922654892818,
-        "y": 0.4921473342553271
+        "x": 1.6169778434090074,
+        "y": 6.988727277436247
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake 1 Left"
     }
   ],
   "rotationTargets": [],
@@ -34,21 +34,21 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -128.5029098931646
+    "rotation": 126.95896279640525
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.575589943645
+    "rotation": -117.21576279250351
   },
   "useDefaultConstraints": true
 }

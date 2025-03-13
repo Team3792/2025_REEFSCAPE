@@ -7,31 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "test 1"
+            "pathName": "Middle - Top"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "DumpPosition"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "test 2"
+            "pathName": "Top - Right Intake"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Intake - Bottom Right"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Quarter Field Auto Testing",
+  "folder": "Competition Autos",
   "choreoAuto": false
 }
