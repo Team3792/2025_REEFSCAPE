@@ -89,6 +89,7 @@ public class RobotContainer {
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.R1().and(algaeIntake.hasAlgae.negate()).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
+    //algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kHoldingVoltage));
     
 
     //Swerve
