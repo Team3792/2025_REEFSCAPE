@@ -28,7 +28,7 @@ public class SwerveConstants {
 
     public static final double kDeadBandValue = 0.05;
 
-    public static final double kMaxLinearVelocity = 3.0; //Left stick
+    public static final double kMaxLinearVelocity = 4.0; //Left stick
     public static final double kMaxOmega = 4.0; //Right stick 
 
     public static final double kSlowLinearVelocity = 1.0;

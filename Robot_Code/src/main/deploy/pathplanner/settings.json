@@ -11,7 +11,7 @@
     "Competition Autos"
   ],
   "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 500.0,
   "defaultMaxAngAccel": 650.0,
   "defaultNominalVoltage": 12.0,

@@ -66,7 +66,7 @@ public class Swerve extends SubsystemBase {
 
   public Swerve() {
     configureAutoBuilder();
-    resetHeading();
+    resetHeading(180);
 
     SmartDashboard.putData("Field Pose", field);
     SmartDashboard.putData("Tag Pose", tag);
@@ -74,6 +74,11 @@ public class Swerve extends SubsystemBase {
 
   public void resetHeading() {
     pigeon.reset();
+    fieldPoseEstimator.resetRotation(new Rotation2d());
+  }
+
+  public void resetHeading(double yawDegrees) {
+    pigeon.setYaw(yawDegrees);
     fieldPoseEstimator.resetRotation(new Rotation2d());
   }
 
