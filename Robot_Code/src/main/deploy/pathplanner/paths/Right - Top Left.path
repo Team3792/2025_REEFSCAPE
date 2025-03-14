@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.130947696461396,
-        "y": 2.019103285845588
+        "x": 7.209090909090909,
+        "y": 2.6166666666666663
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.748859265793243,
-        "y": 1.921721278941261
+        "x": 6.827002478422756,
+        "y": 2.5192846597623393
       },
       "isLocked": false,
       "linkedName": "Start Right "
     },
     {
       "anchor": {
-        "x": 5.178470437105736,
-        "y": 2.8496112886537937
+        "x": 5.186130597093653,
+        "y": 2.836613653849067
       },
       "prevControl": {
-        "x": 5.423146397234822,
-        "y": 2.9009306274541946
+        "x": 5.430806557222739,
+        "y": 2.887932992649468
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Prime Position",
+      "waypointRelativePos": 0.40878701050620275,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Prime Position"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 1.5,

@@ -39,6 +39,30 @@
           "data": {
             "name": "DumpPosition"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Right - Right Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Intake - Bottom Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DumpPosition"
+          }
         }
       ]
     }

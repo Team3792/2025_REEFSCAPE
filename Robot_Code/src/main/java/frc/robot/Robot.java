@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Elastic.selectTab("TeleOp");
+    m_robotContainer.initiateBrakes();
     //m_robotContainer.swerve.frontLeft.setState(new SwerveModuleState(0, new Rotation))
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

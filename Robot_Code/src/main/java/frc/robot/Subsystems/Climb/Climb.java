@@ -14,6 +14,7 @@ import frc.robot.Util.CANManager;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class Climb extends SubsystemBase {
   //Define hardware
@@ -42,6 +43,11 @@ public class Climb extends SubsystemBase {
   public void zeroPosition(){
     leftMotor.setPosition(0);
     rightMotor.setPosition(0);
+  }
+
+  public void setNeutralMode(NeutralModeValue neutralMode){
+    leftMotor.setNeutralMode(neutralMode);
+    rightMotor.setNeutralMode(neutralMode);
   }
 
   public void setPosition(double leftDegrees, double rightDegrees){

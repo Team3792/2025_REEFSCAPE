@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.864253988471653,
-        "y": 4.020982796469569
+        "x": 5.864,
+        "y": 4.021
       },
       "prevControl": {
-        "x": 6.114253988471653,
-        "y": 4.020982796469569
+        "x": 6.114,
+        "y": 4.021
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Dump Top"
+      "linkedName": "Dump 1 Top"
     }
   ],
   "rotationTargets": [],

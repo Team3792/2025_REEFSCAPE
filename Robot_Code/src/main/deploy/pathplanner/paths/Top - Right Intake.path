@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.815176571116727,
-        "y": 4.0
+        "x": 5.864,
+        "y": 4.021
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.141659366383271,
-        "y": 2.1864993824678303
+        "x": 7.1904827952665435,
+        "y": 2.20749938246783
       },
       "isLocked": false,
       "linkedName": "Dump 1 Top"

@@ -35,6 +35,7 @@ public class AlgaeIntake extends SubsystemBase {
 
   I2C.Port i2cPort = I2C.Port.kOnboard;
   ColorSensorV3 colorSensorV3 = new ColorSensorV3(i2cPort);
+  public boolean manualMode = false;
 
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
 
@@ -118,9 +119,9 @@ public class AlgaeIntake extends SubsystemBase {
   private void runToPosition(){
     double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
     double velocityFF = AlgaeIntakeConstants.kVelocityFF * pidController.getSetpoint().velocity;
-    double pidOutput = pidController.calculate(getAngleDegrees());
+    double pidOutput = manualMode? 0: pidController.calculate(getAngleDegrees());
 
-    pivot.setVoltage(pidOutput + gravityFF + velocityFF + manualVoltage);
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF + (manualMode? manualVoltage : 0));
   }
   
   @Override

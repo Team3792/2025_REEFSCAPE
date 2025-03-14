@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.18432222254136,
-        "y": 5.150817512063419
+        "x": 5.185207644238006,
+        "y": 5.219478062734279
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.7406149471507355,
-        "y": 5.521609317555146
+        "x": 5.741500368847381,
+        "y": 5.590269868226006
       },
       "isLocked": false,
       "linkedName": "Dump 1 Top Left"
@@ -48,7 +48,7 @@
   "folder": "Competition Autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -117.21576279250351
+    "rotation": -118.92904032598754
   },
   "useDefaultConstraints": true
 }

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -66,7 +67,7 @@ public class RobotContainer {
     // () -> false,
     // swerve)
     // );
-
+    climb.setNeutralMode(NeutralModeValue.Brake);
     configureDriverBindings(driver);
     configureOperatorBindings(operator);
 
@@ -122,11 +123,16 @@ public class RobotContainer {
 
     controller.R2().whileTrue(algaeIntake.voltageCommand(1));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
+   // controller.R2().whileTrue(algaeIntake.manualVoltageCommand)
 
     controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
+    controller.options().onTrue(Commands.runOnce(() -> {algaeIntake.manualMode = true;}, algaeIntake));
+  }
 
+  public void initiateBrakes(){
+    climb.setNeutralMode(NeutralModeValue.Brake);
   }
 
   public Command getAutonomousCommand() {
