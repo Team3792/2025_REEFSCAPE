@@ -4,14 +4,17 @@
   "holonomicMode": true,
   "pathFolders": [
     "4 CORAL!!!",
-    "Competition Autos"
+    "Inertia Paths",
+    "Other Paths",
+    "STL Stop Paths"
   ],
   "autoFolders": [
-    "4 CORAL!!!",
+    "Inertia Auto",
+    "Other Autos",
     "STL Stop Autos"
   ],
   "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 1.5,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 500.0,
   "defaultMaxAngAccel": 650.0,
   "defaultNominalVoltage": 12.0,
