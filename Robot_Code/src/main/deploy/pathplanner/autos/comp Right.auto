@@ -68,6 +68,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Competition Autos",
+  "folder": "STL Stop Autos",
   "choreoAuto": false
 }
