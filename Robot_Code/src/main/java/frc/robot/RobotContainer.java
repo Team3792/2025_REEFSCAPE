@@ -125,11 +125,13 @@ public class RobotContainer {
     controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
    // controller.R2().whileTrue(algaeIntake.manualVoltageCommand)
 
-    controller.R1().whileTrue(algaeIntake.deployAndIntakeCommand());
+    controller.R1().and(algaeIntake.algaeTipped.negate()).whileTrue(algaeIntake.deployAndIntakeCommand());
+    contorller.R1().and(algaeIntake.algaeTipped).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
     controller.options().onTrue(Commands.runOnce(() -> {algaeIntake.manualMode = true;}, algaeIntake));
-  }
+    //when gyro says not right angle outtake on for algae manipulator; (this is langston's dumb ass code)
+  //Author:Reittenger et al Peer Reviewed by Aanya Shetty} 
 
   public void initiateBrakes(){
     climb.setNeutralMode(NeutralModeValue.Brake);

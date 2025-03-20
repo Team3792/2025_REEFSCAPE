@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.HardwareMap;
 import frc.robot.Util.CANManager;
 
@@ -38,6 +39,7 @@ public class AlgaeIntake extends SubsystemBase {
   public boolean manualMode = false;
 
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
+  public Trigger algaeTipped = new Trigger(this::robotTipped);
 
   
   public AlgaeIntake() {
@@ -52,6 +54,9 @@ public class AlgaeIntake extends SubsystemBase {
     CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
 
     
+  }
+  public boolean robotTipped(){
+    return swerve.getPitch() > AlgaeIntakeConstants.kRobotTippedThreshold;
   }
 
   //Returns true when there is algae in manipulator

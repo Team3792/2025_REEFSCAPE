@@ -37,10 +37,19 @@ public class Swerve extends SubsystemBase {
   SwerveModule[] modules = { frontLeft, frontRight, backLeft, backRight };
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
+  PigeoIMU pigeonIMU = new PigeonIMU(HardwareMap.kPigeon.id());
+
+  
 
   Vision vision = new Vision();
   Field2d field = new Field2d();
   Field2d tag = new Field2d();
+
+  
+
+  public double getPitch (){
+    return pigeonIMU.getPitch();
+  }
 
   SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveConstants.kKinematics,
