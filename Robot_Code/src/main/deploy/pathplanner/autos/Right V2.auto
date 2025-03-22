@@ -11,21 +11,33 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Copy of C - Right Station Loop"
+            "name": "IntakePosition"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of D - Right Station - F"
+            "pathName": "RI - BR - RI"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RI - BR"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Other Autos",
+  "folder": "Inertia Auto",
   "choreoAuto": false
 }
