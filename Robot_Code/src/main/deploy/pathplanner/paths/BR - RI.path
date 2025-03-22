@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6911913976389705,
-        "y": 2.7368065242508717
+        "x": 3.559353651768613,
+        "y": 2.994880066335647
       },
       "isLocked": false,
       "linkedName": "Dump 2 Bottom Right"
@@ -20,8 +20,8 @@
         "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 2.4824847452724077,
-        "y": 2.402598684613803
+        "x": 1.7173295454545454,
+        "y": 1.6650568181818186
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": -125.9837852426988
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "Inertia Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.91675331668373

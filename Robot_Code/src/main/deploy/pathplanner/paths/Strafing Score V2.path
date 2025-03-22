@@ -36,8 +36,8 @@
         "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 3.2639508415644576,
-        "y": 0.2893996294809469
+        "x": 2.877280560661765,
+        "y": 0.175477869370403
       },
       "nextControl": null,
       "isLocked": false,
@@ -107,7 +107,7 @@
     "rotation": -125.9837852426988
   },
   "reversed": false,
-  "folder": "4 CORAL!!!",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 117.86088416675166

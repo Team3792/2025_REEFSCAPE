@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7673925994284159,
-        "y": 1.7625285132990087
+        "x": 1.7285760841568836,
+        "y": 2.374396572034555
       },
       "isLocked": false,
       "linkedName": "Intake 1 Right"
@@ -20,35 +20,39 @@
         "y": 2.8588141123803803
       },
       "prevControl": {
-        "x": 3.7992331069135123,
-        "y": 2.610638928900226
+        "x": 4.13930930555392,
+        "y": 1.7912871231008936
+      },
+      "nextControl": {
+        "x": 3.5060693208181566,
+        "y": 3.617195411383217
+      },
+      "isLocked": false,
+      "linkedName": "Dump 2 Bottom Right"
+    },
+    {
+      "anchor": {
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
+      },
+      "prevControl": {
+        "x": 0.8242945053998162,
+        "y": 1.9982260311351092
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Dump 2 Bottom Right"
+      "linkedName": "Intake 1 Right"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4290755208333337,
-      "rotationDegrees": 57.00000000000001
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 59.99999999999999
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Prime Position",
-      "waypointRelativePos": 0.35530085959884666,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Prime Position"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -59,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.91675331668373
+    "rotation": -125.9837852426988
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "Inertia Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -125.9837852426988

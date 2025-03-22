@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7673925994284159,
-        "y": 1.7625285132990087
+        "x": 1.6297702464991366,
+        "y": 2.123537430839802
       },
       "isLocked": false,
       "linkedName": "Intake 1 Right"
@@ -20,8 +20,8 @@
         "y": 2.8588141123803803
       },
       "prevControl": {
-        "x": 3.7992331069135123,
-        "y": 2.610638928900226
+        "x": 3.5610509962793264,
+        "y": 2.720166984805899
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,25 +30,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4290755208333337,
-      "rotationDegrees": 57.00000000000001
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 59.99999999999999
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Prime Position",
-      "waypointRelativePos": 0.35530085959884666,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Prime Position"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -62,7 +50,7 @@
     "rotation": 59.91675331668373
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "Inertia Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -125.9837852426988
