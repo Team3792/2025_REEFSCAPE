@@ -27,6 +27,8 @@ import frc.robot.Subsystems.Swerve.AlignToTagCommand;
 import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.Subsystems.Swerve.SwerveConstants;
+import frc.robot.Subsystems.LED.LED;
+import frc.robot.Subsystems.LED.LEDConstants;
 
 public class RobotContainer {
 
@@ -40,7 +42,7 @@ public class RobotContainer {
   Climb climb = new Climb();
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
-  // LED led = new LED();
+  LED led = new LED();
   public Swerve swerve = new Swerve();
 
   private final SendableChooser<Command> autoChooser;
@@ -53,25 +55,16 @@ public class RobotContainer {
     // SmartDashboard.putData("PDH", pdh);
 
     NamedCommands.registerCommand("IntakePosition",
-        coral.holdAngleCommand(CoralConstants.kIntakePosition).withTimeout(CoralConstants.kAutoIntakeTime));
+        coral.holdAngleCommand(CoralConstants.kIntakePosition, led).withTimeout(CoralConstants.kAutoIntakeTime));
     NamedCommands.registerCommand("Prime Position", coral.setAngleCommand(60));
     NamedCommands.registerCommand("DumpPosition",
-        coral.holdAngleCommand(110).withTimeout(CoralConstants.kAutoDumpTime));
+        coral.holdAngleCommand(110, led).withTimeout(CoralConstants.kAutoDumpTime));
 
-    // swerve.setDefaultCommand(
-    // new FunctionalCommand(
-    // () -> {},
-    // () -> swerve.driveForwardVoltage(SmartDashboard.getNumber("DriveVoltage",
-    // 0)),
-    // (a) -> {},
-    // () -> false,
-    // swerve)
-    // );
     climb.setNeutralMode(NeutralModeValue.Brake);
     configureDriverBindings(driver);
     configureOperatorBindings(operator);
 
-    // led.setDefaultCommand(led.setLEDPatternCommand(LEDConstants.kIdleLED));
+    led.setDefaultCommand(led.whileSetLEDPatternCommand(LEDConstants.kIdle));
 
     // Auto builder
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -89,17 +82,19 @@ public class RobotContainer {
     // Algae
     controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
+
     controller.R1()
       .and(algaeIntake.hasAlgae.negate())
       .and(swerve.isTipped.negate())
-      .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+      .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage, led));
+      
     controller.R1().and(swerve.isTipped).whileTrue(
-      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
+      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
       .alongWith(swerve.stopCommand())
       );
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
 
-    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
+    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led));
 
 
     // Swerve
@@ -119,9 +114,9 @@ public class RobotContainer {
 
   private void configureOperatorBindings(CommandPS5Controller controller) {
     // Coral
-    controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition));
-    controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition));
-    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition));
+    controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
+    controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition, led));
+    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition, led));
 
     // Climb
     controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
@@ -129,8 +124,8 @@ public class RobotContainer {
 
 
     //Manual Algae controler
-    controller.R2().whileTrue(algaeIntake.voltageCommand(1));
-    controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
+    controller.R2().whileTrue(algaeIntake.voltageCommand(AlgaeIntakeConstants.kManualVoltage));
+    controller.L2().whileTrue(algaeIntake.voltageCommand(-AlgaeIntakeConstants.kManualVoltage));
     controller.options().onTrue(Commands.runOnce(() -> {algaeIntake.manualMode = true;}, algaeIntake)); //TODO: change to toggle
   }
 

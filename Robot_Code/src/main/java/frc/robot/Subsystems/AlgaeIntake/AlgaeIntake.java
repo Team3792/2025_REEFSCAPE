@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Subsystems.LED.LED;
+import frc.robot.Subsystems.LED.LEDConstants;
 import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.HardwareMap;
 import frc.robot.Util.CANManager;
@@ -65,8 +67,13 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
   //applies voltage to drive motor
-  public Command intakeVoltageCommand(double voltage){
-    return this.startEnd(()->{setDriveVoltage(voltage);}, ()->{setDriveVoltage(0);});
+  public Command intakeVoltageCommand(double voltage, LED led){
+    return this.startEnd(
+      ()->{
+        setDriveVoltage(voltage);
+        led.setPattern(LEDConstants.kAlgaeManipulation);
+      }, 
+      ()->setDriveVoltage(0));
   }
 
   private double getAngleDegrees(){
@@ -87,14 +94,6 @@ public class AlgaeIntake extends SubsystemBase {
       (b) -> {},
       () -> false, 
       this);
-  }
-
-  //Deploys and runs intake until algae is detected
-  public Command deployAndIntakeCommand(){
-    return setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition)
-          .andThen(
-            intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage))
-          .onlyWhile(hasAlgae.negate());
   }
 
   public Command voltageCommand(double voltage){

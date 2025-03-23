@@ -15,12 +15,19 @@ public class LED extends SubsystemBase {
   
   public LED() {}
 
-  private void LEDPatterns(double LEDPattern){
-    led.set(LEDPattern);
+  public void setPattern(double ledPattern){
+    led.set(ledPattern);
   }
-  public Command setLEDPatternCommand(double LEDPattern){
-    return this.runOnce(()-> {LEDPatterns(LEDPattern);});
+  
+  public Command instantSetLEDPatternCommand(double ledPattern){
+    return this.runOnce(()-> setPattern(ledPattern));
     //return Commands.none();
+  }
+
+  public Command whileSetLEDPatternCommand(double ledPattern){
+    return this.startEnd(
+      () -> setPattern(ledPattern), 
+      () -> {});
   }
 
   @Override

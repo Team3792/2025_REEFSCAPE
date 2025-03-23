@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.Subsystems.LED.LED;
+import frc.robot.Subsystems.LED.LEDConstants;
 import frc.robot.Util.CANManager;
 
 
@@ -39,9 +41,13 @@ public class Coral extends SubsystemBase {
   }
 
   //Command that set angle and then returns to 0
-  public Command holdAngleCommand(double setPointDegrees){
+  public Command holdAngleCommand(double setPointDegrees, LED led){
     return Commands.startEnd(
-      () -> pidController.setGoal(setPointDegrees), 
+      () -> 
+        {
+          pidController.setGoal(setPointDegrees);
+          led.setPattern(LEDConstants.kCoralManipulation);
+        }, 
       () -> pidController.setGoal(0), 
       this);
   }
