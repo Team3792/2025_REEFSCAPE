@@ -43,6 +43,8 @@ public class SwerveConstants {
 
     public static final Translation2d kCenterAlign = new Translation2d(0.09, -0.18);
     public static final double kAutoAlignTranslationTolerance = 0.005;
+
+    public static final double kRobotTippedDegrees = 10;//how many degreees root needs to be pitched to be considered stuck on algae
 }
 
     

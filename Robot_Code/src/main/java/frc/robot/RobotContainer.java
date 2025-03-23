@@ -89,14 +89,20 @@ public class RobotContainer {
     // Algae
     controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
     controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-    controller.R1().and(algaeIntake.hasAlgae.negate())
-        .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+    controller.R1()
+      .and(algaeIntake.hasAlgae.negate())
+      .and(swerve.isTipped.negate())
+      .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage));
+    controller.R1().and(swerve.isTipped).whileTrue(
+      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage)
+      .alongWith(swerve.stopCommand())
+      );
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
+
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    // algaeIntake.hasAlgae.whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kHoldingVoltage));
+
 
     // Swerve
-
     swerve.setDefaultCommand(
         new ManualDriveCommand(swerve,
             () -> -controller.getLeftY(),
@@ -121,17 +127,13 @@ public class RobotContainer {
     controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
     controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
 
+
+    //Manual Algae controler
     controller.R2().whileTrue(algaeIntake.voltageCommand(1));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-1));
-   // controller.R2().whileTrue(algaeIntake.manualVoltageCommand)
+    controller.options().onTrue(Commands.runOnce(() -> {algaeIntake.manualMode = true;}, algaeIntake)); //TODO: change to toggle
+  }
 
-    controller.R1().and(algaeIntake.algaeTipped.negate()).whileTrue(algaeIntake.deployAndIntakeCommand());
-    contorller.R1().and(algaeIntake.algaeTipped).whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage));
-    controller.options().onTrue(Commands.runOnce(() -> {algaeIntake.manualMode = true;}, algaeIntake));
-    //when gyro says not right angle outtake on for algae manipulator; (this is langston's dumb ass code)
-  //Author:Reittenger et al Peer Reviewed by Aanya Shetty} 
 
   public void initiateBrakes(){
     climb.setNeutralMode(NeutralModeValue.Brake);

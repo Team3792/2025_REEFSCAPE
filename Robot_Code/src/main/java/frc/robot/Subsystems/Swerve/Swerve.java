@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
 import frc.robot.MatchData;
 import frc.robot.Subsystems.Vision.Vision;
@@ -37,19 +38,12 @@ public class Swerve extends SubsystemBase {
   SwerveModule[] modules = { frontLeft, frontRight, backLeft, backRight };
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
-  PigeoIMU pigeonIMU = new PigeonIMU(HardwareMap.kPigeon.id());
-
-  
 
   Vision vision = new Vision();
   Field2d field = new Field2d();
   Field2d tag = new Field2d();
 
-  
-
-  public double getPitch (){
-    return pigeonIMU.getPitch();
-  }
+  public Trigger isTipped = new Trigger(this::isTipped);
 
   SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveConstants.kKinematics,
@@ -135,6 +129,14 @@ public class Swerve extends SubsystemBase {
     for (SwerveModule m : modules) {
       m.stop();
     }
+  }
+
+  public Command stopCommand(){
+    return this.runOnce(this::stop);
+  }
+
+  public boolean isTipped(){
+    return pigeon.getPitch().getValueAsDouble() > SwerveConstants.kRobotTippedDegrees * Math.PI/180.0;
   }
 
   public Command driveForwardCommand(double voltage, double seconds) {

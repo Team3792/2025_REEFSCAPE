@@ -39,7 +39,6 @@ public class AlgaeIntake extends SubsystemBase {
   public boolean manualMode = false;
 
   public Trigger hasAlgae = new Trigger(this::hasAlgae);
-  public Trigger algaeTipped = new Trigger(this::robotTipped);
 
   
   public AlgaeIntake() {
@@ -54,9 +53,6 @@ public class AlgaeIntake extends SubsystemBase {
     CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
 
     
-  }
-  public boolean robotTipped(){
-    return swerve.getPitch() > AlgaeIntakeConstants.kRobotTippedThreshold;
   }
 
   //Returns true when there is algae in manipulator

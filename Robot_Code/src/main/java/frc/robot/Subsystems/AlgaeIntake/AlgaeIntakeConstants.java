@@ -33,8 +33,6 @@ public class AlgaeIntakeConstants {
         public static final double kEjectVoltage = -10;
         public static final double kHoldingVoltage = 1;
 
-        public static final double kRobotTippedThreshold = 5;//how many degreees root needs to be pitched to be considered stuck on algae
-
 
         public static TalonFXConfiguration getPivotConfig(){
             TalonFXConfiguration config = new TalonFXConfiguration();
