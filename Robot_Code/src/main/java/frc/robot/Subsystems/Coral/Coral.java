@@ -49,7 +49,7 @@ public class Coral extends SubsystemBase {
           led.setPattern(LEDConstants.kCoralManipulation);
         }, 
       () -> pidController.setGoal(0), 
-      this);
+      this, led);
   }
 
   //Returns the tilted forward angle of the bucket where 0 is vertical

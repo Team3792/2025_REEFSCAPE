@@ -28,7 +28,7 @@ public class HardwareMap {
     public static final CANAddress kclimbRight = new CANAddress(51, "climb right", 5);
 
     //LED
-    public static final int kLED = 60;
+    public static final int kLED = 0;
 
     //public static final CANADress 
     public record CANAddress(int id, String name, int index){}

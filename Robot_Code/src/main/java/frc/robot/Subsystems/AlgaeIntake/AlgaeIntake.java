@@ -68,12 +68,13 @@ public class AlgaeIntake extends SubsystemBase {
 
   //applies voltage to drive motor
   public Command intakeVoltageCommand(double voltage, LED led){
-    return this.startEnd(
-      ()->{
+    return Commands.startEnd(
+      () -> {
         setDriveVoltage(voltage);
         led.setPattern(LEDConstants.kAlgaeManipulation);
       }, 
-      ()->setDriveVoltage(0));
+      () -> setDriveVoltage(0),
+      this, led);
   }
 
   private double getAngleDegrees(){
@@ -114,6 +115,16 @@ public class AlgaeIntake extends SubsystemBase {
   
   public Command setPositionCommand(double position){
     return Commands.runOnce(() -> {setPosition(position);});
+  }
+
+  public Command manualModeCommand(LED led){
+    return Commands.startEnd(
+      () -> {
+        manualMode = true; 
+        led.setPattern(LEDConstants.kClimbMode);},
+      () -> {manualMode = false;}, 
+      led, this
+    );
   }
 
   private void runToPosition(){
