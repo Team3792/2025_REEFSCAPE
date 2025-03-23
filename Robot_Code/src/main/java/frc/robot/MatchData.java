@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 /** Add your docs here. */
 public class MatchData {
     public static final boolean kIsCompetition = true;
+    public static boolean error = false;
 
 
     //Returns whether the field should be flipped for red. If data is no available, assume blue.

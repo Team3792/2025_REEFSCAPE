@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.MatchData;
 import frc.robot.HardwareMap.CANAddress;
 
 import com.ctre.phoenix6.hardware.ParentDevice;
@@ -27,7 +28,7 @@ public class CANManager {
             if(address.index() < canConnections.get(i).address.index()){
                 canConnections.add(i, new CANConnection(address, connectedFunction));
                 return;
-            }
+           }
         }
             
         canConnections.add(new CANConnection(address, connectedFunction));
@@ -42,12 +43,13 @@ public class CANManager {
         for (CANConnection c : canConnections) {
             boolean connected = c.connectedFunction().getAsBoolean();
 
-            SmartDashboard.putBoolean("CANConnections/" + c.address.name() + " [" + c.address.index() +  "] - " + c.address.id(), connected);
+            SmartDashboard.putBoolean("CANConnections new/" + "[" + c.address.index() +  "] " + c.address.name() + " id:" + c.address.id(), connected);
             if(!connected){
                 allConnected = false;
             }
         }
         diconnectionAlert.set(!allConnected);
+        MatchData.error = !allConnected;
     }
 
     public record CANConnection(CANAddress address, BooleanSupplier connectedFunction) {

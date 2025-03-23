@@ -39,11 +39,12 @@ public class RobotContainer {
   CommandPS5Controller operator = new CommandPS5Controller(HardwareMap.kOperatorPort);
 
   // Create subsystems
+  Swerve swerve = new Swerve();
   Climb climb = new Climb();
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
   LED led = new LED();
-  public Swerve swerve = new Swerve();
+  
 
   private final SendableChooser<Command> autoChooser;
 
@@ -64,7 +65,7 @@ public class RobotContainer {
     configureDriverBindings(driver);
     configureOperatorBindings(operator);
 
-    led.setDefaultCommand(led.whileSetLEDPatternCommand(LEDConstants.kIdle));
+    led.setDefaultCommand(led.idleOrErrorCommand());
 
     // Auto builder
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(

@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     m_robotContainer = new RobotContainer();
     
-    addPeriodic(CANManager::updateConnections, 1, 1); //Update CANManager every second
+    addPeriodic(CANManager::updateConnections, 1); //Update CANManager every second
   }
 
   @Override

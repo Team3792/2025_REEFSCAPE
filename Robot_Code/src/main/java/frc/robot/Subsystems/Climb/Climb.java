@@ -45,6 +45,16 @@ public class Climb extends SubsystemBase {
     rightMotor.setPosition(0);
   }
 
+
+  //Rough way to stop at position for a single motor
+  private void setVoltageWithLimit(double voltage, double limitDegrees, TalonFX motor){
+    if(motor.getPosition().getValueAsDouble()*ClimbConstants.kRotationsToDegrees <= limitDegrees){
+      motor.setVoltage(voltage);
+    } else{
+      motor.setVoltage(0);
+    }
+  }
+
   public void setNeutralMode(NeutralModeValue neutralMode){
     leftMotor.setNeutralMode(neutralMode);
     rightMotor.setNeutralMode(neutralMode);

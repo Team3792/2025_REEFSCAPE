@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.HardwareMap;
 import frc.robot.MatchData;
 import frc.robot.Subsystems.Vision.Vision;
+import frc.robot.Util.CANManager;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
@@ -35,6 +36,7 @@ public class Swerve extends SubsystemBase {
   SwerveModule frontRight = new SwerveModule(ModuleConstants.kFrontRightConfig, "Front Right");
   SwerveModule backLeft = new SwerveModule(ModuleConstants.kBackLeftConfig, "Back left");
   SwerveModule backRight = new SwerveModule(ModuleConstants.kBackRightConfig, "Back right");
+
   SwerveModule[] modules = { frontLeft, frontRight, backLeft, backRight };
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
@@ -73,6 +75,8 @@ public class Swerve extends SubsystemBase {
 
     SmartDashboard.putData("Field Pose", field);
     SmartDashboard.putData("Tag Pose", tag);
+
+    CANManager.addConnection(HardwareMap.kPigeon, pigeon);
   }
 
   public void resetHeading() {

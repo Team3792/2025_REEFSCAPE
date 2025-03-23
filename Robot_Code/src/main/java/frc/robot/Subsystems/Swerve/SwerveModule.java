@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Swerve.ModuleConstants.ModuleConfig;
+import frc.robot.Util.CANManager;
 import edu.wpi.first.math.controller.PIDController;
 
 /** Add your docs here. */
@@ -23,10 +24,15 @@ public class SwerveModule {
     String name;
 
     public SwerveModule(ModuleConfig moduleConfig, String name){
-        drive = new TalonFX(moduleConfig.driveID());
-        turn = new TalonFX(moduleConfig.turnID());
-        encoder = new CANcoder(moduleConfig.encoderID());
+        drive = new TalonFX(moduleConfig.driveAddress().id());
+        turn = new TalonFX(moduleConfig.turnAddress().id());
+        encoder = new CANcoder(moduleConfig.encoderAddress().id());
         this.name = name;
+
+        //CAN Connections
+        CANManager.addConnection(moduleConfig.driveAddress(), drive);
+        CANManager.addConnection(moduleConfig.turnAddress(), turn);
+        CANManager.addConnection(moduleConfig.encoderAddress(), encoder);
 
         //Configure hardware
         drive.getConfigurator().apply(ModuleConstants.getDriveConfig());
@@ -40,7 +46,7 @@ public class SwerveModule {
 
         drive.setPosition(0);
         //turn.setPosition(0);
-        resetTurnEncoder();
+        resetTurnEncoder();  
     }
 
     private void resetTurnEncoder () {

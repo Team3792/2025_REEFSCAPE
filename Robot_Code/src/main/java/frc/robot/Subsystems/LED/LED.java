@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HardwareMap;
+import frc.robot.MatchData;
 
 public class LED extends SubsystemBase {
   /** Creates a new LED. */
@@ -28,6 +29,17 @@ public class LED extends SubsystemBase {
     return this.startEnd(
       () -> setPattern(ledPattern), 
       () -> {});
+  }
+
+  public Command idleOrErrorCommand(){
+    return this.run(
+      () -> {
+        if(MatchData.error){
+          setPattern(LEDConstants.kIdle);
+        } else {
+          setPattern(LEDConstants.kError);
+        }
+      });
   }
 
   @Override

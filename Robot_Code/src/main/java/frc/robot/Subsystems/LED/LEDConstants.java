@@ -7,8 +7,9 @@ package frc.robot.Subsystems.LED;
 /** Add your docs here. */
 public class LEDConstants {
     public static final double 
-        kIdle = 0.71, //(lawn green)
-        kAlgaeManipulation = -0.09, //(strobe blue)
-        kCoralManipulation = -0.05, //(strobe white)
-        kClimbMode = 0.61; //(red)
+        kIdle = 0.71, //lawn green
+        kAlgaeManipulation = -0.09, //strobe blue
+        kCoralManipulation = -0.05, //strobe white
+        kClimbMode = 0.61, //red
+        kError = -0.11; //strobe red
 }
