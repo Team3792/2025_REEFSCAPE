@@ -110,6 +110,7 @@ public class Swerve extends SubsystemBase {
             SwerveConstants.kTranslationPIDConstants,
             SwerveConstants.kRotationPIDConstants),
         config,
+        
         MatchData::flipFieldToRed,
         this);
 
@@ -118,6 +119,7 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("gyro pitch", pigeon.getPitch().getValueAsDouble());// * 180.0/Math.PI);
     updateFieldOdemetry();
     updateFieldVision();
     showRobotPose();
@@ -140,7 +142,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public boolean isTipped(){
-    return pigeon.getPitch().getValueAsDouble() > SwerveConstants.kRobotTippedDegrees * Math.PI/180.0;
+    return pigeon.getPitch().getValueAsDouble() > SwerveConstants.kRobotTippedDegrees; //* Math.PI/180.0;
   }
 
   public Command driveForwardCommand(double voltage, double seconds) {

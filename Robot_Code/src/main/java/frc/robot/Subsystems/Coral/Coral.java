@@ -40,6 +40,10 @@ public class Coral extends SubsystemBase {
     return this.runOnce(() -> pidController.setGoal(setPointDegrees));
   }
 
+  public void setAngle(double setPointDegrees){
+    pidController.setGoal(setPointDegrees);
+  }
+
   //Command that set angle and then returns to 0
   public Command holdAngleCommand(double setPointDegrees, LED led){
     return Commands.startEnd(

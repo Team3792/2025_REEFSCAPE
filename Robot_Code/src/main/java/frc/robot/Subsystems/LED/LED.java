@@ -35,9 +35,9 @@ public class LED extends SubsystemBase {
     return this.run(
       () -> {
         if(MatchData.error){
-          setPattern(LEDConstants.kIdle);
-        } else {
           setPattern(LEDConstants.kError);
+        } else {
+          setPattern(LEDConstants.kIdle);
         }
       });
   }

@@ -28,7 +28,12 @@
       "linkedName": "Intake 1 Right"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.38898756660746364,
+      "rotationDegrees": -135.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

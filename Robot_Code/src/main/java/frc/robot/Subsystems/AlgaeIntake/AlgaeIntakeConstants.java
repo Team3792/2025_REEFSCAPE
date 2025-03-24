@@ -30,7 +30,7 @@ public class AlgaeIntakeConstants {
         public static final double kPivotRatio = 25.0 * 26.0/15.0;
         
         public static final double kIntakeVoltage = 8;
-        public static final double kEjectVoltage = -10;
+        public static final double kEjectVoltage = -4;
         public static final double kHoldingVoltage = 1;
         public static final double kManualVoltage = 1.5;
 

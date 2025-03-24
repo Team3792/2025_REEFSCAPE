@@ -86,13 +86,13 @@ public class RobotContainer {
 
     controller.R1()
       .and(algaeIntake.hasAlgae.negate())
-      .and(swerve.isTipped.negate())
+      //.and(swerve.isTipped.negate())
       .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage, led));
 
-    controller.R1().and(swerve.isTipped).whileTrue(
-      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
-      .alongWith(swerve.stopCommand())
-      );
+    // controller.R1().and(swerve.isTipped).whileTrue(
+    //   algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
+    //   .alongWith(swerve.stopCommand())
+    //   );
     algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
 
     controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led));
@@ -127,7 +127,7 @@ public class RobotContainer {
     //Manual Algae controler
     controller.R2().whileTrue(algaeIntake.voltageCommand(AlgaeIntakeConstants.kManualVoltage));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-AlgaeIntakeConstants.kManualVoltage));
-    controller.options().toggleOnTrue(algaeIntake.manualModeCommand(led));
+    controller.options().toggleOnTrue(algaeIntake.manualModeCommand(led, coral));
   }
 
 

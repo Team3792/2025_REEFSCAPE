@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
 import frc.robot.Subsystems.Swerve.Swerve;
@@ -99,7 +100,7 @@ public class AlgaeIntake extends SubsystemBase {
 
   public Command voltageCommand(double voltage){
     //return Commands.startEnd(() -> pivot.setVoltage(voltage), () -> pivot.setVoltage(0), this);
-    return Commands.startEnd(() -> {manualVoltage = voltage;}, () -> {manualVoltage = 0;}, this);
+    return Commands.startEnd(() -> {manualVoltage = voltage;}, () -> {manualVoltage = 0;});
   
   }
 
@@ -117,13 +118,14 @@ public class AlgaeIntake extends SubsystemBase {
     return Commands.runOnce(() -> {setPosition(position);});
   }
 
-  public Command manualModeCommand(LED led){
+  public Command manualModeCommand(LED led, Coral coral){
     return Commands.startEnd(
       () -> {
         manualMode = true; 
+        coral.setAngle(90);
         led.setPattern(LEDConstants.kClimbMode);},
-      () -> {manualMode = false;}, 
-      led, this
+      () -> {manualMode = false; coral.setAngle(0);}, 
+      led, this, coral
     );
   }
 
