@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DumpPosition"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 2"
+            "pathName": "Strafing Score"
           }
         },
         {
@@ -31,19 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DumpPosition"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 2"
+            "pathName": "RI - BR - RI"
           }
         },
         {
@@ -55,19 +31,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path 3"
+            "pathName": "RI - BR - RI"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "DumpPosition"
+            "name": "IntakePosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RI - BR"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Other Autos",
+  "folder": "Inertia Auto",
   "choreoAuto": false
 }

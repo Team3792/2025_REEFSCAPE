@@ -12,7 +12,7 @@
         "y": 3.3520175184279357
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Strafing Start Right"
     },
     {
       "anchor": {
@@ -32,32 +32,16 @@
     },
     {
       "anchor": {
-        "x": 1.4702712115119485,
-        "y": 0.9685195025275732
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 2.1940740401834837,
-        "y": -0.35056690910150534
-      },
-      "nextControl": {
-        "x": 0.9922806109067852,
-        "y": 1.8396281541778163
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.338604377297794,
-        "y": 2.500372314453124
-      },
-      "prevControl": {
-        "x": 2.685043532390371,
-        "y": 2.7198736496083122
+        "x": 3.2639508415644576,
+        "y": 0.2893996294809469
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Intake 1 Right"
     }
   ],
   "rotationTargets": [
@@ -66,13 +50,50 @@
       "rotationDegrees": 122.70967284324703
     },
     {
-      "waypointRelativePos": 1.9175195312499995,
-      "rotationDegrees": -131.3735723858339
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": -120.4879648970006
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.4526601487523991,
+      "maxWaypointRelativePos": 1.1117292466410749,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Prime Position",
+      "waypointRelativePos": 0.09814359404990397,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Prime Position"
+        }
+      }
+    },
+    {
+      "name": "Down",
+      "waypointRelativePos": 0.41907089731285996,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Down"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -83,7 +104,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 79.48038175862439
+    "rotation": -125.9837852426988
   },
   "reversed": false,
   "folder": "4 CORAL!!!",

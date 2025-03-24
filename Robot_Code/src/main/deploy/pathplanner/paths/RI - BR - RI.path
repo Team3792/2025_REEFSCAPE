@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.864,
-        "y": 4.021
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.1904827952665435,
-        "y": 2.20749938246783
+        "x": 1.7173295454545454,
+        "y": 1.6539772727272726
       },
       "isLocked": false,
-      "linkedName": "Dump 1 Top"
+      "linkedName": "Intake 1 Right"
+    },
+    {
+      "anchor": {
+        "x": 3.769082181478434,
+        "y": 2.8588141123803803
+      },
+      "prevControl": {
+        "x": 3.978810711188256,
+        "y": 2.722748158425113
+      },
+      "nextControl": {
+        "x": 3.559353651768613,
+        "y": 2.994880066335647
+      },
+      "isLocked": false,
+      "linkedName": "Dump 2 Bottom Right"
     },
     {
       "anchor": {
@@ -20,30 +36,23 @@
         "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 1.396394051714048,
-        "y": 1.153610994944375
+        "x": 1.7173295454545454,
+        "y": 1.6650568181818186
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Intake 1 Right"
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [],
-  "pointTowardsZones": [],
-  "eventMarkers": [
+  "rotationTargets": [
     {
-      "name": "IntakePosition",
       "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "IntakePosition"
-        }
-      }
+      "rotationDegrees": 59.99999999999999
     }
   ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -57,10 +66,10 @@
     "rotation": -125.9837852426988
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "Inertia Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.5927678403193
+    "rotation": -125.9837852426988
   },
   "useDefaultConstraints": true
 }

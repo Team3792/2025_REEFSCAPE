@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Middle - Right Station - C"
+            "pathName": "Strafing Score"
           }
         },
         {
@@ -26,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "4 CORAL!!!",
+  "folder": "Other Autos",
   "choreoAuto": false
 }
