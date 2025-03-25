@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.037315099379596,
-        "y": 3.5210474350873158
+        "x": 7.299204545454545,
+        "y": 2.6190056818181815
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.421780354755249,
-        "y": 3.3520175184279357
+        "x": 6.683669800830199,
+        "y": 2.4499757651588014
       },
       "isLocked": false,
       "linkedName": "Strafing Start Right"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.2062600528492646,
-        "y": 0.9912870519301464
+        "x": 1.2165340909090911,
+        "y": 1.0534659090909075
       },
       "prevControl": {
-        "x": 2.877280560661765,
-        "y": 0.175477869370403
+        "x": 2.887554598721591,
+        "y": 0.2376567265311641
       },
       "nextControl": null,
       "isLocked": false,
@@ -110,7 +110,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 117.86088416675166
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

@@ -11,9 +11,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "IntakePosition"
+            "waitTime": 1.0
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RI - BR"
+            "pathName": "RI - BR - RI"
           }
         }
       ]

@@ -58,6 +58,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakePosition",
         coral.holdAngleCommand(CoralConstants.kIntakePosition, led).withTimeout(CoralConstants.kAutoIntakeTime));
     NamedCommands.registerCommand("Prime Position", coral.setAngleCommand(60));
+    NamedCommands.registerCommand("Down", coral.setAngleCommand(100));
+    NamedCommands.registerCommand("Up", coral.setAngleCommand(CoralConstants.kIntakePosition));
     NamedCommands.registerCommand("DumpPosition",
         coral.holdAngleCommand(110, led).withTimeout(CoralConstants.kAutoDumpTime));
 

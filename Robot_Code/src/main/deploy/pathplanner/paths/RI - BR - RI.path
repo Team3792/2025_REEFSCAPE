@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2062600528492646,
-        "y": 0.9912870519301464
+        "x": 1.2165340909090911,
+        "y": 1.0534659090909075
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7173295454545454,
-        "y": 1.6539772727272726
+        "x": 1.727603583514372,
+        "y": 1.7161561298880337
       },
       "isLocked": false,
       "linkedName": "Intake 1 Right"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.2062600528492646,
-        "y": 0.9912870519301464
+        "x": 1.2165340909090911,
+        "y": 1.0534659090909075
       },
       "prevControl": {
-        "x": 1.7173295454545454,
-        "y": 1.6650568181818186
+        "x": 1.727603583514372,
+        "y": 1.7272356753425797
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,13 +46,40 @@
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 0.5506216696269974,
+      "rotationDegrees": 59.99999999999999
+    },
+    {
       "waypointRelativePos": 1.0,
       "rotationDegrees": 59.99999999999999
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Down",
+      "waypointRelativePos": 0.5444319460067389,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Down"
+        }
+      }
+    },
+    {
+      "name": "Up",
+      "waypointRelativePos": 1.592800899887531,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Up"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
