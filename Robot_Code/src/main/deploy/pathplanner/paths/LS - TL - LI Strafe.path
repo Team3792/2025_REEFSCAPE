@@ -3,32 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3492424242424244,
-        "y": 7.137121212121212
+        "x": 7.20750921490617,
+        "y": 5.49623665997593
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7136363636363634,
-        "y": 7.284848484848485
+        "x": 5.406818181818181,
+        "y": 6.28030303030303
       },
       "isLocked": false,
-      "linkedName": "Intake 1 Left"
+      "linkedName": "Start Left"
     },
     {
       "anchor": {
-        "x": 3.7736022986341773,
-        "y": 5.209334741077551
+        "x": 5.185207644238006,
+        "y": 5.219478062734279
       },
       "prevControl": {
-        "x": 3.9917469187830976,
-        "y": 5.331453227393437
+        "x": 5.554586920138192,
+        "y": 5.128197936686683
       },
       "nextControl": {
-        "x": 3.4877970400044536,
-        "y": 5.049339479488446
+        "x": 4.638636363635608,
+        "y": 5.354545454552071
       },
       "isLocked": false,
-      "linkedName": "Dump 2 Bottom Left"
+      "linkedName": "Dump 1 Top Left"
     },
     {
       "anchor": {
@@ -36,8 +36,8 @@
         "y": 7.137121212121212
       },
       "prevControl": {
-        "x": 1.2278316914477658,
-        "y": 6.918581893090828
+        "x": 4.215151515151515,
+        "y": 5.975
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,20 +46,30 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.65270506108202,
-      "rotationDegrees": -52.64771197846977
-    },
-    {
       "waypointRelativePos": 1,
-      "rotationDegrees": -56.679252450103036
+      "rotationDegrees": -119.99999999999999
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.3828382838283901,
+      "maxWaypointRelativePos": 1.1661166116611497,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 650.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "Down",
-      "waypointRelativePos": 0.6996699669967009,
+      "waypointRelativePos": 0.5368536853685384,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -70,7 +80,7 @@
     },
     {
       "name": "Up",
-      "waypointRelativePos": 1.4741474147414702,
+      "waypointRelativePos": 1.7469746974697475,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -96,7 +106,7 @@
   "folder": "Inertia Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.95896279640525
+    "rotation": 178.8065105760181
   },
   "useDefaultConstraints": false
 }
