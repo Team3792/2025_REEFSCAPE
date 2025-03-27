@@ -155,6 +155,8 @@ public class Swerve extends SubsystemBase {
       System.out.println("vision present");
       fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(),
           fieldPoseEstimate.get().timestampSeconds);
+    } else {
+      System.out.println("vision not present");
     }
   }
 
