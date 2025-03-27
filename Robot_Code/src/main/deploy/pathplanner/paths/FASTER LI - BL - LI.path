@@ -1,0 +1,102 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3492424242424244,
+        "y": 7.137121212121212
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7136363636363634,
+        "y": 7.284848484848485
+      },
+      "isLocked": false,
+      "linkedName": "Intake 1 Left"
+    },
+    {
+      "anchor": {
+        "x": 3.7736022986341773,
+        "y": 5.209334741077551
+      },
+      "prevControl": {
+        "x": 3.9917469187830976,
+        "y": 5.331453227393437
+      },
+      "nextControl": {
+        "x": 3.4877970400044536,
+        "y": 5.049339479488446
+      },
+      "isLocked": false,
+      "linkedName": "Dump 2 Bottom Left"
+    },
+    {
+      "anchor": {
+        "x": 1.3492424242424244,
+        "y": 7.137121212121212
+      },
+      "prevControl": {
+        "x": 1.2278316914477658,
+        "y": 6.918581893090828
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Intake 1 Left"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.65270506108202,
+      "rotationDegrees": -52.64771197846977
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -56.679252450103036
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Down",
+      "waypointRelativePos": 0.7348734873487351,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Down"
+        }
+      }
+    },
+    {
+      "name": "Up",
+      "waypointRelativePos": 1.4741474147414702,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Up"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 650.0,
+    "nominalVoltage": 12.0,
+    "unlimited": true
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 126.95896279640525
+  },
+  "reversed": false,
+  "folder": "Inertia Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 126.95896279640525
+  },
+  "useDefaultConstraints": false
+}
