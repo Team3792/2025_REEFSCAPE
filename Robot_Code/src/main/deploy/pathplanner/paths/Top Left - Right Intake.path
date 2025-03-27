@@ -16,24 +16,19 @@
     },
     {
       "anchor": {
-        "x": 1.1666761363636364,
-        "y": 0.9736931818181813
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 0.9191792862186536,
-        "y": 0.8551497363754421
+        "x": 0.9587632027042818,
+        "y": 0.8727436064874072
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Intake 1 Right"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.30905861456483397,
-      "rotationDegrees": -135.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

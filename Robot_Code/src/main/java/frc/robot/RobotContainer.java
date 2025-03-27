@@ -72,7 +72,7 @@ public class RobotContainer {
     // Auto builder
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
         (stream) -> MatchData.kIsCompetition
-            ? stream.filter(auto -> auto.getName().startsWith("comp"))
+            ? stream.filter(auto -> auto.getName().startsWith("comp") || auto.getName().startsWith("exp"))
             : stream);
 
     // Absolute back up auto ---- Drive forward at voltage (literal constants here)

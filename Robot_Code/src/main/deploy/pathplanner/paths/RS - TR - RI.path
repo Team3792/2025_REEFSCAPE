@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.209090909090909,
-        "y": 2.6166666666666663
+        "x": 7.179545454545454,
+        "y": 2.5772727272727263
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.4289772727272725,
-        "y": 1.842329545454546
+        "x": 5.643181818181818,
+        "y": 2.1636363636363636
       },
       "isLocked": false,
       "linkedName": "Start Right "
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.1666761363636364,
-        "y": 0.9736931818181813
+        "x": 1.2062600528492646,
+        "y": 0.9912870519301464
       },
       "prevControl": {
-        "x": 6.508427447150735,
-        "y": 1.6474629480698535
+        "x": 6.5480113636363635,
+        "y": 1.6650568181818186
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +50,7 @@
       "rotationDegrees": 119.99999999999999
     },
     {
-      "waypointRelativePos": 1.7300177619893293,
+      "waypointRelativePos": 1.8708551483420703,
       "rotationDegrees": -135.0
     }
   ],
@@ -73,7 +73,7 @@
   "eventMarkers": [
     {
       "name": "Down",
-      "waypointRelativePos": 0.25670498084291193,
+      "waypointRelativePos": 0.43564356435642626,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -96,7 +96,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
@@ -112,5 +112,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
