@@ -14,6 +14,6 @@ public class VisionConstants {
     public static final String kCoralCameraName = "coral";
     public static final Transform3d kRobotToCamera = new Transform3d(
         new Translation3d(Units.inchesToMeters(14), 0.0, 0.0), //TODO: set these values to be acurate to how the camera is mounted
-        new Rotation3d(0, 15 *Math.PI / 180.0, 0)
+        new Rotation3d(0, 0, 0)
         );
 }

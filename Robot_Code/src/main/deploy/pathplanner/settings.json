@@ -14,7 +14,7 @@
     "STL Stop Autos"
   ],
   "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 500.0,
   "defaultMaxAngAccel": 650.0,
   "defaultNominalVoltage": 12.0,

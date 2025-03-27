@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2165340909090911,
-        "y": 1.0534659090909075
+        "x": 1.1666761363636364,
+        "y": 0.9736931818181813
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7776666374882424,
-        "y": 1.8247073704597698
+        "x": 1.7278086829427874,
+        "y": 1.7449346431870436
       },
       "isLocked": false,
       "linkedName": "Intake 1 Right"
@@ -51,7 +51,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
