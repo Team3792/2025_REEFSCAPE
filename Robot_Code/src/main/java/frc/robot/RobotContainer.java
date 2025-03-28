@@ -64,6 +64,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Up", coral.setAngleCommand(CoralConstants.kIntakePosition));
     NamedCommands.registerCommand("DumpPosition",
         coral.holdAngleCommand(110, led).withTimeout(CoralConstants.kAutoDumpTime));
+    NamedCommands.registerCommand("Climb Down", climb.toPositionCommand(3, 90));
 
     climb.setNeutralMode(NeutralModeValue.Brake);
     configureDriverBindings(driver);
@@ -140,6 +141,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return Commands.parallel(climb.toPositionCommand(3, 90), autoChooser.getSelected());
   }
 }

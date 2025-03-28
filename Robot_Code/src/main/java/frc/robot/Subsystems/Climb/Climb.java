@@ -45,6 +45,12 @@ public class Climb extends SubsystemBase {
     rightMotor.setPosition(0);
   }
 
+  public Command toPositionCommand(double voltage, double angleDegrees){
+    return this.run(
+      () -> {setVoltageWithLimit(voltage, angleDegrees, leftMotor);
+        setVoltageWithLimit(voltage, angleDegrees, rightMotor);});
+  }
+
 
   //Rough way to stop at position for a single motor
   private void setVoltageWithLimit(double voltage, double limitDegrees, TalonFX motor){
