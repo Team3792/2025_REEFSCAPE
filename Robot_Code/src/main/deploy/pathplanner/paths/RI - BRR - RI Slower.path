@@ -1,0 +1,116 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.249976516226182,
+        "y": 1.0499180071547551
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7610460088314628,
+        "y": 1.7126082279518815
+      },
+      "isLocked": false,
+      "linkedName": "Intake 1 Right"
+    },
+    {
+      "anchor": {
+        "x": 3.9409931038145145,
+        "y": 2.764139453474371
+      },
+      "prevControl": {
+        "x": 3.7356495181731693,
+        "y": 2.9067368301541525
+      },
+      "nextControl": {
+        "x": 4.14633668945586,
+        "y": 2.6215420767945896
+      },
+      "isLocked": false,
+      "linkedName": "Bottom Right Right"
+    },
+    {
+      "anchor": {
+        "x": 1.249976516226182,
+        "y": 1.0499180071547551
+      },
+      "prevControl": {
+        "x": 1.4597050459360053,
+        "y": 0.9138520531994871
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Intake 1 Right"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1,
+      "rotationDegrees": 59.99999999999999
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.2,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 650.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Down",
+      "waypointRelativePos": 1.4,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Down"
+        }
+      }
+    },
+    {
+      "name": "Up",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Up"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 650.0,
+    "nominalVoltage": 12.0,
+    "unlimited": true
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -125.9837852426988
+  },
+  "reversed": false,
+  "folder": "Inertia Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -125.9837852426988
+  },
+  "useDefaultConstraints": false
+}
