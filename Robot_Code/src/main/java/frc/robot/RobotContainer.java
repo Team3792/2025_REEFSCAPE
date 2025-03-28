@@ -131,7 +131,7 @@ public class RobotContainer {
     //Manual Algae controler
     controller.R2().whileTrue(algaeIntake.voltageCommand(AlgaeIntakeConstants.kManualVoltage));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-AlgaeIntakeConstants.kManualVoltage));
-    controller.options().toggleOnTrue(algaeIntake.manualModeCommand(led, coral));
+    controller.options().onTrue(algaeIntake.manualModeCommand(led, coral));
   }
 
 

@@ -124,7 +124,7 @@ public class AlgaeIntake extends SubsystemBase {
         manualMode = true; 
         coral.setAngle(90);
         led.setPattern(LEDConstants.kClimbMode);},
-      () -> {manualMode = false; coral.setAngle(0);}, 
+      () -> {},//manualMode = false; coral.setAngle(0);}, 
       led, this, coral
     );
   }
