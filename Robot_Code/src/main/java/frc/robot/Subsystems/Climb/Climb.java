@@ -48,7 +48,7 @@ public class Climb extends SubsystemBase {
   public Command toPositionCommand(double voltage, double angleDegrees){
     return this.run(
       () -> {setVoltageWithLimit(voltage, angleDegrees, leftMotor);
-        setVoltageWithLimit(voltage, angleDegrees, rightMotor);});
+        setVoltageWithLimit(voltage, angleDegrees, rightMotor);}).withTimeout(5);
   }
 
 
