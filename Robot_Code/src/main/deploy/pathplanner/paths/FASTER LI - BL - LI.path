@@ -60,7 +60,7 @@
       "minWaypointRelativePos": 0.585258525852585,
       "maxWaypointRelativePos": 1.324532453245342,
       "constraints": {
-        "maxVelocity": 3.0,
+        "maxVelocity": 2.0,
         "maxAcceleration": 1.5,
         "maxAngularVelocity": 500.0,
         "maxAngularAcceleration": 650.0,
@@ -73,7 +73,7 @@
   "eventMarkers": [
     {
       "name": "Down",
-      "waypointRelativePos": 0.6996699669967009,
+      "waypointRelativePos": 0.74,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
