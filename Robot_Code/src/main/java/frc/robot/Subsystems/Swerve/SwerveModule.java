@@ -103,7 +103,7 @@ public class SwerveModule {
     }
 
     public void showEncoderPosition(){
-        SmartDashboard.putNumber("Swerve/" + name + "/turn rotations", getTurnPosition().getRotations());
+        SmartDashboard.putNumber("Swerve/" + name + "/turn rotations", encoder.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Swerve/" + name + "/drive position meters", getDrivePosition());
     }
 }
