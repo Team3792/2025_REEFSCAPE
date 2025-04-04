@@ -112,9 +112,6 @@ public class RobotContainer {
             () -> controller.L3().getAsBoolean(),
             () -> controller.R3().getAsBoolean()));
 
-    controller.cross().whileTrue(
-        new AlignToTagCommand(swerve, SwerveConstants.kCenterAlign));
-
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
   }
 

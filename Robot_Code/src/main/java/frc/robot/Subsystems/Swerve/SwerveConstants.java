@@ -4,12 +4,21 @@
 
 package frc.robot.Subsystems.Swerve;
 
-import com.pathplanner.lib.config.PIDConstants;
+import static edu.wpi.first.units.Units.Rotation;
 
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.path.PathConstraints;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Util.PIDConfig;
+import frc.robot.Util.ProfiledPIDConfig;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 /** All swerve constants that don't relate to the modules*/
 public class SwerveConstants {
@@ -39,10 +48,12 @@ public class SwerveConstants {
     public static final PIDConstants kRotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
 
     public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(3.0, 0.0, 0.0);
-    public static final PIDConfig kRotationAlignPIDConfig = new PIDConfig(0.21, 0.0, 0.0);
+    public static final ProfiledPIDConfig kRotationAlignPIDConfig = new ProfiledPIDConfig(0.21, 0.0, 0.0, 360, 360);
+    public static final TrajectoryConfig kAutoAlignTrajectoryConfig = new TrajectoryConfig(2.0, 2.0);
+    public static final PathConstraints kAutoAlignPathConstraints = new PathConstraints(2.0, 2.0, 360, 720);
 
     public static final Translation2d kCenterAlign = new Translation2d(0.09, -0.18);
-    public static final double kAutoAlignTranslationTolerance = 0.005;
+    public static final Pose2d kAutoAlignTolerance = new Pose2d(0.005, 0.005, Rotation2d.fromDegrees(2));
 
     public static final double kRobotTippedDegrees = 10;//how many degreees root needs to be pitched to be considered stuck on algae
 }

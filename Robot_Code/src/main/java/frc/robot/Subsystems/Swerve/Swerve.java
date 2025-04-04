@@ -13,6 +13,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -20,6 +21,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +48,8 @@ public class Swerve extends SubsystemBase {
   Field2d tag = new Field2d();
 
   public Trigger isTipped = new Trigger(this::isTipped);
+
+  Pose2d previousPose;
 
   SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveConstants.kKinematics,
@@ -120,6 +124,7 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("gyro pitch", pigeon.getPitch().getValueAsDouble());// * 180.0/Math.PI);
+    previousPose = getFieldPose();
     updateFieldOdemetry();
     updateFieldVision();
     showRobotPose();
@@ -158,6 +163,10 @@ public class Swerve extends SubsystemBase {
     } else {
       System.out.println("vision not present");
     }
+  }
+
+  public Translation2d getVelocity(){
+    return getFieldPose().minus(previousPose).div(0.02).getTranslation(); //Could change to be based on timer;
   }
 
   private void updateFieldOdemetry() {
@@ -226,7 +235,7 @@ public class Swerve extends SubsystemBase {
         });
   }
 
-  private Pose2d getFieldPose() {
+  public Pose2d getFieldPose() {
     return fieldPoseEstimator.getEstimatedPosition();
   }
 
