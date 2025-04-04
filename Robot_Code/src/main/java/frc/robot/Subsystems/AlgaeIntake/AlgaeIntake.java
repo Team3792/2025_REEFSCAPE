@@ -78,6 +78,15 @@ public class AlgaeIntake extends SubsystemBase {
       this, led);
   }
 
+  public Command runRolllerCommand(double voltage){
+    return Commands.startEnd(
+      () -> {
+        setDriveVoltage(voltage);
+      },
+      () -> setDriveVoltage(0)
+    );
+  }
+
   private double getAngleDegrees(){
     return pivot.getPosition().getValueAsDouble()/AlgaeIntakeConstants.kPivotRatio * 360;
   }

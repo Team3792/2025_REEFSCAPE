@@ -133,9 +133,13 @@ public class RobotContainer {
     controller.R2().whileTrue(algaeIntake.voltageCommand(AlgaeIntakeConstants.kManualVoltage));
     controller.L2().whileTrue(algaeIntake.voltageCommand(-AlgaeIntakeConstants.kManualVoltage));
     controller.options().onTrue(algaeIntake.manualModeCommand(led, coral));
+
+    controller.R2().whileTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kCoralGroundIntakePosition)
+        .alongWith(algaeIntake.runRolllerCommand(3)));
+        
+    controller.L2().whileTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kCoralEjectPosition)
+        .alongWith(algaeIntake.runRolllerCommand(-3)));
   }
-
-
   public void initiateBrakes(){
     climb.setNeutralMode(NeutralModeValue.Brake);
   }

@@ -23,6 +23,8 @@ public class AlgaeIntakeConstants {
         public static final double kStowPosition = 0; //start of match position
         public static final double kAlgaeEjectPosition = 0; //score into processor position
         public static final double kAlgaeIntakePosition = 60;//intake from ground position
+        public static final double kCoralGroundIntakePosition = 100; //intake from ground coral position
+        public static final double kCoralEjectPosition = 20; //coral eject position
 
         //threshold for sensor to detect algae; less than threshold means theres algae
         public static final double kProximityMin = 250;
