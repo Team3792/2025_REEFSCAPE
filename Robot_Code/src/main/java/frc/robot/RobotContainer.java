@@ -113,6 +113,10 @@ public class RobotContainer {
             () -> controller.R3().getAsBoolean()));
 
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
+
+    //Auto aligning
+    controller.R2().whileTrue(new AlignToTagCommand(swerve, SwerveConstants.kRightAlign));
+    controller.L2().whileTrue(new AlignToTagCommand(swerve, SwerveConstants.kLeftAlign));
   }
 
   private void configureOperatorBindings(CommandPS5Controller controller) {

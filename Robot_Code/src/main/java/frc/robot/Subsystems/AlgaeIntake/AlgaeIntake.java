@@ -6,8 +6,6 @@ package frc.robot.Subsystems.AlgaeIntake;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import java.util.function.Consumer;
-
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.spark.SparkMax;
@@ -25,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Subsystems.Coral.Coral;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
-import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.HardwareMap;
 import frc.robot.Util.CANManager;
 

@@ -53,6 +53,8 @@ public class SwerveConstants {
     public static final PathConstraints kAutoAlignPathConstraints = new PathConstraints(2.0, 2.0, 360, 720);
 
     public static final Translation2d kCenterAlign = new Translation2d(0.09, -0.18);
+    public static final Pose2d kLeftAlign = new Pose2d(0.09, -0.18, Rotation2d.fromDegrees(180));
+    public static final Pose2d kRightAlign = new Pose2d(0.09, 0.18, Rotation2d.fromDegrees(180));
     public static final Pose2d kAutoAlignTolerance = new Pose2d(0.005, 0.005, Rotation2d.fromDegrees(2));
 
     public static final double kRobotTippedDegrees = 10;//how many degreees root needs to be pitched to be considered stuck on algae
