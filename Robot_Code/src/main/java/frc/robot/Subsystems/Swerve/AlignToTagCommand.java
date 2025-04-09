@@ -14,7 +14,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Util.FieldGeometry;
+import frc.robot.Subsystems.Vision.FieldGeometry;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlignToTagCommand extends Command {
@@ -22,6 +22,7 @@ public class AlignToTagCommand extends Command {
   Swerve swerve;
   Pose2d goalPoseField, goalPoseTag;
   Trajectory trajectory;
+  AlignType alignType;
   Timer timer = new Timer();
 
   HolonomicDriveController driveController = new HolonomicDriveController(
@@ -29,19 +30,23 @@ public class AlignToTagCommand extends Command {
     SwerveConstants.kTranslationAlignPIDConfig.getController(),
     SwerveConstants.kRotationAlignPIDConfig.getController());
 
-  public AlignToTagCommand(Swerve swerve, Pose2d tagRelativePose) {
+  public AlignToTagCommand(Swerve swerve, AlignType alignType, Pose2d tagRelativePose) {
     this.swerve = swerve;
     goalPoseTag = tagRelativePose;
     driveController.setTolerance(SwerveConstants.kAutoAlignTolerance);
-    
+    this.alignType = alignType;
 
     addRequirements(swerve);
+  }
+
+  public static enum AlignType{
+    Reef, CoralStation, Processor
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    goalPoseField = FieldGeometry.getTargetPose(swerve.getFieldPose(), goalPoseTag);
+    goalPoseField = FieldGeometry.getTargetPose(swerve.getFieldPose(), alignType, goalPoseTag);
     Pose2d startingPose = swerve.getTagPose();
     Translation2d fieldVelocity = swerve.getVelocity();
 
