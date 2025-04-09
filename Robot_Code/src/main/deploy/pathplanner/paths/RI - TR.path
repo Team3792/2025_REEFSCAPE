@@ -1,0 +1,80 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.67827868852459,
+        "y": 0.734375
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.67827868852459,
+        "y": 0.734375
+      },
+      "isLocked": false,
+      "linkedName": "Wait Intake Right"
+    },
+    {
+      "anchor": {
+        "x": 5.184160900123957,
+        "y": 2.8385833508187637
+      },
+      "prevControl": {
+        "x": 5.190676229508196,
+        "y": 1.8732069672131149
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Dump 1 Top Right"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.6956315289648622,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 650.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Down",
+      "waypointRelativePos": 0.927350427350427,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Down"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 650.0,
+    "nominalVoltage": 12.0,
+    "unlimited": true
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 120.79299999999999
+  },
+  "reversed": false,
+  "folder": "2 Coral Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -133.2285302599659
+  },
+  "useDefaultConstraints": true
+}

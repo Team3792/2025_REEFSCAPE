@@ -54,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 179.5927678403193
+    "rotation": -178.6411254547755
   },
   "reversed": false,
   "folder": "STL Stop Paths",

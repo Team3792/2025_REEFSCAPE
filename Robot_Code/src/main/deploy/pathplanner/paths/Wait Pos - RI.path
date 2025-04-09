@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.864,
-        "y": 4.021
+        "x": 2.9249999999999994,
+        "y": 0.734375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.0471144445082725,
-        "y": 5.755372486787683
+        "x": 3.1670133872456976,
+        "y": 0.797060886719928
       },
       "isLocked": false,
-      "linkedName": "Dump 1 Top"
+      "linkedName": "Wait Position Right"
     },
     {
       "anchor": {
-        "x": 1.3981737380041688,
-        "y": 7.0559339395917995
+        "x": 1.67827868852459,
+        "y": 0.734375
       },
       "prevControl": {
-        "x": 1.6082724412430456,
-        "y": 6.9204402685317
+        "x": 1.3800828127297362,
+        "y": 0.7184475177335052
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Intake 1 Left"
+      "linkedName": "Wait Intake Right"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.95896279640525
+    "rotation": -133.2285302599659
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "2 Coral Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.6411254547755
+    "rotation": -158.19859051364816
   },
   "useDefaultConstraints": true
 }

@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 5.864,
-        "y": 4.021
+        "y": 4.020982796469569
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.0471144445082725,
-        "y": 5.755372486787683
+        "x": 6.864,
+        "y": 4.020982796469569
       },
       "isLocked": false,
-      "linkedName": "Dump 1 Top"
+      "linkedName": "Dump Top"
     },
     {
       "anchor": {
-        "x": 1.3981737380041688,
-        "y": 7.0559339395917995
+        "x": 2.9249999999999994,
+        "y": 0.734375
       },
       "prevControl": {
-        "x": 1.6082724412430456,
-        "y": 6.9204402685317
+        "x": 5.310553278688524,
+        "y": 0.1589651639344265
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Intake 1 Left"
+      "linkedName": "Wait Position Right"
     }
   ],
   "rotationTargets": [],
@@ -38,17 +38,17 @@
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.95896279640525
+    "rotation": -158.19859051364816
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "2 Coral Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.6411254547755
+    "rotation": 179.5927678403193
   },
   "useDefaultConstraints": true
 }

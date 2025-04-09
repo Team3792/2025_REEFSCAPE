@@ -60,7 +60,7 @@
   "folder": "STL Stop Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.5927678403193
+    "rotation": -178.6411254547755
   },
   "useDefaultConstraints": true
 }
