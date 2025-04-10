@@ -3,35 +3,47 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8,
-        "y": 0.6039026596966903
+        "x": 5.184160900123957,
+        "y": 2.8385833508187637
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.042013387245698,
-        "y": 0.6665885464166184
+        "x": 6.49009578929228,
+        "y": 2.4294232536764695
       },
       "isLocked": false,
-      "linkedName": "Wait Position Right"
+      "linkedName": "Dump 1 Top Right"
     },
     {
       "anchor": {
-        "x": 1.6992909150973161,
-        "y": 0.742188218060295
+        "x": 3.8,
+        "y": 0.6039026596966903
       },
       "prevControl": {
-        "x": 1.4010950393024624,
-        "y": 0.7262607357938002
+        "x": 5.189576631433823,
+        "y": 0.11557653090532993
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Wait Intake Right"
+      "linkedName": "Wait Position Right"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Up",
+      "waypointRelativePos": 0.9004618522072938,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Up"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 1.5,
@@ -42,13 +54,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -131.01690329321315
+    "rotation": 179.60151131721173
   },
   "reversed": false,
   "folder": "2 Coral Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.60151131721173
+    "rotation": 120.79299999999999
   },
   "useDefaultConstraints": false
 }
