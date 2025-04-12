@@ -20,7 +20,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 public class VisionConstants {
     public static final String kCoralCameraName = "coral";
     public static final Transform3d kRobotToCamera = new Transform3d(
-        new Translation3d(Units.inchesToMeters(14), 0.0, 0.0), //TODO: set these values to be acurate to how the camera is mounted
+        new Translation3d(Units.inchesToMeters(14), 0.0, 0.262), //TODO: set these values to be acurate to how the camera is mounted
         new Rotation3d(0, 15.0 * Math.PI/180.0, 0)
         );
 

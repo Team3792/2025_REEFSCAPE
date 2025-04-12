@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.184160900123957,
-        "y": 2.8385833508187637
+        "x": 5.145340909090908,
+        "y": 2.868295454545454
       },
       "prevControl": {
-        "x": 4.947719872737194,
-        "y": 2.9197968999857102
+        "x": 4.908899881704145,
+        "y": 2.9495090037124005
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,13 +47,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Up",
+      "name": "Down",
       "waypointRelativePos": 0.6022672744721689,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Up"
+          "name": "Down"
         }
       }
     }

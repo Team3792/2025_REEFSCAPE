@@ -31,6 +31,7 @@ import frc.robot.HardwareMap;
 import frc.robot.MatchData;
 import frc.robot.Subsystems.Vision.Vision;
 import frc.robot.Util.CANManager;
+import edu.wpi.first.math.geometry.Transform2d;
 
 public class Swerve extends SubsystemBase {
   /** Creates a new Swerve. */
@@ -44,12 +45,13 @@ public class Swerve extends SubsystemBase {
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
 
   Vision vision = new Vision();
-  Field2d field = new Field2d();
-  Field2d tag = new Field2d();
+  Field2d visionField = new Field2d();
+  Field2d estimatorField = new Field2d();
 
   public Trigger isTipped = new Trigger(this::isTipped);
 
   Pose2d previousPose;
+  public ChassisSpeeds lastFieldRelativeCommand;
 
   SwerveDrivePoseEstimator fieldPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveConstants.kKinematics,
@@ -77,8 +79,8 @@ public class Swerve extends SubsystemBase {
     configureAutoBuilder();
     resetHeading(180);
 
-    SmartDashboard.putData("Field Pose", field);
-    SmartDashboard.putData("Tag Pose", tag);
+    SmartDashboard.putData("Vision Pose", visionField);
+    SmartDashboard.putData("Estimator Pose", estimatorField);
 
     CANManager.addConnection(HardwareMap.kPigeon, pigeon);
   }
@@ -127,7 +129,6 @@ public class Swerve extends SubsystemBase {
     previousPose = getFieldPose();
     updateFieldOdemetry();
     updateFieldVision();
-    showRobotPose();
   }
 
   public void driveForwardVoltage(double voltage) {
@@ -155,14 +156,17 @@ public class Swerve extends SubsystemBase {
   }
 
   private void updateFieldVision() {
-    var fieldPoseEstimate = vision.getFieldPoseEstimate();
+    var fieldPoseEstimate = vision.getFieldPoseEstimate(getFieldPose());
     if (fieldPoseEstimate.isPresent()) {
-      System.out.println("vision present");
-      fieldPoseEstimator.addVisionMeasurement(fieldPoseEstimate.get().estimatedPose.toPose2d(),
-          fieldPoseEstimate.get().timestampSeconds);
+      //System.out.println("vision present");
+      Pose2d visionPose = fieldPoseEstimate.get().estimatedPose.toPose2d();
+      visionField.setRobotPose(visionPose);
+      fieldPoseEstimator.addVisionMeasurement(visionPose, fieldPoseEstimate.get().timestampSeconds);
     } else {
-      System.out.println("vision not present");
+      //System.out.println("vision not present");
     }
+
+    estimatorField.setRobotPose(getFieldPose());
   }
 
   public Translation2d getVelocity(){
@@ -243,13 +247,6 @@ public class Swerve extends SubsystemBase {
     return tagPoseEstimator.getEstimatedPosition();
   }
 
-  private void showRobotPose() {
-    field.setRobotPose(getFieldPose());
-
-    tag.setRobotPose(getTagPose());
-
-  }
-
   public Rotation2d getPigeonRotation2d() {
     return pigeon.getRotation2d();
   }
@@ -273,6 +270,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void drive(ChassisSpeeds speeds, boolean fieldCentric) {
+    lastFieldRelativeCommand = speeds;
     speeds = ChassisSpeeds.discretize(speeds, 0.002);
 
     // Convert field centric to robot centric if fieldCentric is true

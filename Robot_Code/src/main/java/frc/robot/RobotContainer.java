@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.lang.reflect.Parameter;
+
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -17,6 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntake;
 import frc.robot.Subsystems.AlgaeIntake.AlgaeIntakeConstants;
@@ -28,6 +32,7 @@ import frc.robot.Subsystems.Swerve.AlignToTagCommand;
 import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.Subsystems.Swerve.SwerveConstants;
+import frc.robot.Subsystems.Swerve.AlignToTagCommand.AlignType;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
 
@@ -115,8 +120,12 @@ public class RobotContainer {
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
 
     //Auto aligning
-    controller.R2().whileTrue(new AlignToTagCommand(swerve, SwerveConstants.kRightAlign));
-    controller.L2().whileTrue(new AlignToTagCommand(swerve, SwerveConstants.kLeftAlign));
+    controller.R2().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
+    controller.R2().whileTrue(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCoralStationOffset));
+    controller.L2().whileTrue(new SequentialCommandGroup(
+      new AlignToTagCommand(swerve, AlignType.Processor, SwerveConstants.kkProcessorOffset),
+      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
+    ));
   }
 
   private void configureOperatorBindings(CommandPS5Controller controller) {
@@ -146,6 +155,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.parallel(climb.toPositionCommand(3, 90), autoChooser.getSelected());
+    return Commands.parallel(climb.toPositionCommand(0, 90), autoChooser.getSelected());
   }
 }
