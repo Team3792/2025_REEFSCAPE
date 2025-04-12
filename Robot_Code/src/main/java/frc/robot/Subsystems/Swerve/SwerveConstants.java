@@ -6,6 +6,8 @@ package frc.robot.Subsystems.Swerve;
 
 import static edu.wpi.first.units.Units.Rotation;
 
+import java.security.ProviderException;
+
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -47,15 +49,20 @@ public class SwerveConstants {
     public static final PIDConstants kTranslationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
     public static final PIDConstants kRotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
 
-    public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(3.0, 0.0, 0.0);
+
+    //Trajectory tuning
+    public static final PIDConfig kTranslationAlignPIDConfig = new PIDConfig(1.0, 0.01, 0.0);
     public static final ProfiledPIDConfig kRotationAlignPIDConfig = new ProfiledPIDConfig(0.21, 0.0, 0.0, 360, 360);
     public static final TrajectoryConfig kAutoAlignTrajectoryConfig = new TrajectoryConfig(2.0, 2.0);
     public static final PathConstraints kAutoAlignPathConstraints = new PathConstraints(2.0, 2.0, 360, 720);
 
-    public static final Translation2d kCenterAlign = new Translation2d(0.09, -0.18);
+    //Point auto align
+    public static final ProfiledPIDConfig kTranslationAlignConfid = new ProfiledPIDConfig(3, 0.01, 0, 4, 3);
+
+    public static final Pose2d kCenterAlign = new Pose2d(0.4, 0, Rotation2d.fromDegrees(180));
     public static final Pose2d kLeftAlign = new Pose2d(0.09, -0.18, Rotation2d.fromDegrees(180));
     public static final Pose2d kRightAlign = new Pose2d(0.09, 0.18, Rotation2d.fromDegrees(180));
-    public static final Pose2d kAutoAlignTolerance = new Pose2d(0.005, 0.005, Rotation2d.fromDegrees(2));
+    public static final Pose2d kAutoAlignTolerance = new Pose2d(0.02, 0.02, Rotation2d.fromDegrees(2));
 
     public static final double kRobotTippedDegrees = 10;//how many degreees root needs to be pitched to be considered stuck on algae
 }

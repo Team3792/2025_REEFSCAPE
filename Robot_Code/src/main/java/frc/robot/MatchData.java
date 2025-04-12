@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 /** Add your docs here. */
 public class MatchData {
-    public static final boolean kIsCompetition = true;
+    public static final boolean kIsCompetition = false;
     public static boolean error = false;
 
 

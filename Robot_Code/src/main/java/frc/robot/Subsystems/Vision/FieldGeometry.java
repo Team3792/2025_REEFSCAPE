@@ -19,26 +19,28 @@ import java.util.ArrayList;
 public class FieldGeometry {
     private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape); //TODO: add separate for welded and non welded
     private static List<AprilTag> tags = fieldLayout.getTags(); //TODO: maybe make this only reef tags?
-    private static List<AprilTag> reefTags = getTagGroup(VisionConstants.reefAprilTags);
-    private static List<AprilTag> coralStationTags = getTagGroup(VisionConstants.coralStationAprilTags);
-    private static List<AprilTag> processorTags = getTagGroup(VisionConstants.processorAprilTags);
+    private static List<Pose2d> reefTags = getTagGroup(VisionConstants.reefAprilTags);
+    private static List<Pose2d> coralStationTags = getTagGroup(VisionConstants.coralStationAprilTags);
+    private static List<Pose2d> processorTags = getTagGroup(VisionConstants.processorAprilTags);
 
     
     public static Pose2d getTargetPose(Pose2d robotPose, AlignType alignType, Pose2d tagRelativePose){
         Pose2d tagPose = getClosestTagPose(robotPose, alignType);
-        return tagRelativePose.plus(new Transform2d(tagPose.getX(), tagPose.getY(), tagPose.getRotation())); //Map tag relative onto field relative tag pose
+        //return tagRelativePose.plus(new Transform2d(tagPose.getX(), tagPose.getY(), tagPose.getRotation())); //Map tag relative onto field relative tag pose
+        return tagPose.plus(new Transform2d(tagRelativePose.getX(), tagRelativePose.getY(), tagRelativePose.getRotation())); //Map tag relative onto field relative tag pose
+
     }
 
-    public static List<AprilTag> getTagGroup(int groupIndecies[]){
-        List<AprilTag> tagGroup = new ArrayList<AprilTag>();
+    public static List<Pose2d> getTagGroup(int groupIndecies[]){
+        List<Pose2d> tagGroup = new ArrayList<Pose2d>();
         
         for(int i : groupIndecies){
-            tagGroup.add(tags.get(i));
+            tagGroup.add(fieldLayout.getTagPose(i).get().toPose2d());
         }
         return tagGroup;
     }
 
-    private static List<AprilTag> getTagGroup(AlignType alignType){
+    private static List<Pose2d> getTagGroup(AlignType alignType){
         switch (alignType){
             case Reef:
                 return reefTags;
@@ -54,14 +56,14 @@ public class FieldGeometry {
     
     private static Pose2d getClosestTagPose(Pose2d pose, AlignType alignType){ //Rewrite of a method in Pose2d already
         //Start min at the first tag
-        List<AprilTag> tagGroup = getTagGroup(alignType);
-        double minDistance = getPoseDistance(pose, tagGroup.get(0).pose.toPose2d());
-        Pose2d closestTagPose = tagGroup.get(0).pose.toPose2d();
+        List<Pose2d> tagGroup = getTagGroup(alignType);
+        double minDistance = getPoseDistance(pose, tagGroup.get(0));
+        Pose2d closestTagPose = tagGroup.get(0);
         double distance;
         Pose2d testTagPose;
         
         for(int i = 1; i < tagGroup.size(); i++){
-            testTagPose = tagGroup.get(i).pose.toPose2d();
+            testTagPose = tagGroup.get(i);
             distance = getPoseDistance(pose, testTagPose);
             if(distance < minDistance){
                 minDistance = distance;

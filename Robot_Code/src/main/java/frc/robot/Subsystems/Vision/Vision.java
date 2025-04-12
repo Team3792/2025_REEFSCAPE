@@ -29,12 +29,15 @@ public class Vision {
   /** Creates a new VisionSubsystem. */
   PhotonCamera coralCamera = new PhotonCamera(VisionConstants.kCoralCameraName);
   AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
-  PhotonPoseEstimator fieldPoseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, VisionConstants.kRobotToCamera);
+  PhotonPoseEstimator fieldPoseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, VisionConstants.kRobotToCamera);
 
-  public Vision() {}
+  public Vision() {
+    //fieldPoseEstimator.set
+  }
 
-  public Optional<EstimatedRobotPose> getFieldPoseEstimate(){
+  public Optional<EstimatedRobotPose> getFieldPoseEstimate(Pose2d lastPose){
     //List<PhotonPipelineResult> results = coralCamera.getAllUnreadResults();
+    fieldPoseEstimator.setReferencePose(lastPose);
     return fieldPoseEstimator.update(coralCamera.getLatestResult());
     // if(results.size() > 0){
     //     return fieldPoseEstimator.update(
