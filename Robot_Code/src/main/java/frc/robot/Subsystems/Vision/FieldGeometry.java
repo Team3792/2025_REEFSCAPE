@@ -54,7 +54,7 @@ public class FieldGeometry {
     }
 
     
-    private static Pose2d getClosestTagPose(Pose2d pose, AlignType alignType){ //Rewrite of a method in Pose2d already
+    public static Pose2d getClosestTagPose(Pose2d pose, AlignType alignType){ //Rewrite of a method in Pose2d already
         //Start min at the first tag
         List<Pose2d> tagGroup = getTagGroup(alignType);
         double minDistance = getPoseDistance(pose, tagGroup.get(0));

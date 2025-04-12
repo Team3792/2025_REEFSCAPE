@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.977279842601913,
-        "y": 0.2865431841678321
+        "y": 0.28654318416783203
       },
       "isLocked": false,
       "linkedName": "Wait Intake Right"
     },
     {
       "anchor": {
-        "x": 5.184160900123957,
-        "y": 2.8385833508187637
+        "x": 5.145340909090908,
+        "y": 2.868295454545454
       },
       "prevControl": {
-        "x": 5.70692569508353,
-        "y": 1.7267797133498175
+        "x": 5.668105704050482,
+        "y": 1.7564918170765078
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6956315289648622,
+      "minWaypointRelativePos": 0.93,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 2.0,
@@ -56,6 +56,17 @@
           "name": "Down"
         }
       }
+    },
+    {
+      "name": "Up",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Up"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -64,7 +75,7 @@
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
@@ -76,5 +87,5 @@
     "velocity": 0,
     "rotation": -131.01690329321315
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

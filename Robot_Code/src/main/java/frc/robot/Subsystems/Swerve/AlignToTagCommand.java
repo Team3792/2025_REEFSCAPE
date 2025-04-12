@@ -28,6 +28,7 @@ public class AlignToTagCommand extends Command {
   Pose2d goalPoseField, goalPoseTag;
   Trajectory trajectory;
   AlignType alignType;
+  Pose2d tagPose;
   ProfiledPIDController xController = SwerveConstants.kTranslationAlignConfid.getController();
   ProfiledPIDController yController = SwerveConstants.kTranslationAlignConfid.getController();
   ProfiledPIDController tController = SwerveConstants.kRotationAlignPIDConfig.getController();
@@ -66,12 +67,14 @@ public class AlignToTagCommand extends Command {
   @Override
   public void initialize() {
     Pose2d pose = swerve.getFieldPose();
-    goalPoseField = FieldGeometry.getTargetPose(pose, alignType, goalPoseTag);
-    field.setRobotPose(goalPoseField);
+    tagPose = FieldGeometry.getClosestTagPose(pose, alignType);
+    Pose2d tagRelativeRobotPose = pose.relativeTo(tagPose);
+    //goalPoseField = FieldGeometry.getTargetPose(pose, alignType, goalPoseTag);
+    field.setRobotPose(tagPose);
     //SmartDashboard.putData(goalP)
-    Pose2d startingPose = swerve.getTagPose();
-    ChassisSpeeds velocity = swerve.lastFieldRelativeCommand;
-    trajectory = TrajectoryGenerator.generateTrajectory(startingPose, List.of(goalPoseField.getTranslation()), goalPoseField, SwerveConstants.kAutoAlignTrajectoryConfig);
+    //Pose2d startingPose = swerve.getTagPose();
+    ChassisSpeeds velocity = ChassisSpeeds.fromRobotRelativeSpeeds(swerve.lastFieldRelativeCommand, tagPose.getRotation());
+    //trajectory = TrajectoryGenerator.generateTrajectory(startingPose, List.of(goalPoseField.getTranslation()), goalPoseField, SwerveConstants.kAutoAlignTrajectoryConfig);
     // trajectory = TrajectoryGenerator.generateTrajectory(new ControlVector(
     //   new double[] {
     //     startingPose.getX(), 
@@ -94,14 +97,16 @@ public class AlignToTagCommand extends Command {
    
       timer.reset();
 
-      xController.reset(pose.getX(), velocity.vxMetersPerSecond);
-      yController.reset(pose.getY(), velocity.vyMetersPerSecond);
-      tController.reset(pose.getRotation().getDegrees(), velocity.omegaRadiansPerSecond*180.0/Math.PI);//, fieldVelocity.getAngle().getDegrees());
+      xController.reset(tagRelativeRobotPose.getX(), velocity.vxMetersPerSecond);
+      yController.reset(tagRelativeRobotPose.getY(), velocity.vyMetersPerSecond);
+      tController.reset(tagRelativeRobotPose.getRotation().getDegrees(), velocity.omegaRadiansPerSecond*180.0/Math.PI);//, fieldVelocity.getAngle().getDegrees());
 
-      xController.setGoal(goalPoseField.getX());
-      yController.setGoal(goalPoseField.getY());
-      tController.setGoal(goalPoseField.getRotation().getDegrees());
+      xController.setGoal(goalPoseTag.getX());
+      yController.setGoal(goalPoseTag.getY());
+      tController.setGoal(goalPoseTag.getRotation().getDegrees());
   }
+
+
 
 
 
@@ -120,13 +125,17 @@ public class AlignToTagCommand extends Command {
   }
 
   private void pointExecute(){
-    Pose2d pose = swerve.getFieldPose();
+    Pose2d pose = swerve.getFieldPose().relativeTo(tagPose);
+    double xOut = xController.calculate(pose.getX());
+    // if(Math.abs(pose.getY())>0.5){
+    //   xOut = 0.5;
+    // }
     ChassisSpeeds fieldChassisSpeeds = new ChassisSpeeds(
-      xController.calculate(pose.getX()),
+      xOut,
       yController.calculate(pose.getY()),
       tController.calculate(pose.getRotation().getDegrees())
     );
-    ChassisSpeeds robotChassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldChassisSpeeds, swerve.getFieldPose().getRotation());
+    ChassisSpeeds robotChassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldChassisSpeeds, pose.getRotation());
     swerve.drive(robotChassisSpeeds, false);
   }
 
@@ -142,6 +151,6 @@ public class AlignToTagCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;//xController.atGoal() && yController.atGoal() && tController.atGoal();//false; //driveController.atReference();
+    return xController.atGoal() && yController.atGoal() && tController.atGoal();//false; //driveController.atReference();
   }
 }

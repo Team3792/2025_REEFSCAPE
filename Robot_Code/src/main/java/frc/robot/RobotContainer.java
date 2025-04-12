@@ -120,9 +120,12 @@ public class RobotContainer {
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
 
     //Auto aligning
-    controller.R2().whileTrue(
-      new ParallelCommandGroup(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCenterAlign), coral.holdAngleCommand(CoralConstants.kIntakePosition, led)));
-    controller.L2().whileTrue(new AlignToTagCommand(swerve, AlignType.Reef, SwerveConstants.kLeftAlign));
+    controller.R2().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
+    controller.R2().whileTrue(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCoralStationOffset));
+    controller.L2().whileTrue(new SequentialCommandGroup(
+      new AlignToTagCommand(swerve, AlignType.Processor, SwerveConstants.kkProcessorOffset),
+      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
+    ));
   }
 
   private void configureOperatorBindings(CommandPS5Controller controller) {
