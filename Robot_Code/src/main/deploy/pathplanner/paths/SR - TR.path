@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6992909150973161,
-        "y": 0.742188218060295
+        "x": 7.1513628791360295,
+        "y": 0.738617661420036
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.977279842601913,
-        "y": 0.2865431841678321
+        "x": 7.442188227146451,
+        "y": 0.5671453897182873
       },
       "isLocked": false,
-      "linkedName": "Wait Intake Right"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 2.8385833508187637
       },
       "prevControl": {
-        "x": 5.70692569508353,
-        "y": 1.7267797133498175
+        "x": 4.947719872737194,
+        "y": 2.9197968999857102
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6956315289648622,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 0.7161183421305183,
+      "maxWaypointRelativePos": 0.887333553262956,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 1.5,
@@ -47,13 +47,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Down",
-      "waypointRelativePos": 0.927350427350427,
+      "name": "Up",
+      "waypointRelativePos": 0.6022672744721689,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Down"
+          "name": "Up"
         }
       }
     }
@@ -64,7 +64,7 @@
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 650.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 0,
@@ -74,7 +74,7 @@
   "folder": "2 Coral Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -131.01690329321315
+    "rotation": 179.3740662265937
   },
   "useDefaultConstraints": true
 }
