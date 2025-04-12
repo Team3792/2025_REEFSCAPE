@@ -40,7 +40,7 @@ public class SwerveConstants {
     public static final double kDeadBandValue = 0.08;
 
     public static final double kMaxLinearVelocity = 4.0; //Left stick
-    public static final double kMaxOmega = 4.0; //Right stick 
+    public static final double kMaxOmega = 6.0; //Right stick 
 
     public static final double kSlowLinearVelocity = 1.0;
     public static final double kSlowOmega = 1.0;
@@ -60,11 +60,13 @@ public class SwerveConstants {
     public static final ProfiledPIDConfig kTranslationAlignConfid = new ProfiledPIDConfig(3, 0.01, 0, 4, 3);
 
     public static final Pose2d kCoralStationOffset = new Pose2d(0.4, 0, Rotation2d.fromDegrees(180));
-    public static final Pose2d kkProcessorOffset = new Pose2d(0.3, 0, Rotation2d.fromDegrees(0));
+    public static final Pose2d kProcessorOffset = new Pose2d(0.5, 0, Rotation2d.fromDegrees(0));
 
     public static final Pose2d kLeftAlign = new Pose2d(0.09, -0.18, Rotation2d.fromDegrees(180));
     public static final Pose2d kRightAlign = new Pose2d(0.09, 0.18, Rotation2d.fromDegrees(180));
     public static final Pose2d kAutoAlignTolerance = new Pose2d(0.02, 0.02, Rotation2d.fromDegrees(2));
+    public static final Pose2d kProcessorAlignTolerance = new Pose2d(0.05, 0.05, Rotation2d.fromDegrees(5));
+
 
     public static final double kRobotTippedDegrees = 10;//how many degreees root needs to be pitched to be considered stuck on algae
 }

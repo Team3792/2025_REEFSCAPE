@@ -42,16 +42,16 @@ public class AlignToTagCommand extends Command {
 
   Field2d field = new Field2d();
 
-  public AlignToTagCommand(Swerve swerve, AlignType alignType, Pose2d tagRelativePose) {
+  public AlignToTagCommand(Swerve swerve, AlignType alignType, Pose2d tagRelativePose, Pose2d tolerance) {
     this.swerve = swerve;
     goalPoseTag = tagRelativePose;
 
 
     driveController.setTolerance(SwerveConstants.kAutoAlignTolerance);
 
-    xController.setTolerance(SwerveConstants.kAutoAlignTolerance.getX());
-    yController.setTolerance(SwerveConstants.kAutoAlignTolerance.getY());
-    tController.setTolerance(SwerveConstants.kAutoAlignTolerance.getRotation().getDegrees());
+    xController.setTolerance(tolerance.getX());
+    yController.setTolerance(tolerance.getY());
+    tController.setTolerance(tolerance.getRotation().getDegrees());
 
     tController.enableContinuousInput(-180, 180);
     this.alignType = alignType;

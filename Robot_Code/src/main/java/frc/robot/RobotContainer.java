@@ -121,9 +121,9 @@ public class RobotContainer {
 
     //Auto aligning
     controller.R2().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
-    controller.R2().whileTrue(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCoralStationOffset));
+    controller.R2().whileTrue(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCoralStationOffset, SwerveConstants.kAutoAlignTolerance));
     controller.L2().whileTrue(new SequentialCommandGroup(
-      new AlignToTagCommand(swerve, AlignType.Processor, SwerveConstants.kkProcessorOffset),
+      new AlignToTagCommand(swerve, AlignType.Processor, SwerveConstants.kProcessorOffset, SwerveConstants.kProcessorAlignTolerance),
       algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
     ));
   }
