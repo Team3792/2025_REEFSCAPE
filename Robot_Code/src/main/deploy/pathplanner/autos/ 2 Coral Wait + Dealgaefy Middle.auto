@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Middle - Top"
+            "pathName": "Copy of Middle - Top"
           }
         },
         {
@@ -19,19 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Dealgaefy Middle"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Top - Wait Pos"
+            "pathName": "Copy of Top - Wait Pos"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
