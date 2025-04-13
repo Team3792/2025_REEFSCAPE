@@ -19,7 +19,7 @@ import frc.robot.MatchData;
 
 /** Add your docs here. */
 public class AutoManager {
-    public static SendableChooser<Command> chooser;
+    public static SendableChooser<Command> chooser = new SendableChooser<>();
 
     public static void initAutoChooser() {
         if (!AutoBuilder.isConfigured()) {
