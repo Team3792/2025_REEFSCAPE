@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 5.864,
-        "y": 4.021
+        "y": 3.8
       },
       "prevControl": {
         "x": 6.114,
-        "y": 4.021
+        "y": 3.8
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Dump 1 Top"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

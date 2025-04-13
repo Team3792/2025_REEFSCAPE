@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.184254006778492,
-        "y": 4.0
+        "x": 5.864,
+        "y": 3.8
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.934254006778492,
-        "y": 4.0
+        "x": 5.191085276884191,
+        "y": 3.768378446691176
       },
       "isLocked": false,
-      "linkedName": "Start Mid"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.864,
-        "y": 4.021
+        "x": 6.603513470818014,
+        "y": 3.8
       },
       "prevControl": {
-        "x": 6.114,
-        "y": 4.021
+        "x": 6.3565777609979515,
+        "y": 3.839022496276658
+      },
+      "nextControl": {
+        "x": 8.089986719798029,
+        "y": 3.565097170976436
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.8,
+        "y": 0.6039026596966903
+      },
+      "prevControl": {
+        "x": 6.919864789177389,
+        "y": 0.2389497644761025
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Dump 1 Top"
+      "linkedName": "Wait Position Right"
     }
   ],
   "rotationTargets": [],
@@ -33,13 +49,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Prime Position",
-      "waypointRelativePos": 0.3563777994157774,
+      "name": "Up",
+      "waypointRelativePos": 0.047714731285988465,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Prime Position"
+          "name": "Up"
         }
       }
     }
@@ -54,13 +70,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.6411254547755
+    "rotation": 179.60151131721173
   },
   "reversed": false,
-  "folder": "STL Stop Paths",
+  "folder": "2 Coral Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.23435309131273
+    "rotation": -178.6411254547755
   },
   "useDefaultConstraints": false
 }
