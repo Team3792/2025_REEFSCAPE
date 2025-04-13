@@ -33,6 +33,7 @@ import frc.robot.Subsystems.Swerve.ManualDriveCommand;
 import frc.robot.Subsystems.Swerve.Swerve;
 import frc.robot.Subsystems.Swerve.SwerveConstants;
 import frc.robot.Subsystems.Swerve.AlignToTagCommand.AlignType;
+import frc.robot.Util.AutoManager;
 import frc.robot.Subsystems.LED.LED;
 import frc.robot.Subsystems.LED.LEDConstants;
 
@@ -50,9 +51,6 @@ public class RobotContainer {
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
   LED led = new LED();
-  
-
-  private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     CameraServer.startAutomaticCapture();
@@ -77,16 +75,7 @@ public class RobotContainer {
 
     led.setDefaultCommand(led.idleOrErrorCommand());
 
-    // Auto builder
-    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-        (stream) -> MatchData.kIsCompetition
-            ? stream.filter(auto -> auto.getName().startsWith("comp") || auto.getName().startsWith("exp"))
-            : stream);
-
-    // Absolute back up auto ---- Drive forward at voltage (literal constants here)
-    autoChooser.addOption("***Drive Forward***", swerve.driveForwardCommand(1.0, 2.0));
-
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    AutoManager.initAutoChooser();
   }
 
   private void configureDriverBindings(CommandPS5Controller controller) {
@@ -155,6 +144,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.parallel(climb.toPositionCommand(0, 90), autoChooser.getSelected());
+    return Commands.parallel(climb.toPositionCommand(0, 90), AutoManager.getAuto());
   }
 }
