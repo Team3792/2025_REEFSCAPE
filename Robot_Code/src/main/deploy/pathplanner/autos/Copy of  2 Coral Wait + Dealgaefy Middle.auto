@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Middle - Top"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DumpPosition"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Top - Wait Pos"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

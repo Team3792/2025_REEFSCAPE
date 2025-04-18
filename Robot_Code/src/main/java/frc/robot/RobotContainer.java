@@ -155,6 +155,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.parallel(climb.toPositionCommand(0, 90), autoChooser.getSelected());
+    return Commands.parallel(climb.toPositionCommand(3, 90), autoChooser.getSelected());
   }
 }

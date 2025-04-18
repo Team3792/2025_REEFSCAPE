@@ -10,6 +10,9 @@ import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -83,6 +86,7 @@ public class Swerve extends SubsystemBase {
     SmartDashboard.putData("Estimator Pose", estimatorField);
 
     CANManager.addConnection(HardwareMap.kPigeon, pigeon);
+    fieldPoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(1.2, 1.2, 2.0));
   }
 
   public void resetHeading() {

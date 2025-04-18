@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.185207644238006,
-        "y": 5.219478062734279
+        "x": 5.075252525252525,
+        "y": 5.041414141414141
       },
       "prevControl": {
-        "x": 5.406818181818181,
-        "y": 5.059090909090909
+        "x": 5.2968630628327,
+        "y": 4.881026987770771
       },
       "nextControl": {
-        "x": 4.97903251041523,
-        "y": 5.368694084801427
+        "x": 4.869077391429749,
+        "y": 5.1906301634812895
       },
       "isLocked": false,
       "linkedName": "Dump 1 Top Left"
@@ -69,7 +69,7 @@
   "eventMarkers": [
     {
       "name": "Down",
-      "waypointRelativePos": 0.44,
+      "waypointRelativePos": 0.52,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

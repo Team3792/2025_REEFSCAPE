@@ -25,11 +25,11 @@ import edu.wpi.first.math.geometry.Translation3d;
 import org.photonvision.targeting.PhotonPipelineResult;
 import java.util.List;
 
-public class Vision {
-  /** Creates a new VisionSubsystem. */
+public class Vision { 
+  /** Creates a new VisionSub1system. */
   PhotonCamera coralCamera = new PhotonCamera(VisionConstants.kCoralCameraName);
   AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
-  PhotonPoseEstimator fieldPoseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, VisionConstants.kRobotToCamera);
+  PhotonPoseEstimator fieldPoseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, VisionConstants.kRobotToCamera);
 
   public Vision() {
     //fieldPoseEstimator.set
