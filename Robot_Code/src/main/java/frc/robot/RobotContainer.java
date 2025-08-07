@@ -91,23 +91,8 @@ public class RobotContainer {
 
   private void configureDriverBindings(CommandPS5Controller controller) {
     // Algae
-    controller.R1().onTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kAlgaeIntakePosition));
-    controller.R1().onFalse(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition));
-
-    controller.R1()
-      .and(algaeIntake.hasAlgae.negate())
-      //.and(swerve.isTipped.negate())
-      .whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kIntakeVoltage, led));
-
-    // controller.R1().and(swerve.isTipped).whileTrue(
-    //   algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
-    //   .alongWith(swerve.stopCommand())
-    //   );
-    algaeIntake.setDefaultCommand(algaeIntake.getHoldCommand());
-
-    controller.L1().whileTrue(algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led));
-
-
+    controller.R1().whileTrue(algaeIntake.runRolllerCommand(3));
+    controller.L1().whileTrue(algaeIntake.runRolllerCommand(-3));
     // Swerve
     swerve.setDefaultCommand(
         new ManualDriveCommand(swerve,

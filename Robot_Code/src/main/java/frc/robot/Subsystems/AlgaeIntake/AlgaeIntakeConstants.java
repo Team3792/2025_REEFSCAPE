@@ -47,7 +47,7 @@ public class AlgaeIntakeConstants {
         public static SparkMaxConfig getDriveConfig(){
             SparkMaxConfig config = new SparkMaxConfig();
             config
-                .smartCurrentLimit(60, 30)
+                .smartCurrentLimit(10, 10)
                 .inverted(true)
                 .idleMode(IdleMode.kBrake);
 
