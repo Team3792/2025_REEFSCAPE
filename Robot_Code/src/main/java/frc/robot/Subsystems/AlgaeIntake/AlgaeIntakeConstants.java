@@ -4,9 +4,11 @@
 
 package frc.robot.Subsystems.AlgaeIntake;
 
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -15,26 +17,16 @@ import frc.robot.Util.ProfiledPIDConfig;
 /** Add your docs here. */
 public class AlgaeIntakeConstants {
         //pid+g values for postionVoltage control
-        public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 720, 1440);
-        public static final double kG = 0.3;
+        public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 25, 25);
+        public static final double kG = 1;
         public static final double kVelocityFF = 0.0;
 
         //positions for manipulator
-        public static final double kStowPosition = 0; //start of match position
-        public static final double kAlgaeEjectPosition = 0; //score into processor position
-        public static final double kAlgaeIntakePosition = 60;//intake from ground position
-        public static final double kCoralGroundIntakePosition = 100; //intake from ground coral position
-        public static final double kCoralEjectPosition = 20; //coral eject position
-
-        //threshold for sensor to detect algae; less than threshold means theres algae
-        public static final double kProximityMin = 250;
+        public static final double kStowPosition = 70; //start of match position
+        public static final double kUprightPosition = 110;
 
         public static final double kPivotRatio = 25.0 * 26.0/15.0;
-        
-        public static final double kIntakeVoltage = 8;
-        public static final double kEjectVoltage = -4;
-        public static final double kHoldingVoltage = 1;
-        public static final double kManualVoltage = 1.5;
+        public static final double kCuttingVoltage = 3;
 
 
         public static TalonFXConfiguration getPivotConfig(){
@@ -50,6 +42,13 @@ public class AlgaeIntakeConstants {
                 .smartCurrentLimit(10, 10)
                 .inverted(true)
                 .idleMode(IdleMode.kBrake);
+
+            // config.softLimit
+            //     .forwardSoftLimitEnabled(true)
+            //     .forwardSoftLimit(10)
+            //     .reverseSoftLimitEnabled(true)
+            //     .reverseSoftLimit(0);
+            
 
             return config;
         }

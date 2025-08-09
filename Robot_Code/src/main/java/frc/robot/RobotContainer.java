@@ -50,7 +50,9 @@ public class RobotContainer {
   AlgaeIntake algaeIntake = new AlgaeIntake();
   Coral coral = new Coral();
   LED led = new LED();
-  
+  Command stowCommand = coral.setAngleCommand(90).alongWith(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition)).alongWith(algaeIntake.closeScissorsCommand());
+  Command loadCommand = coral.setAngleCommand(0).alongWith(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kUprightPosition)).alongWith(algaeIntake.openScissorsCommand());
+
 
   private final SendableChooser<Command> autoChooser;
 
@@ -73,7 +75,7 @@ public class RobotContainer {
 
     climb.setNeutralMode(NeutralModeValue.Brake);
     configureDriverBindings(driver);
-    configureOperatorBindings(operator);
+    configureOperatorBindings(driver);
 
     led.setDefaultCommand(led.idleOrErrorCommand());
 
@@ -90,9 +92,6 @@ public class RobotContainer {
   }
 
   private void configureDriverBindings(CommandPS5Controller controller) {
-    // Algae
-    controller.R1().whileTrue(algaeIntake.runRolllerCommand(3));
-    controller.L1().whileTrue(algaeIntake.runRolllerCommand(-3));
     // Swerve
     swerve.setDefaultCommand(
         new ManualDriveCommand(swerve,
@@ -104,42 +103,29 @@ public class RobotContainer {
 
     controller.options().onTrue(Commands.runOnce(() -> swerve.resetHeading(), swerve));
 
-    //Auto aligning
-    controller.R2().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
-    controller.R2().whileTrue(new AlignToTagCommand(swerve, AlignType.CoralStation, SwerveConstants.kCoralStationOffset, SwerveConstants.kAutoAlignTolerance));
-    controller.L2().whileTrue(new SequentialCommandGroup(
-      new AlignToTagCommand(swerve, AlignType.Processor, SwerveConstants.kProcessorOffset, SwerveConstants.kProcessorAlignTolerance),
-      algaeIntake.intakeVoltageCommand(AlgaeIntakeConstants.kEjectVoltage, led)
-    ));
+
   }
 
   private void configureOperatorBindings(CommandPS5Controller controller) {
-    // Coral
-    controller.triangle().whileTrue(coral.holdAngleCommand(CoralConstants.kIntakePosition, led));
-    controller.square().whileTrue(coral.holdAngleCommand(CoralConstants.kMidPosition, led));
-    controller.cross().whileTrue(coral.holdAngleCommand(CoralConstants.kDumpPosition, led));
+     // Algae
+    //  controller.R1().whileTrue(algaeIntake.runRolllerCommand(3));
+    controller.R1().onTrue(algaeIntake.closeScissorsCommand());
+    controller.R1().onFalse(algaeIntake.openScissorsCommand());
 
-    // Climb
-    controller.povUp().whileTrue(climb.voltageClimbCommand(ClimbConstants.kUpVoltage));
-    controller.povDown().whileTrue(climb.voltageClimbCommand(ClimbConstants.kDownVoltage));
+    controller.L1().onTrue(loadCommand);
+    controller.L2().onTrue(stowCommand);
+
+    coral.setDefaultCommand(coral.holdAngleCommand(0, led));
+    //algaeIntake.setDefaultCommand(stowCommand);
 
 
-    //Manual Algae controler
-    controller.R2().whileTrue(algaeIntake.voltageCommand(AlgaeIntakeConstants.kManualVoltage));
-    controller.L2().whileTrue(algaeIntake.voltageCommand(-AlgaeIntakeConstants.kManualVoltage));
-    controller.options().onTrue(algaeIntake.manualModeCommand(led, coral));
-
-    controller.R2().whileTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kCoralGroundIntakePosition)
-        .alongWith(algaeIntake.runRolllerCommand(3)));
-        
-    controller.L2().whileTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kCoralEjectPosition)
-        .alongWith(algaeIntake.runRolllerCommand(-3)));
+    //  controller.L1().whileTrue(algaeIntake.runRolllerCommand(-3));
   }
   public void initiateBrakes(){
     climb.setNeutralMode(NeutralModeValue.Brake);
   }
 
   public Command getAutonomousCommand() {
-    return Commands.parallel(climb.toPositionCommand(3, 90), autoChooser.getSelected());
+    return Commands.none(); 
   }
 }

@@ -47,7 +47,7 @@ public class Swerve extends SubsystemBase {
 
   Pigeon2 pigeon = new Pigeon2(HardwareMap.kPigeon.id());
 
-  Vision vision = new Vision();
+ // Vision vision = new Vision();
   Field2d visionField = new Field2d();
   Field2d estimatorField = new Field2d();
 
@@ -160,15 +160,15 @@ public class Swerve extends SubsystemBase {
   }
 
   private void updateFieldVision() {
-    var fieldPoseEstimate = vision.getFieldPoseEstimate(getFieldPose());
-    if (fieldPoseEstimate.isPresent()) {
-      //System.out.println("vision present");
-      Pose2d visionPose = fieldPoseEstimate.get().estimatedPose.toPose2d();
-      visionField.setRobotPose(visionPose);
-      fieldPoseEstimator.addVisionMeasurement(visionPose, fieldPoseEstimate.get().timestampSeconds);
-    } else {
-      //System.out.println("vision not present");
-    }
+   // var fieldPoseEstimate = vision.getFieldPoseEstimate(getFieldPose());
+    // if (fieldPoseEstimate.isPresent()) {
+    //   //System.out.println("vision present");
+    //   Pose2d visionPose = fieldPoseEstimate.get().estimatedPose.toPose2d();
+    //   visionField.setRobotPose(visionPose);
+    //   fieldPoseEstimator.addVisionMeasurement(visionPose, fieldPoseEstimate.get().timestampSeconds);
+    // } else {
+    //   //System.out.println("vision not present");
+    // }
 
     estimatorField.setRobotPose(getFieldPose());
   }
@@ -189,25 +189,25 @@ public class Swerve extends SubsystemBase {
   }
 
   public void updateTagVision() {
-    var poseFromTarget = vision.getTagToRobot();
-    if (poseFromTarget.isPresent()) {
-      Pose2d pose = poseFromTarget.get().pose();
-      tagPoseEstimator.addVisionMeasurement(pose, poseFromTarget.get().timeStampSeconds());
+    // var poseFromTarget = vision.getTagToRobot();
+    // if (poseFromTarget.isPresent()) {
+    //   Pose2d pose = poseFromTarget.get().pose();
+    //   tagPoseEstimator.addVisionMeasurement(pose, poseFromTarget.get().timeStampSeconds());
 
-      double xTranslationMeters = pose.getX();
-      double yTranslationMeters = pose.getY();
-      double thetaDegrees = pose.getRotation().getDegrees();
+    //   double xTranslationMeters = pose.getX();
+    //   double yTranslationMeters = pose.getY();
+    //   double thetaDegrees = pose.getRotation().getDegrees();
 
       // field.setRobotPose(poseFromTarget.get().plus(new Transform2d(new
       // Translation2d(5, 5), new Rotation2d(0))));
 
-      SmartDashboard.putNumber("vision/x", xTranslationMeters);
-      SmartDashboard.putNumber("vision/y", yTranslationMeters);
-      SmartDashboard.putNumber("vision/theta", thetaDegrees);
-      SmartDashboard.putBoolean("vision/low_camera", true);
-    } else {
-      SmartDashboard.putBoolean("vision/low_camera", false);
-    }
+    //   SmartDashboard.putNumber("vision/x", xTranslationMeters);
+    //   SmartDashboard.putNumber("vision/y", yTranslationMeters);
+    //   SmartDashboard.putNumber("vision/theta", thetaDegrees);
+    //   SmartDashboard.putBoolean("vision/low_camera", true);
+    // } else {
+    //   SmartDashboard.putBoolean("vision/low_camera", false);
+    // }
   }
 
   private void addDashboardWidget() {

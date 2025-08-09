@@ -28,7 +28,7 @@ import java.util.List;
 public class Vision { 
   /** Creates a new VisionSub1system. */
   PhotonCamera coralCamera = new PhotonCamera(VisionConstants.kCoralCameraName);
-  AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+  AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
   PhotonPoseEstimator fieldPoseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, VisionConstants.kRobotToCamera);
 
   public Vision() {

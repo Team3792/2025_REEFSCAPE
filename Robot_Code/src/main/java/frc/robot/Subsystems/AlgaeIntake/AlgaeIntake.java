@@ -30,15 +30,8 @@ public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
   TalonFX pivot = new TalonFX(HardwareMap.kAlgaeRotate.id());
   SparkMax drive = new SparkMax(HardwareMap.kAlgaeSpin.id(), MotorType.kBrushless);
-  double manualVoltage = 0;
 
   private ProfiledPIDController pidController = AlgaeIntakeConstants.pivotPIDConfig.getController();
-
-  I2C.Port i2cPort = I2C.Port.kOnboard;
-  ColorSensorV3 colorSensorV3 = new ColorSensorV3(i2cPort);
-  public boolean manualMode = false;
-
-  public Trigger hasAlgae = new Trigger(this::hasAlgae);
 
   
   public AlgaeIntake() {
@@ -46,74 +39,37 @@ public class AlgaeIntake extends SubsystemBase {
     drive.configure(AlgaeIntakeConstants.getDriveConfig(), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     pivot.getConfigurator().apply(AlgaeIntakeConstants.getPivotConfig());
 
-    pivot.setPosition(0); //TODO: change to absolute encoder
-    pidController.setGoal(0);
+    drive.getEncoder().setPosition(0);
+    pivot.setPosition(angleToPosition(90)); //TODO: change to absolute encoder
+    pidController.setGoal(90);
     pidController.reset(getAngleDegrees()); //Reset position to current angle to generate profile to return to 0 at start
 
     CANManager.addConnection(HardwareMap.kAlgaeRotate, pivot);
+  }
 
+
+
+  public Command closeScissorsCommand(){
     
+    return this.run(() -> {drive.setVoltage(-AlgaeIntakeConstants.kCuttingVoltage);}).onlyWhile(() -> (drive.getEncoder().getPosition() > 0.5)).andThen(this.runOnce(() -> drive.setVoltage(-0.5)));
   }
-
-  //Returns true when there is algae in manipulator
-  public boolean hasAlgae(){
-    return colorSensorV3.getProximity() > AlgaeIntakeConstants.kProximityMin;
-  }
-  
-  public void setDriveVoltage(double voltage){
-    drive.setVoltage(voltage);
-  }
-
-  //applies voltage to drive motor
-  public Command intakeVoltageCommand(double voltage, LED led){
-    return Commands.startEnd(
-      () -> {
-        setDriveVoltage(voltage);
-        led.setPattern(LEDConstants.kAlgaeManipulation);
-      }, 
-      () -> setDriveVoltage(0),
-      this, led);
-  }
-
-  public Command runRolllerCommand(double voltage){
-    return Commands.startEnd(
-      () -> {
-        setDriveVoltage(voltage);
-      },
-      () -> setDriveVoltage(0)
-    );
+  public Command openScissorsCommand(){
+    return this.run(() -> {drive.setVoltage(AlgaeIntakeConstants.kCuttingVoltage);}).onlyWhile(() -> (drive.getEncoder().getPosition() <9)).andThen(this.runOnce(() -> drive.setVoltage(0)));
   }
 
   private double getAngleDegrees(){
     return pivot.getPosition().getValueAsDouble()/AlgaeIntakeConstants.kPivotRatio * 360;
   }
 
-
-  public Command getHoldCommand(){
-    return new FunctionalCommand(
-      () -> {}, 
-      () -> {
-        if(hasAlgae()){
-          setDriveVoltage(AlgaeIntakeConstants.kHoldingVoltage);
-        } else {
-          setDriveVoltage(0);
-        }
-      },
-      (b) -> {},
-      () -> false, 
-      this);
+  private double angleToPosition(double angleDegrees){
+    return angleDegrees/360.0 * AlgaeIntakeConstants.kPivotRatio;
   }
 
-  public Command voltageCommand(double voltage){
-    //return Commands.startEnd(() -> pivot.setVoltage(voltage), () -> pivot.setVoltage(0), this);
-    return Commands.startEnd(() -> {manualVoltage = voltage;}, () -> {manualVoltage = 0;});
-  
-  }
 
   //Stows and stops intake
   public Command stowCommand(){
     return setPositionCommand(AlgaeIntakeConstants.kStowPosition)
-          .alongWith(this.runOnce(() -> {setDriveVoltage(-0.25);}));
+          .alongWith(closeScissorsCommand());
   }
 
   public void setPosition(double setPointDegrees){
@@ -124,28 +80,19 @@ public class AlgaeIntake extends SubsystemBase {
     return Commands.runOnce(() -> {setPosition(position);});
   }
 
-  public Command manualModeCommand(LED led, Coral coral){
-    return Commands.startEnd(
-      () -> {
-        manualMode = true; 
-        coral.setAngle(90);
-        led.setPattern(LEDConstants.kClimbMode);},
-      () -> {},//manualMode = false; coral.setAngle(0);}, 
-      led, this, coral
-    );
-  }
+  
 
   private void runToPosition(){
-    double gravityFF = -Math.sin(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
+    double gravityFF = Math.cos(getAngleDegrees() * Math.PI / 180.0) * AlgaeIntakeConstants.kG;
     double velocityFF = AlgaeIntakeConstants.kVelocityFF * pidController.getSetpoint().velocity;
-    double pidOutput = manualMode? 0: pidController.calculate(getAngleDegrees());
-
-    pivot.setVoltage(pidOutput + gravityFF + velocityFF + (manualMode? manualVoltage : 0));
+    double pidOutput = pidController.calculate(getAngleDegrees());
+    pivot.setVoltage(pidOutput + gravityFF + velocityFF);
   }
   
   @Override
   public void periodic() {
-    runToPosition();
-    SmartDashboard.putBoolean("Has Algae", hasAlgae());
+    //runToPosition();
+    SmartDashboard.putNumber("Algae Drive Position", drive.getEncoder().getPosition());
+    SmartDashboard.putNumber("Algae pivot position", getAngleDegrees());
   }
 }

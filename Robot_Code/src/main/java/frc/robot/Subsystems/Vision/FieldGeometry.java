@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /** Add your docs here. */
 public class FieldGeometry {
-    private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape); //TODO: add separate for welded and non welded
+    private static AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark); //TODO: add separate for welded and non welded
     private static List<AprilTag> tags = fieldLayout.getTags(); //TODO: maybe make this only reef tags?
     private static List<Pose2d> reefTags = getTagGroup(VisionConstants.reefAprilTags);
     private static List<Pose2d> coralStationTags = getTagGroup(VisionConstants.coralStationAprilTags);
