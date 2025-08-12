@@ -91,7 +91,7 @@ public class AlgaeIntake extends SubsystemBase {
   
   @Override
   public void periodic() {
-    //runToPosition();
+    runToPosition();
     SmartDashboard.putNumber("Algae Drive Position", drive.getEncoder().getPosition());
     SmartDashboard.putNumber("Algae pivot position", getAngleDegrees());
   }

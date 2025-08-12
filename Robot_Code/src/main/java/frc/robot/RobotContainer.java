@@ -51,7 +51,7 @@ public class RobotContainer {
   Coral coral = new Coral();
   LED led = new LED();
   Command stowCommand = coral.setAngleCommand(90).alongWith(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kStowPosition)).alongWith(algaeIntake.closeScissorsCommand());
-  Command loadCommand = coral.setAngleCommand(0).alongWith(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kUprightPosition)).alongWith(algaeIntake.openScissorsCommand());
+  Command loadCommand = algaeIntake.setPositionCommand(AlgaeIntakeConstants.kUprightPosition).andThen(Commands.waitSeconds(2)).andThen(algaeIntake.openScissorsCommand()).andThen(coral.setAngleCommand(0));
 
 
   private final SendableChooser<Command> autoChooser;
@@ -75,7 +75,7 @@ public class RobotContainer {
 
     climb.setNeutralMode(NeutralModeValue.Brake);
     configureDriverBindings(driver);
-    configureOperatorBindings(driver);
+    configureOperatorBindings(operator);
 
     led.setDefaultCommand(led.idleOrErrorCommand());
 
@@ -108,14 +108,14 @@ public class RobotContainer {
 
   private void configureOperatorBindings(CommandPS5Controller controller) {
      // Algae
-    //  controller.R1().whileTrue(algaeIntake.runRolllerCommand(3));
+     //algaeIntake.setDefaultCommand(algaeIntake.closeScissorsCommand());
     controller.R1().onTrue(algaeIntake.closeScissorsCommand());
     controller.R1().onFalse(algaeIntake.openScissorsCommand());
 
-    controller.L1().onTrue(loadCommand);
-    controller.L2().onTrue(stowCommand);
+    controller.povUp().onTrue(loadCommand);
+    controller.povDown().onTrue(stowCommand);
 
-    coral.setDefaultCommand(coral.holdAngleCommand(0, led));
+    //coral.setDefaultCommand(coral.holdAngleCommand(0, led));
     //algaeIntake.setDefaultCommand(stowCommand);
 
 
