@@ -29,7 +29,7 @@ public class AlgaeIntakeConstants {
         //threshold for sensor to detect algae; less than threshold means theres algae
         public static final double kProximityMin = 250;
 
-        public static final double kPivotRatio = 25.0 * 26.0/15.0;
+        public static final double kPivotRatio = 5.0 * 5.0 * 42.0/18.0;
         
         public static final double kIntakeVoltage = 8;
         public static final double kEjectVoltage = -4;
