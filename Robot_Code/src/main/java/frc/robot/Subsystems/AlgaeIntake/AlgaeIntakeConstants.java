@@ -27,7 +27,7 @@ public class AlgaeIntakeConstants {
         public static final double kCoralEjectPosition = 20; //coral eject position
 
         //threshold for sensor to detect algae; less than threshold means theres algae
-        public static final double kProximityMin = 250;
+        public static final double kProximityMin = 500;
 
         public static final double kPivotRatio = 5.0 * 5.0 * 42.0/18.0;
         

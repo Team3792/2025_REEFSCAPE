@@ -146,6 +146,7 @@ public class AlgaeIntake extends SubsystemBase {
   @Override
   public void periodic() {
     runToPosition();
+    SmartDashboard.putNumber("Algae proximity", colorSensorV3.getProximity());
     SmartDashboard.putBoolean("Has Algae", hasAlgae());
   }
 }
