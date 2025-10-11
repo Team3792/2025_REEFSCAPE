@@ -16,7 +16,7 @@ import frc.robot.Util.ProfiledPIDConfig;
 public class AlgaeIntakeConstants {
         //pid+g values for postionVoltage control
         public static final ProfiledPIDConfig pivotPIDConfig = new ProfiledPIDConfig(0.1, 0.1, 0, 720, 1440);
-        public static final double kG = 0.3;
+        public static final double kG = 0.5;
         public static final double kVelocityFF = 0.0;
 
         //positions for manipulator
@@ -33,7 +33,7 @@ public class AlgaeIntakeConstants {
         
         public static final double kIntakeVoltage = 8;
         public static final double kEjectVoltage = -4;
-        public static final double kHoldingVoltage = 1;
+        public static final double kHoldingVoltage = 1.5;
         public static final double kManualVoltage = 1.5;
 
 
