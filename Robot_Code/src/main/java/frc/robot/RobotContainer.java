@@ -152,6 +152,7 @@ public class RobotContainer {
         
     controller.L2().whileTrue(algaeIntake.setPositionCommand(AlgaeIntakeConstants.kCoralEjectPosition)
         .alongWith(algaeIntake.runRolllerCommand(-3)));
+
   }
   public void initiateBrakes(){
     climb.setNeutralMode(NeutralModeValue.Brake);
